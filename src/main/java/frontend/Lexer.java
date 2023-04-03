@@ -150,7 +150,17 @@ public class Lexer{
         acceptedStates.put("int", lexeme -> TokenType.Int);
         acceptedStates.put("float", lexeme -> TokenType.Float);
         acceptedStates.put("colour",lexeme -> TokenType.Colour);
-        acceptedStates.put("word",null);
+        acceptedStates.put("word",lexeme -> {
+            switch (lexeme){
+                case "true": return TokenType.True;
+                case "false": return TokenType.False;
+                case "float": return TokenType.FloatType;
+                case "int": return TokenType.IntegerType;
+                case "bool": return TokenType.BoolType;
+                case "colour": return TokenType.ColourType;
+                default: return null;
+            }
+        });
         acceptedStates.put("equals",null);
         acceptedStates.put("exclamation",null);
         acceptedStates.put("relop.GT",null);

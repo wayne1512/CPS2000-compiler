@@ -27,6 +27,16 @@ class LexerTest{
         singleTokenTestMap.put("1.2", TokenType.Float);
         singleTokenTestMap.put("1", TokenType.Int);
         singleTokenTestMap.put("#ff0000", TokenType.Colour);
+
+        singleTokenTestMap.put("true", TokenType.True);
+        singleTokenTestMap.put("false", TokenType.False);
+        singleTokenTestMap.put("float", TokenType.FloatType);
+        singleTokenTestMap.put("int", TokenType.IntegerType);
+        singleTokenTestMap.put("bool", TokenType.BoolType);
+        singleTokenTestMap.put("colour", TokenType.ColourType);
+
+
+
         singleTokenTestMap.put("/", TokenType.Divide);
         singleTokenTestMap.put("*", TokenType.Multiply);
         singleTokenTestMap.put("__print", TokenType.Print);
@@ -64,7 +74,7 @@ class LexerTest{
         int paddingRight = rnd.nextInt(3);
 
         for (int i = 0; i < paddingLeft; i++){
-            leftPadding+=" ";
+            leftPadding += " ";
         }
 
         for (int i = 0; i < paddingRight; i++){

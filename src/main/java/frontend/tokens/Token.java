@@ -42,6 +42,15 @@ public class Token{
         Int,
         Colour,
 
+        //reserved words
+        True,
+        False,
+        FloatType,
+        IntegerType,
+        BoolType,
+        ColourType,
+
+
 
         //operations
         Divide,
