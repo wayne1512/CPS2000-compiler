@@ -37,6 +37,16 @@ class LexerTest{
 
 
 
+        singleTokenTestMap.put("a", TokenType.Identifier);
+        singleTokenTestMap.put("var", TokenType.Identifier);
+        singleTokenTestMap.put("number_", TokenType.Identifier);
+        singleTokenTestMap.put("i", TokenType.Identifier);
+        singleTokenTestMap.put("i1", TokenType.Identifier);
+        singleTokenTestMap.put("i1_", TokenType.Identifier);
+        singleTokenTestMap.put("i_1", TokenType.Identifier);
+
+
+
         singleTokenTestMap.put("/", TokenType.Divide);
         singleTokenTestMap.put("*", TokenType.Multiply);
         singleTokenTestMap.put("__print", TokenType.Print);

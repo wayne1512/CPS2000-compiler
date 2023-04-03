@@ -50,6 +50,9 @@ public class Token{
         BoolType,
         ColourType,
 
+        //identifier
+        Identifier,
+
 
 
         //operations

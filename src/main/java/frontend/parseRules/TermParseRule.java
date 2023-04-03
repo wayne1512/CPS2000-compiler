@@ -1,28 +1,21 @@
 package frontend.parseRules;
 
+import exceptions.SyntaxErrorException;
 import frontend.ParserContext;
+import frontend.ast.ASTNode;
 import frontend.ast.BinaryOpASTNode;
+import frontend.ast.FactorAstNode;
 import frontend.ast.IntegerLiteralASTNode;
 import frontend.tokens.Token;
 import frontend.tokens.Token.TokenType;
 
-public class TermParseRule implements ParseRule<BinaryOpASTNode>{
+public class TermParseRule implements ParseRule<ASTNode>{
     @Override
-    public BinaryOpASTNode parse(ParserContext pc){
-        Token lookahead = pc.lookahead(1);
+    public ASTNode parse(ParserContext pc) throws SyntaxErrorException{
 
-        BinaryOpASTNode.OpType op = null;
 
-        if (lookahead.getType() == TokenType.Multiply)
-            op = BinaryOpASTNode.OpType.mul;
-        else if (lookahead.getType() == TokenType.Divide)
-            op = BinaryOpASTNode.OpType.div;
+        FactorAstNode left = new FactorParseRule().parse(pc);
 
-        IntegerLiteralASTNode left = new IntegerLiteralParseRule().parse(pc);
-        pc.consumeToken();
-        IntegerLiteralASTNode right = new IntegerLiteralParseRule().parse(pc);
-
-        return new BinaryOpASTNode(left.getSourceStart(),right.getSourceEnd(),op,left,right);
-
+        return new Term_ParseRule(left).parse(pc);
     }
 }

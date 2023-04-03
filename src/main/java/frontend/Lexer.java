@@ -158,7 +158,7 @@ public class Lexer{
                 case "int": return TokenType.IntegerType;
                 case "bool": return TokenType.BoolType;
                 case "colour": return TokenType.ColourType;
-                default: return null;
+                default: return TokenType.Identifier;
             }
         });
         acceptedStates.put("equals",null);
