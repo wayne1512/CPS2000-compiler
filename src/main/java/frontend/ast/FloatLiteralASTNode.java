@@ -3,9 +3,9 @@ package frontend.ast;
 public class FloatLiteralASTNode extends ASTNode{
     private final float val;
 
-    public FloatLiteralASTNode(long sourceStart, long sourceEnd, String val){
+    public FloatLiteralASTNode(long sourceStart, long sourceEnd, float val){
         super(sourceStart, sourceEnd);
-        this.val = Float.parseFloat(val);
+        this.val = val;
     }
 
     public float getVal(){

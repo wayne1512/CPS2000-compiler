@@ -10,6 +10,6 @@ public class FloatLiteralParseRule implements ParseRule<FloatLiteralASTNode>{
     @Override
     public FloatLiteralASTNode parse(ParserContext pc){
         Token t = pc.consumeToken();
-        return new FloatLiteralASTNode(t.getTokenStart(),t.getTokenEnd(),t.getLexeme());
+        return new FloatLiteralASTNode(t.getTokenStart(),t.getTokenEnd(),Float.parseFloat(t.getLexeme()));
     }
 }
