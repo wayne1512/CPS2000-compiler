@@ -1,6 +1,5 @@
 package frontend.parseRules;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import frontend.ParserContext;
 import frontend.ast.BooleanLiteralASTNode;
 import frontend.ast.FloatLiteralASTNode;

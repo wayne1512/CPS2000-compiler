@@ -1,6 +1,8 @@
 package frontend;
 
+import exceptions.SyntaxErrorException;
 import frontend.ast.ASTNode;
+import frontend.parseRules.LiteralParseRule;
 import frontend.parseRules.ParseRule;
 import frontend.parseRules.TermParseRule;
 import frontend.tokens.Token;
@@ -29,8 +31,8 @@ public class Parser{
         return lookahead.get(amount);
     }
 
-    public ASTNode parse(){
-        ParseRule<? extends ASTNode> startRule = new TermParseRule();
+    public ASTNode parse() throws SyntaxErrorException{
+        ParseRule<? extends ASTNode> startRule = new LiteralParseRule();
 
         return startRule.parse(new ParserContext(this));
     }

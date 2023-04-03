@@ -14,7 +14,7 @@ public class TypeLiteralASTNode extends ASTNode{
 
     @Override
     public String toString(){
-        return String.format("<Int>%b</Int>",val);
+        return String.format("<Type>%s</Type>",val);
     }
 
     public enum Type{

@@ -1,3 +1,4 @@
+import exceptions.SyntaxErrorException;
 import frontend.CharacterProvider;
 import frontend.FileCharacterProvider;
 import frontend.Lexer;
@@ -28,6 +29,8 @@ public class Main{
         } catch (IOException e) {
             System.err.println("Error while opening file");
             e.printStackTrace();
+        } catch (SyntaxErrorException e) {
+            throw new RuntimeException(e);
         }
 
 
