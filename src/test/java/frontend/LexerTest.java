@@ -2,8 +2,6 @@ package frontend;
 
 import frontend.tokens.Token;
 import frontend.tokens.Token.TokenType;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -50,7 +48,13 @@ class LexerTest{
         singleTokenTestMap.put("/", TokenType.Divide);
         singleTokenTestMap.put("*", TokenType.Multiply);
         singleTokenTestMap.put("+", TokenType.Add);
-        singleTokenTestMap.put("-", TokenType.Subtract);
+        singleTokenTestMap.put(">", TokenType.GT);
+        singleTokenTestMap.put("<", TokenType.LT);
+        singleTokenTestMap.put("==", TokenType.EQ);
+        singleTokenTestMap.put("!=", TokenType.NE);
+        singleTokenTestMap.put("<=", TokenType.LTE);
+        singleTokenTestMap.put(">=", TokenType.GTE);
+
         singleTokenTestMap.put("__print", TokenType.Print);
         singleTokenTestMap.put("__width", TokenType.PadWidth);
         singleTokenTestMap.put("__height", TokenType.PadHeight);

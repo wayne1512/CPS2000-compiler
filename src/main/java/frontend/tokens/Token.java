@@ -61,6 +61,14 @@ public class Token{
         Add,
         Subtract,
 
+        //relops
+        LT,
+        GT,
+        EQ,
+        NE,
+        LTE,
+        GTE,
+
 
 
         //vm operations

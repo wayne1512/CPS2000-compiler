@@ -163,12 +163,12 @@ public class Lexer{
         });
         acceptedStates.put("equals",null);
         acceptedStates.put("exclamation",null);
-        acceptedStates.put("relop.GT",null);
-        acceptedStates.put("relop.LT",null);
-        acceptedStates.put("relop.EQ",null);
-        acceptedStates.put("relop.NE",null);
-        acceptedStates.put("relop.GTE",null);
-        acceptedStates.put("relop.LTE",null);
+        acceptedStates.put("relop.GT",lexeme -> TokenType.GT);
+        acceptedStates.put("relop.LT",lexeme -> TokenType.LT);
+        acceptedStates.put("relop.EQ",lexeme -> TokenType.EQ);
+        acceptedStates.put("relop.NE",lexeme -> TokenType.NE);
+        acceptedStates.put("relop.GTE",lexeme -> TokenType.GTE);
+        acceptedStates.put("relop.LTE",lexeme -> TokenType.LTE);
         acceptedStates.put("mulOp.Mul", lexeme -> TokenType.Multiply);
         acceptedStates.put("mulOp.Div", lexeme -> TokenType.Divide);
         acceptedStates.put("addOp.Add", lexeme -> TokenType.Add);

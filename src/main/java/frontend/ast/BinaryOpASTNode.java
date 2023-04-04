@@ -22,18 +22,26 @@ public class BinaryOpASTNode extends ASTNode{
 
 
     public enum OpType{
-        mul('*'),
-        div('/'),
+        mul("*"),
+        div("/"),
 
-        add('+'),
+        add("+"),
 
-        sub('-');
+        sub("-"),
+
+        //relops
+        LT("<"),
+        GT(">"),
+        EQ("=="),
+        NE("!="),
+        LTE("<="),
+        GTE(">=");
 
 
 
-        final char humanReadableName;
+        final String humanReadableName;
 
-        OpType(char humanReadableName){
+        OpType(String humanReadableName){
             this.humanReadableName = humanReadableName;
         }
     }
