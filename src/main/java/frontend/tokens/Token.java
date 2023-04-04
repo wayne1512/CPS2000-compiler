@@ -58,6 +58,8 @@ public class Token{
         //operations
         Divide,
         Multiply,
+        Add,
+        Subtract,
 
 
 

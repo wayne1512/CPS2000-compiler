@@ -17,13 +17,19 @@ public class BinaryOpASTNode extends ASTNode{
     }
     @Override
     public String toString(){
-        return String.format("<BinaryOp type = \"%s\">%s%s</BinaryOp>",opType,left,right);
+        return String.format("<BinaryOp type = \"%s\">%s%s</BinaryOp>",opType.humanReadableName,left,right);
     }
 
 
     public enum OpType{
         mul('*'),
-        div('/');
+        div('/'),
+
+        add('+'),
+
+        sub('-');
+
+
 
         final char humanReadableName;
 

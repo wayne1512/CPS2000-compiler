@@ -171,8 +171,8 @@ public class Lexer{
         acceptedStates.put("relop.LTE",null);
         acceptedStates.put("mulOp.Mul", lexeme -> TokenType.Multiply);
         acceptedStates.put("mulOp.Div", lexeme -> TokenType.Divide);
-        acceptedStates.put("addOp.Add",null);
-        acceptedStates.put("addOp.Sub",null);
+        acceptedStates.put("addOp.Add", lexeme -> TokenType.Add);
+        acceptedStates.put("addOp.Sub", lexeme -> TokenType.Subtract);
 
     }
 
