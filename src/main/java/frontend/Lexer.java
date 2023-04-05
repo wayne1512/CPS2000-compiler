@@ -8,7 +8,6 @@ import frontend.tokens.*;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
-import java.util.function.Function;
 
 import static frontend.tokens.Token.*;
 
@@ -159,32 +158,35 @@ public class Lexer{
         acceptedStates.put("float", lexeme -> TokenType.Float);
         acceptedStates.put("colour",lexeme -> TokenType.Colour);
         acceptedStates.put("word",lexeme -> {
-            switch (lexeme){
+            switch (lexeme.toLowerCase(Locale.ENGLISH)){
                 case "true": return TokenType.True;
                 case "false": return TokenType.False;
                 case "float": return TokenType.FloatType;
                 case "int": return TokenType.IntegerType;
                 case "bool": return TokenType.BoolType;
                 case "colour": return TokenType.ColourType;
+                case "and": return TokenType.And;
+                case "or": return TokenType.Or;
+                case "not": return TokenType.Not;
                 default: return TokenType.Identifier;
             }
         });
         acceptedStates.put("equals",null);
         acceptedStates.put("exclamation",null);
-        acceptedStates.put("relop.GT",lexeme -> TokenType.GT);
-        acceptedStates.put("relop.LT",lexeme -> TokenType.LT);
-        acceptedStates.put("relop.EQ",lexeme -> TokenType.EQ);
-        acceptedStates.put("relop.NE",lexeme -> TokenType.NE);
-        acceptedStates.put("relop.GTE",lexeme -> TokenType.GTE);
-        acceptedStates.put("relop.LTE",lexeme -> TokenType.LTE);
-        acceptedStates.put("mulOp.Mul", lexeme -> TokenType.Multiply);
-        acceptedStates.put("mulOp.Div", lexeme -> TokenType.Divide);
-        acceptedStates.put("addOp.Add", lexeme -> TokenType.Add);
-        acceptedStates.put("addOp.Sub", lexeme -> TokenType.Subtract);
+        acceptedStates.put("GT",lexeme -> TokenType.GT);
+        acceptedStates.put("LT",lexeme -> TokenType.LT);
+        acceptedStates.put("EQ",lexeme -> TokenType.EQ);
+        acceptedStates.put("NE",lexeme -> TokenType.NE);
+        acceptedStates.put("GTE",lexeme -> TokenType.GTE);
+        acceptedStates.put("LTE",lexeme -> TokenType.LTE);
+        acceptedStates.put("multiply", lexeme -> TokenType.Multiply);
+        acceptedStates.put("divide", lexeme -> TokenType.Divide);
+        acceptedStates.put("add", lexeme -> TokenType.Add);
+        acceptedStates.put("subtract", lexeme -> TokenType.Subtract);
         acceptedStates.put("bracOpen", lexeme -> TokenType.BracOpen);
         acceptedStates.put("bracClose", lexeme -> TokenType.BracClose);
         acceptedStates.put("curlyBracOpen", lexeme -> TokenType.CurlyBracOpen);
-        acceptedStates.put("curlyBracClose", lexeme -> TokenType.CurlyBrackClose);
+        acceptedStates.put("curlyBracClose", lexeme -> TokenType.CurlyBracClose);
 
     }
 

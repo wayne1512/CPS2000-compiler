@@ -17,4 +17,8 @@ public class ParserContext{
     public Token lookahead(int amount) throws SyntaxErrorException{
         return p.lookahead(amount);
     }
+
+    public void throwUnexpectedTokenException(Token t) throws SyntaxErrorException{
+        throw new SyntaxErrorException("unexpected token \""+t.getLexeme()+"\"",t.getTokenStart(),t.getTokenEnd());
+    }
 }

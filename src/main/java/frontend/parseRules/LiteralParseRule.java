@@ -37,7 +37,7 @@ public class LiteralParseRule implements ParseRule<LiteralASTNode>{
         }
 
         if (child == null)
-            throw new SyntaxErrorException("failed to parse token",t.getTokenStart(),t.getTokenEnd());
+            pc.throwUnexpectedTokenException(t);
 
         return new LiteralASTNode(t.getTokenStart(),t.getTokenEnd(),child);
 

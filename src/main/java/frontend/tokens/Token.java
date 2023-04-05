@@ -60,6 +60,9 @@ public class Token{
         Multiply,
         Add,
         Subtract,
+        And,
+        Or,
+        Not,
 
         //relops
         LT,
@@ -73,7 +76,7 @@ public class Token{
         BracOpen,
         BracClose,
         CurlyBracOpen,
-        CurlyBrackClose,
+        CurlyBracClose,
 
 
 

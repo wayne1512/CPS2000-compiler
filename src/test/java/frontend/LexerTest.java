@@ -33,6 +33,9 @@ class LexerTest{
         singleTokenTestMap.put("int", TokenType.IntegerType);
         singleTokenTestMap.put("bool", TokenType.BoolType);
         singleTokenTestMap.put("colour", TokenType.ColourType);
+        singleTokenTestMap.put("and", TokenType.And);
+        singleTokenTestMap.put("or", TokenType.Or);
+        singleTokenTestMap.put("not", TokenType.Not);
 
 
 
@@ -60,7 +63,7 @@ class LexerTest{
         singleTokenTestMap.put("(", TokenType.BracOpen);
         singleTokenTestMap.put(")", TokenType.BracClose);
         singleTokenTestMap.put("{", TokenType.CurlyBracOpen);
-        singleTokenTestMap.put("}", TokenType.CurlyBrackClose);
+        singleTokenTestMap.put("}", TokenType.CurlyBracClose);
 
         singleTokenTestMap.put("__print", TokenType.Print);
         singleTokenTestMap.put("__width", TokenType.PadWidth);

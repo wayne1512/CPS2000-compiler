@@ -30,14 +30,16 @@ public class FactorParseRule implements ParseRule<FactorAstNode>{
             case Identifier:
                 child = new IdentifierParseRule().parse(pc);
                 break;
+            case BracOpen:
+                child = new SubExprParseRule().parse(pc);
+                break;
             case PadRandI:
                 throw new NotImplementedException("todo");
 
         }
 
         if (child == null)
-            throw new SyntaxErrorException("failed to parse token",t.getTokenStart(),t.getTokenEnd());
-
+            pc.throwUnexpectedTokenException(t);
         return new FactorAstNode(t.getTokenStart(),t.getTokenEnd(),child);
 
     }
