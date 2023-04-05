@@ -17,4 +17,9 @@ public class SyntaxErrorException extends Exception{
     public long getTo(){
         return to;
     }
+
+    @Override
+    public String getMessage(){
+        return super.getMessage() + " in position ("+from +"-" + to +")";
+    }
 }

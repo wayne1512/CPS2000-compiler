@@ -1,5 +1,6 @@
 package frontend.parseRules;
 
+import exceptions.SyntaxErrorException;
 import frontend.ParserContext;
 import frontend.ast.BooleanLiteralASTNode;
 import frontend.ast.TypeLiteralASTNode;
@@ -7,7 +8,7 @@ import frontend.tokens.Token;
 
 public class TypeLiteralParseRule implements ParseRule<TypeLiteralASTNode>{
     @Override
-    public TypeLiteralASTNode parse(ParserContext pc){
+    public TypeLiteralASTNode parse(ParserContext pc) throws SyntaxErrorException{
         Token t = pc.consumeToken();
 
         TypeLiteralASTNode.Type val = null;

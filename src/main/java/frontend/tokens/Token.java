@@ -69,6 +69,12 @@ public class Token{
         LTE,
         GTE,
 
+        //punctuation
+        BracOpen,
+        BracClose,
+        CurlyBracOpen,
+        CurlyBrackClose,
+
 
 
         //vm operations

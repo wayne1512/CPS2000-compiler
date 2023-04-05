@@ -2,6 +2,7 @@ package frontend;
 
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
+import exceptions.SyntaxErrorException;
 import frontend.tokens.*;
 
 import java.io.IOException;
@@ -21,7 +22,7 @@ public class Lexer{
 
 
 
-    public Token nextToken(){
+    public Token nextToken() throws SyntaxErrorException{
 
         //ket for debugging purposes
         long tokenStart = -1;
@@ -67,8 +68,15 @@ public class Lexer{
         if (lexeme.length() == 0)
             return null;
 
+        //for error output
+        String originalLexeme = lexeme.toString();
+
         //rollback until we find the last accepted state
         while (!acceptedStates.containsKey(currentState) && currentState!=null){
+            //error - the lexeme is empty, yet we are not in a valid state
+            if (lexeme.length() == 0)
+                throw new SyntaxErrorException("unknown token \""+originalLexeme+"\"",tokenStart,tokenStart+originalLexeme.length());
+
             currentState = stateStack.pop();
             lexeme.deleteCharAt(lexeme.length() - 1);
             cp.rewind();
@@ -173,6 +181,10 @@ public class Lexer{
         acceptedStates.put("mulOp.Div", lexeme -> TokenType.Divide);
         acceptedStates.put("addOp.Add", lexeme -> TokenType.Add);
         acceptedStates.put("addOp.Sub", lexeme -> TokenType.Subtract);
+        acceptedStates.put("bracOpen", lexeme -> TokenType.BracOpen);
+        acceptedStates.put("bracClose", lexeme -> TokenType.BracClose);
+        acceptedStates.put("curlyBracOpen", lexeme -> TokenType.CurlyBracOpen);
+        acceptedStates.put("curlyBracClose", lexeme -> TokenType.CurlyBrackClose);
 
     }
 

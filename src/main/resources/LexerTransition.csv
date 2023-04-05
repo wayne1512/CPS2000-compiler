@@ -1,5 +1,5 @@
 ,Digit,AtoF,GtoZ,Point,Pound,Underscore,Asterisk,Slash,Plus,Minus,GT,LT,Equals,Exclamation,BracOpen,BracClose,Colon,SemiColon,CurlyBracketOpen,CurlyBracketClose
-start,int,word,word,,pound,under1,mulOp.Mul,mulOp.Div,addOp.Add,addOp.Sub,relop.GT,relop.LT,equals,exclamation,,,,,,
+start,int,word,word,,pound,under1,mulOp.Mul,mulOp.Div,addOp.Add,addOp.Sub,relop.GT,relop.LT,equals,exclamation,bracOpen,bracClose,,,curlyBracOpen,curlyBracClose
 under1,,,,,,under2,,,,,,,,,,,,,,
 under2,,sysFunc,sysFunc,,,,,,,,,,,,,,,,,
 sysFunc,,sysFunc,sysFunc,,,,,,,,,,,,,,,,,
@@ -26,3 +26,7 @@ mulOp.Mul,,,,,,,,,,,,,,,,,,,,
 mulOp.Div,,,,,,,,,,,,,,,,,,,,
 addOp.Add,,,,,,,,,,,,,,,,,,,,
 addOp.Sub,,,,,,,,,,,,,,,,,,,,
+bracOpen,,,,,,,,,,,,,,,,,,,,
+bracClose,,,,,,,,,,,,,,,,,,,,
+curlyBracOpen,,,,,,,,,,,,,,,,,,,,
+curlyBracClose,,,,,,,,,,,,,,,,,,,,

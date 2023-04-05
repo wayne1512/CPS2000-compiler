@@ -17,13 +17,13 @@ public class Parser{
         this.lexer = lexer;
     }
 
-    public Token consumeToken(){
+    public Token consumeToken() throws SyntaxErrorException{
         if (lookahead.size() == 0)
             lookahead.add(lexer.nextToken());
         return lookahead.pop();
     }
 
-    public Token lookahead(int amount){
+    public Token lookahead(int amount) throws SyntaxErrorException{
         while (lookahead.size() <= amount)
             lookahead.add(lexer.nextToken());
         return lookahead.get(amount);

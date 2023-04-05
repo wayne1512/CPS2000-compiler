@@ -1,5 +1,6 @@
 package frontend;
 
+import exceptions.SyntaxErrorException;
 import frontend.tokens.Token;
 import frontend.tokens.Token.TokenType;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -55,6 +56,12 @@ class LexerTest{
         singleTokenTestMap.put("<=", TokenType.LTE);
         singleTokenTestMap.put(">=", TokenType.GTE);
 
+
+        singleTokenTestMap.put("(", TokenType.BracOpen);
+        singleTokenTestMap.put(")", TokenType.BracClose);
+        singleTokenTestMap.put("{", TokenType.CurlyBracOpen);
+        singleTokenTestMap.put("}", TokenType.CurlyBrackClose);
+
         singleTokenTestMap.put("__print", TokenType.Print);
         singleTokenTestMap.put("__width", TokenType.PadWidth);
         singleTokenTestMap.put("__height", TokenType.PadHeight);
@@ -69,7 +76,7 @@ class LexerTest{
 
     @ParameterizedTest
     @MethodSource("getTestMap")
-    void singleToken(String input,TokenType expectedType){
+    void singleToken(String input,TokenType expectedType) throws SyntaxErrorException{
         Lexer l = new Lexer(new MockCharProvider(input));
 
         Token t = l.nextToken();
@@ -82,7 +89,7 @@ class LexerTest{
 
     @ParameterizedTest
     @MethodSource("getTestMap")
-    void singleTokenWithPadding(String input,TokenType expectedType){
+    void singleTokenWithPadding(String input,TokenType expectedType) throws SyntaxErrorException{
 
         String leftPadding = "";
         String rightPadding = "";
