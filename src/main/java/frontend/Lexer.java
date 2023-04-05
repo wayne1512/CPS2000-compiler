@@ -25,7 +25,7 @@ public class Lexer{
             //skip headers
             csvReader.skip(1);
 
-            String[] values = null;
+            String[] values;
             while ((values = csvReader.readNext()) != null){
                 classifierMap.put(values[0].charAt(0), values[1]);
             }
@@ -42,7 +42,7 @@ public class Lexer{
 
 
         try (CSVReader csvReader = new CSVReader(new InputStreamReader(Lexer.class.getClassLoader().getResourceAsStream("LexerTransition.csv")))) {
-            String[] values = null;
+            String[] values;
 
             //copy column headers, but remove the 1st column since it's empty
             colHeaders = new LinkedList<>(Arrays.asList(csvReader.readNext()));
