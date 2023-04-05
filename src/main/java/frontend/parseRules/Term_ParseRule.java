@@ -5,7 +5,6 @@ import frontend.ParserContext;
 import frontend.ast.ASTNode;
 import frontend.ast.BinaryOpASTNode;
 import frontend.ast.FactorAstNode;
-import frontend.ast.IntegerLiteralASTNode;
 import frontend.tokens.Token;
 
 public class Term_ParseRule implements ParseRule<ASTNode>{
@@ -40,8 +39,7 @@ public class Term_ParseRule implements ParseRule<ASTNode>{
 
         FactorAstNode factor = new FactorParseRule().parse(pc);
 
-        ASTNode newLeft = new BinaryOpASTNode(left.getSourceStart(),factor.getSourceEnd(),op,left,factor);
-
+        ASTNode newLeft = new BinaryOpASTNode(left.getSourceStart(), factor.getSourceEnd(), op, left, factor);
 
 
         return new Term_ParseRule(newLeft).parse(pc);

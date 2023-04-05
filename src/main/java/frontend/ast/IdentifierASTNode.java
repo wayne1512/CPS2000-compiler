@@ -14,6 +14,6 @@ public class IdentifierASTNode extends ASTNode{
 
     @Override
     public String toString(){
-        return String.format("<Id>%s</Id>",val);
+        return String.format("<Id>%s</Id>", val);
     }
 }

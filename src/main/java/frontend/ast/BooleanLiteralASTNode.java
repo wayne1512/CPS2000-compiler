@@ -14,6 +14,6 @@ public class BooleanLiteralASTNode extends ASTNode{
 
     @Override
     public String toString(){
-        return String.format("<Bool>%b</Bool>",val);
+        return String.format("<Bool>%b</Bool>", val);
     }
 }

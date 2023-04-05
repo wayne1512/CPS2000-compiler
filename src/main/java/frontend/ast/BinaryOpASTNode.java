@@ -15,9 +15,10 @@ public class BinaryOpASTNode extends ASTNode{
         this.left = left;
         this.right = right;
     }
+
     @Override
     public String toString(){
-        return String.format("<BinaryOp type = \"%s\">%s%s</BinaryOp>",opType.humanReadableName,left,right);
+        return String.format("<BinaryOp type = \"%s\">%s%s</BinaryOp>", opType.humanReadableName, left, right);
     }
 
 
@@ -36,7 +37,6 @@ public class BinaryOpASTNode extends ASTNode{
         NE("!="),
         LTE("<="),
         GTE(">=");
-
 
 
         final String humanReadableName;

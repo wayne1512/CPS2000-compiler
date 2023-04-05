@@ -38,8 +38,7 @@ public class SimpleExpr_ParseRule implements ParseRule<ASTNode>{
 
         ASTNode term = new TermParseRule().parse(pc);
 
-        ASTNode newLeft = new BinaryOpASTNode(left.getSourceStart(),term.getSourceEnd(),op,left,term);
-
+        ASTNode newLeft = new BinaryOpASTNode(left.getSourceStart(), term.getSourceEnd(), op, left, term);
 
 
         return new SimpleExpr_ParseRule(newLeft).parse(pc);

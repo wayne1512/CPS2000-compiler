@@ -12,7 +12,7 @@ public class FactorAstNode extends ASTNode{
 
     public String toString(){
         if (CompilerSettings.getInstance().verboseASTTree){
-            return String.format("<Factor>%s</Factor>",child);
+            return String.format("<Factor>%s</Factor>", child);
         } else
             return child.toString();
     }

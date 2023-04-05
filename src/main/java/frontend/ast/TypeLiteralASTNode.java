@@ -14,10 +14,10 @@ public class TypeLiteralASTNode extends ASTNode{
 
     @Override
     public String toString(){
-        return String.format("<Type>%s</Type>",val);
+        return String.format("<Type>%s</Type>", val);
     }
 
     public enum Type{
-        Float,Int,Bool,Colour
+        Float, Int, Bool, Colour
     }
 }

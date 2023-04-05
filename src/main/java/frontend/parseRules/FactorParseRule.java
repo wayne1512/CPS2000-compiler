@@ -4,7 +4,6 @@ import exceptions.SyntaxErrorException;
 import frontend.ParserContext;
 import frontend.ast.ASTNode;
 import frontend.ast.FactorAstNode;
-import frontend.ast.LiteralASTNode;
 import frontend.tokens.Token;
 import org.apache.commons.lang3.NotImplementedException;
 
@@ -16,7 +15,7 @@ public class FactorParseRule implements ParseRule<FactorAstNode>{
 
         ASTNode child = null;
 
-        switch (t.getType()){
+        switch (t.getType()) {
             case True:
             case False:
             case Int:
@@ -40,7 +39,7 @@ public class FactorParseRule implements ParseRule<FactorAstNode>{
 
         if (child == null)
             pc.throwUnexpectedTokenException(t);
-        return new FactorAstNode(t.getTokenStart(),t.getTokenEnd(),child);
+        return new FactorAstNode(t.getTokenStart(), t.getTokenEnd(), child);
 
     }
 }

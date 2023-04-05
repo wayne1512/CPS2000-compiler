@@ -2,7 +2,7 @@ package exceptions;
 
 public class SyntaxErrorException extends Exception{
 
-    long from,to;
+    long from, to;
 
     public SyntaxErrorException(String message, long from, long to){
         super(message);
@@ -20,6 +20,6 @@ public class SyntaxErrorException extends Exception{
 
     @Override
     public String getMessage(){
-        return super.getMessage() + " in position ("+from +"-" + to +")";
+        return super.getMessage() + " in position (" + from + "-" + to + ")";
     }
 }

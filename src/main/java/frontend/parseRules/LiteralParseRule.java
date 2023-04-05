@@ -2,7 +2,8 @@ package frontend.parseRules;
 
 import exceptions.SyntaxErrorException;
 import frontend.ParserContext;
-import frontend.ast.*;
+import frontend.ast.ASTNode;
+import frontend.ast.LiteralASTNode;
 import frontend.tokens.Token;
 import org.apache.commons.lang3.NotImplementedException;
 
@@ -14,7 +15,7 @@ public class LiteralParseRule implements ParseRule<LiteralASTNode>{
 
         ASTNode child = null;
 
-        switch (t.getType()){
+        switch (t.getType()) {
             case True:
             case False:
                 child = new BooleanLiteralParseRule().parse(pc);
@@ -39,7 +40,7 @@ public class LiteralParseRule implements ParseRule<LiteralASTNode>{
         if (child == null)
             pc.throwUnexpectedTokenException(t);
 
-        return new LiteralASTNode(t.getTokenStart(),t.getTokenEnd(),child);
+        return new LiteralASTNode(t.getTokenStart(), t.getTokenEnd(), child);
 
     }
 }

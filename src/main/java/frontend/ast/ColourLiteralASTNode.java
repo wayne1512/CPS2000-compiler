@@ -14,6 +14,6 @@ public class ColourLiteralASTNode extends ASTNode{
 
     @Override
     public String toString(){
-        return String.format("<Colour>%s</Colour>",val);
+        return String.format("<Colour>%s</Colour>", val);
     }
 }

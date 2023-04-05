@@ -12,7 +12,7 @@ import java.util.LinkedHashMap;
 import java.util.Random;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class LexerTest{
 
@@ -38,7 +38,6 @@ class LexerTest{
         singleTokenTestMap.put("not", TokenType.Not);
 
 
-
         singleTokenTestMap.put("a", TokenType.Identifier);
         singleTokenTestMap.put("var", TokenType.Identifier);
         singleTokenTestMap.put("number_", TokenType.Identifier);
@@ -46,7 +45,6 @@ class LexerTest{
         singleTokenTestMap.put("i1", TokenType.Identifier);
         singleTokenTestMap.put("i1_", TokenType.Identifier);
         singleTokenTestMap.put("i_1", TokenType.Identifier);
-
 
 
         singleTokenTestMap.put("/", TokenType.Divide);
@@ -72,27 +70,27 @@ class LexerTest{
         singleTokenTestMap.put("__randi", TokenType.PadRandI);
         singleTokenTestMap.put("__delay", TokenType.Delay);
 
-        return singleTokenTestMap.entrySet().stream().map(set->Arguments.of(set.getKey(),set.getValue()));
+        return singleTokenTestMap.entrySet().stream().map(set -> Arguments.of(set.getKey(), set.getValue()));
 
     }
 
 
     @ParameterizedTest
     @MethodSource("getTestMap")
-    void singleToken(String input,TokenType expectedType) throws SyntaxErrorException{
+    void singleToken(String input, TokenType expectedType) throws SyntaxErrorException{
         Lexer l = new Lexer(new MockCharProvider(input));
 
         Token t = l.nextToken();
 
-        assertEquals(expectedType,t.getType(),"token type was wrong");
-        assertEquals(1,t.getTokenStart(),"token start was wrong");
-        assertEquals(input.length(),t.getTokenEnd(),"token end was wrong");
-        assertEquals(input,t.getLexeme(),"lexeme was wrong");
+        assertEquals(expectedType, t.getType(), "token type was wrong");
+        assertEquals(1, t.getTokenStart(), "token start was wrong");
+        assertEquals(input.length(), t.getTokenEnd(), "token end was wrong");
+        assertEquals(input, t.getLexeme(), "lexeme was wrong");
     }
 
     @ParameterizedTest
     @MethodSource("getTestMap")
-    void singleTokenWithPadding(String input,TokenType expectedType) throws SyntaxErrorException{
+    void singleTokenWithPadding(String input, TokenType expectedType) throws SyntaxErrorException{
 
         String leftPadding = "";
         String rightPadding = "";
@@ -107,18 +105,17 @@ class LexerTest{
             rightPadding += " ";
         }
 
-        String paddedInput = leftPadding+input+rightPadding;
+        String paddedInput = leftPadding + input + rightPadding;
 
         Lexer l = new Lexer(new MockCharProvider(paddedInput));
 
         Token t = l.nextToken();
 
-        assertEquals(expectedType,t.getType(),"token type was wrong");
-        assertEquals(paddingLeft+1,t.getTokenStart(),"token start was wrong");
-        assertEquals(paddingLeft+input.length(),t.getTokenEnd(),"token end was wrong");
-        assertEquals(input,t.getLexeme(),"lexeme was wrong");
+        assertEquals(expectedType, t.getType(), "token type was wrong");
+        assertEquals(paddingLeft + 1, t.getTokenStart(), "token start was wrong");
+        assertEquals(paddingLeft + input.length(), t.getTokenEnd(), "token end was wrong");
+        assertEquals(input, t.getLexeme(), "lexeme was wrong");
     }
-
 
 
     public class MockCharProvider implements CharacterProvider{
@@ -133,7 +130,7 @@ class LexerTest{
 
         @Override
         public Character next(){
-            if (ptr <= s.length()-1)
+            if (ptr <= s.length() - 1)
                 return s.charAt(ptr++);
             else
                 return null;

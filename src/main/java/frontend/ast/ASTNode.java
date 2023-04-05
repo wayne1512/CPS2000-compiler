@@ -2,7 +2,7 @@ package frontend.ast;
 
 public abstract class ASTNode{
     //start and end in source code - used to debug compiler and error if needed
-    long sourceStart,sourceEnd;
+    long sourceStart, sourceEnd;
 
     public ASTNode(long sourceStart, long sourceEnd){
         this.sourceStart = sourceStart;

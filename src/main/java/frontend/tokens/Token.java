@@ -16,7 +16,7 @@ public class Token{
 
     @Override
     public String toString(){
-        return lexeme +" - " + this.getClass().getSimpleName();
+        return lexeme + " - " + this.getClass().getSimpleName();
     }
 
     public long getTokenStart(){
@@ -54,7 +54,6 @@ public class Token{
         Identifier,
 
 
-
         //operations
         Divide,
         Multiply,
@@ -77,7 +76,6 @@ public class Token{
         BracClose,
         CurlyBracOpen,
         CurlyBracClose,
-
 
 
         //vm operations

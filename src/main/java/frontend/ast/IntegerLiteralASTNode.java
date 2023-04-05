@@ -14,6 +14,6 @@ public class IntegerLiteralASTNode extends ASTNode{
 
     @Override
     public String toString(){
-        return String.format("<Int>%d</Int>",val);
+        return String.format("<Int>%d</Int>", val);
     }
 }

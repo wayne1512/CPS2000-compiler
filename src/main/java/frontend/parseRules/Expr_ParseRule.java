@@ -46,8 +46,7 @@ public class Expr_ParseRule implements ParseRule<ASTNode>{
 
         ASTNode term = new SimpleExprParseRule().parse(pc);
 
-        ASTNode newLeft = new BinaryOpASTNode(left.getSourceStart(),term.getSourceEnd(),op,left,term);
-
+        ASTNode newLeft = new BinaryOpASTNode(left.getSourceStart(), term.getSourceEnd(), op, left, term);
 
 
         return new Expr_ParseRule(newLeft).parse(pc);

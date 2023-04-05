@@ -2,11 +2,11 @@ package frontend;
 
 import exceptions.SyntaxErrorException;
 import frontend.ast.ASTNode;
-import frontend.parseRules.*;
+import frontend.parseRules.ExprParseRule;
+import frontend.parseRules.ParseRule;
 import frontend.tokens.Token;
 
 import java.util.LinkedList;
-import java.util.Queue;
 
 public class Parser{
     Lexer lexer;

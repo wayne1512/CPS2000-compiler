@@ -15,6 +15,6 @@ public class FloatLiteralASTNode extends ASTNode{
 
     @Override
     public String toString(){
-        return String.format("<Float>%f</Float>",val);
+        return String.format("<Float>%f</Float>", val);
     }
 }

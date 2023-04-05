@@ -1,13 +1,15 @@
 package frontend;
 
-import java.io.*;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 
 public class FileCharacterProvider implements CharacterProvider{
 
     final RandomAccessFile raf;
 
     public FileCharacterProvider(String path) throws FileNotFoundException{
-        raf = new RandomAccessFile(path,"r");
+        raf = new RandomAccessFile(path, "r");
     }
 
     @Override
@@ -34,7 +36,7 @@ public class FileCharacterProvider implements CharacterProvider{
     @Override
     public void rewind(){
         try {
-            raf.seek(raf.getFilePointer()-1);
+            raf.seek(raf.getFilePointer() - 1);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

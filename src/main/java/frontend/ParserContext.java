@@ -19,6 +19,6 @@ public class ParserContext{
     }
 
     public void throwUnexpectedTokenException(Token t) throws SyntaxErrorException{
-        throw new SyntaxErrorException("unexpected token \""+t.getLexeme()+"\"",t.getTokenStart(),t.getTokenEnd());
+        throw new SyntaxErrorException("unexpected token \"" + t.getLexeme() + "\"", t.getTokenStart(), t.getTokenEnd());
     }
 }

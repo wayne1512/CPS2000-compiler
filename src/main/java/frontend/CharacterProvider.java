@@ -1,7 +1,6 @@
 package frontend;
 
 import java.io.Closeable;
-import java.io.IOException;
 
 public interface CharacterProvider extends Closeable{
     /**

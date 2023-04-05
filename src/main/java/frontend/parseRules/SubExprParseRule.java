@@ -19,7 +19,7 @@ public class SubExprParseRule implements ParseRule<SubExprASTNode>{
         if (b.getType() != Token.TokenType.BracClose)
             pc.throwUnexpectedTokenException(a);
 
-        return new SubExprASTNode(a.getTokenStart(),b.getTokenEnd(),child);
+        return new SubExprASTNode(a.getTokenStart(), b.getTokenEnd(), child);
 
     }
 }

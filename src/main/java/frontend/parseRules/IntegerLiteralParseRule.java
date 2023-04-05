@@ -10,6 +10,6 @@ public class IntegerLiteralParseRule implements ParseRule<IntegerLiteralASTNode>
     @Override
     public IntegerLiteralASTNode parse(ParserContext pc) throws SyntaxErrorException{
         Token t = pc.consumeToken();
-        return new IntegerLiteralASTNode(t.getTokenStart(),t.getTokenEnd(),Integer.parseInt(t.getLexeme()));
+        return new IntegerLiteralASTNode(t.getTokenStart(), t.getTokenEnd(), Integer.parseInt(t.getLexeme()));
     }
 }

@@ -3,23 +3,139 @@ package frontend;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
 import exceptions.SyntaxErrorException;
-import frontend.tokens.*;
+import frontend.tokens.Token;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
-import static frontend.tokens.Token.*;
+import static frontend.tokens.Token.TokenType;
 
 public class Lexer{
+
+    static Map<Character, String> classifierMap = new HashMap<>();
+    static String[][] transition;
+    static String[] transitionClassHeaders;
+    static String[] transitionStateHeaders;
+    static Map<String, TokenTypeFetcher> acceptedStates = new HashMap<>();
+
+    static{
+        //classifier
+        try (CSVReader csvReader = new CSVReader(new InputStreamReader(Lexer.class.getClassLoader().getResourceAsStream("CharClassification.csv")))) {
+            //skip headers
+            csvReader.skip(1);
+
+            String[] values = null;
+            while ((values = csvReader.readNext()) != null){
+                classifierMap.put(values[0].charAt(0), values[1]);
+            }
+        } catch (CsvValidationException | IOException | NullPointerException e) {
+            throw new RuntimeException("internal error while reading internal CharClassification.csv", e);
+        }
+
+
+        //transition
+
+        List<String> rowHeaders = new LinkedList<>();
+        List<String> colHeaders;
+        List<List<String>> transitions = new LinkedList<>();
+
+
+        try (CSVReader csvReader = new CSVReader(new InputStreamReader(Lexer.class.getClassLoader().getResourceAsStream("LexerTransition.csv")))) {
+            String[] values = null;
+
+            //copy column headers, but remove the 1st column since it's empty
+            colHeaders = new LinkedList<>(Arrays.asList(csvReader.readNext()));
+            colHeaders.remove(0);
+
+            while ((values = csvReader.readNext()) != null){
+                //add the row header
+                rowHeaders.add(values[0]);
+                //add the cells
+                transitions.add(Arrays.asList(values).subList(1, values.length));
+            }
+
+            transitionClassHeaders = colHeaders.toArray(new String[0]);
+            transitionStateHeaders = rowHeaders.toArray(new String[0]);
+
+            transition = transitions.stream()
+                    .map(l -> l.toArray(new String[l.size()]))
+                    .toArray(String[][]::new);
+
+        } catch (CsvValidationException | IOException | NullPointerException e) {
+            throw new RuntimeException("internal error while reading internal CharClassification.csv", e);
+        }
+
+
+        acceptedStates.put("sysFunc", lexeme -> {
+            switch (lexeme) {
+                case "__print":
+                    return TokenType.Print;
+                case "__width":
+                    return TokenType.PadWidth;
+                case "__height":
+                    return TokenType.PadHeight;
+                case "__read":
+                    return TokenType.PadRead;
+                case "__randi":
+                    return TokenType.PadRandI;
+                case "__delay":
+                    return TokenType.Delay;
+                default:
+                    return null;
+            }
+        });
+        acceptedStates.put("int", lexeme -> TokenType.Int);
+        acceptedStates.put("float", lexeme -> TokenType.Float);
+        acceptedStates.put("colour", lexeme -> TokenType.Colour);
+        acceptedStates.put("word", lexeme -> {
+            switch (lexeme.toLowerCase(Locale.ENGLISH)) {
+                case "true":
+                    return TokenType.True;
+                case "false":
+                    return TokenType.False;
+                case "float":
+                    return TokenType.FloatType;
+                case "int":
+                    return TokenType.IntegerType;
+                case "bool":
+                    return TokenType.BoolType;
+                case "colour":
+                    return TokenType.ColourType;
+                case "and":
+                    return TokenType.And;
+                case "or":
+                    return TokenType.Or;
+                case "not":
+                    return TokenType.Not;
+                default:
+                    return TokenType.Identifier;
+            }
+        });
+        acceptedStates.put("equals", null);
+        acceptedStates.put("exclamation", null);
+        acceptedStates.put("GT", lexeme -> TokenType.GT);
+        acceptedStates.put("LT", lexeme -> TokenType.LT);
+        acceptedStates.put("EQ", lexeme -> TokenType.EQ);
+        acceptedStates.put("NE", lexeme -> TokenType.NE);
+        acceptedStates.put("GTE", lexeme -> TokenType.GTE);
+        acceptedStates.put("LTE", lexeme -> TokenType.LTE);
+        acceptedStates.put("multiply", lexeme -> TokenType.Multiply);
+        acceptedStates.put("divide", lexeme -> TokenType.Divide);
+        acceptedStates.put("add", lexeme -> TokenType.Add);
+        acceptedStates.put("subtract", lexeme -> TokenType.Subtract);
+        acceptedStates.put("bracOpen", lexeme -> TokenType.BracOpen);
+        acceptedStates.put("bracClose", lexeme -> TokenType.BracClose);
+        acceptedStates.put("curlyBracOpen", lexeme -> TokenType.CurlyBracOpen);
+        acceptedStates.put("curlyBracClose", lexeme -> TokenType.CurlyBracClose);
+
+    }
 
     CharacterProvider cp;
 
     public Lexer(CharacterProvider cp){
         this.cp = cp;
     }
-
-
 
     public Token nextToken() throws SyntaxErrorException{
 
@@ -42,7 +158,7 @@ public class Lexer{
 
             Character c = cp.next();
 
-            if (lexeme.length() == 0 && c!=null){
+            if (lexeme.length() == 0 && c != null){
                 while (Character.isWhitespace(c))
                     c = cp.next();
                 tokenStart = cp.getPointer();
@@ -60,7 +176,7 @@ public class Lexer{
 
             stateStack.push(currentState);
 
-            currentState = transitionState(currentState,charClass);
+            currentState = transitionState(currentState, charClass);
         }
 
         //end of file has been reached
@@ -71,125 +187,18 @@ public class Lexer{
         String originalLexeme = lexeme.toString();
 
         //rollback until we find the last accepted state
-        while (!acceptedStates.containsKey(currentState) && currentState!=null){
+        while (!acceptedStates.containsKey(currentState) && currentState != null){
             //error - the lexeme is empty, yet we are not in a valid state
             if (lexeme.length() == 0)
-                throw new SyntaxErrorException("unknown token \""+originalLexeme+"\"",tokenStart,tokenStart+originalLexeme.length());
+                throw new SyntaxErrorException("unknown token \"" + originalLexeme + "\"", tokenStart, tokenStart + originalLexeme.length());
 
             currentState = stateStack.pop();
             lexeme.deleteCharAt(lexeme.length() - 1);
             cp.rewind();
         }
 
-        return new Token(acceptedStates.get(currentState).getType(lexeme.toString()),tokenStart,cp.getPointer(),lexeme.toString());
+        return new Token(acceptedStates.get(currentState).getType(lexeme.toString()), tokenStart, cp.getPointer(), lexeme.toString());
     }
-
-    static Map<Character,String> classifierMap = new HashMap<>();
-
-    static String[][] transition;
-    static String[] transitionClassHeaders;
-    static String[] transitionStateHeaders;
-
-    static Map<String, TokenTypeFetcher> acceptedStates = new HashMap<>();
-
-    static {
-        //classifier
-        try (CSVReader csvReader = new CSVReader(new InputStreamReader(Lexer.class.getClassLoader().getResourceAsStream("CharClassification.csv")))) {
-            //skip headers
-            csvReader.skip(1);
-
-            String[] values = null;
-            while ((values = csvReader.readNext()) != null) {
-                classifierMap.put(values[0].charAt(0),values[1]);
-            }
-        } catch (CsvValidationException | IOException | NullPointerException e) {
-            throw new RuntimeException("internal error while reading internal CharClassification.csv",e);
-        }
-
-
-
-        //transition
-
-        List<String> rowHeaders = new LinkedList<>();
-        List<String> colHeaders;
-        List<List<String>> transitions = new LinkedList<>();
-
-
-        try (CSVReader csvReader = new CSVReader(new InputStreamReader(Lexer.class.getClassLoader().getResourceAsStream("LexerTransition.csv")))) {
-            String[] values = null;
-
-            //copy column headers, but remove the 1st column since it's empty
-            colHeaders = new LinkedList<>(Arrays.asList(csvReader.readNext()));
-            colHeaders.remove(0);
-
-            while ((values = csvReader.readNext()) != null) {
-                //add the row header
-                rowHeaders.add(values[0]);
-                //add the cells
-                transitions.add(Arrays.asList(values).subList(1,values.length));
-            }
-
-            transitionClassHeaders = colHeaders.toArray(new String[0]);
-            transitionStateHeaders = rowHeaders.toArray(new String[0]);
-
-            transition = transitions.stream()
-                    .map(l -> l.toArray(new String[l.size()]))
-                    .toArray(String[][]::new);
-
-        } catch (CsvValidationException | IOException | NullPointerException e) {
-            throw new RuntimeException("internal error while reading internal CharClassification.csv",e);
-        }
-
-
-
-
-        acceptedStates.put("sysFunc",lexeme -> {
-            switch (lexeme){
-                case "__print": return TokenType.Print;
-                case "__width": return TokenType.PadWidth;
-                case "__height": return TokenType.PadHeight;
-                case "__read": return TokenType.PadRead;
-                case "__randi": return TokenType.PadRandI;
-                case "__delay": return TokenType.Delay;
-                default: return null;
-            }
-        });
-        acceptedStates.put("int", lexeme -> TokenType.Int);
-        acceptedStates.put("float", lexeme -> TokenType.Float);
-        acceptedStates.put("colour",lexeme -> TokenType.Colour);
-        acceptedStates.put("word",lexeme -> {
-            switch (lexeme.toLowerCase(Locale.ENGLISH)){
-                case "true": return TokenType.True;
-                case "false": return TokenType.False;
-                case "float": return TokenType.FloatType;
-                case "int": return TokenType.IntegerType;
-                case "bool": return TokenType.BoolType;
-                case "colour": return TokenType.ColourType;
-                case "and": return TokenType.And;
-                case "or": return TokenType.Or;
-                case "not": return TokenType.Not;
-                default: return TokenType.Identifier;
-            }
-        });
-        acceptedStates.put("equals",null);
-        acceptedStates.put("exclamation",null);
-        acceptedStates.put("GT",lexeme -> TokenType.GT);
-        acceptedStates.put("LT",lexeme -> TokenType.LT);
-        acceptedStates.put("EQ",lexeme -> TokenType.EQ);
-        acceptedStates.put("NE",lexeme -> TokenType.NE);
-        acceptedStates.put("GTE",lexeme -> TokenType.GTE);
-        acceptedStates.put("LTE",lexeme -> TokenType.LTE);
-        acceptedStates.put("multiply", lexeme -> TokenType.Multiply);
-        acceptedStates.put("divide", lexeme -> TokenType.Divide);
-        acceptedStates.put("add", lexeme -> TokenType.Add);
-        acceptedStates.put("subtract", lexeme -> TokenType.Subtract);
-        acceptedStates.put("bracOpen", lexeme -> TokenType.BracOpen);
-        acceptedStates.put("bracClose", lexeme -> TokenType.BracClose);
-        acceptedStates.put("curlyBracOpen", lexeme -> TokenType.CurlyBracOpen);
-        acceptedStates.put("curlyBracClose", lexeme -> TokenType.CurlyBracClose);
-
-    }
-
 
     protected String transitionState(String state, String charClass){
 
@@ -206,6 +215,6 @@ public class Lexer{
     }
 
     public interface TokenTypeFetcher{
-        public TokenType getType(String lexeme);
+        TokenType getType(String lexeme);
     }
 }

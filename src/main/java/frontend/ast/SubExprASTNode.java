@@ -14,7 +14,7 @@ public class SubExprASTNode extends ASTNode{
     @Override
     public String toString(){
         if (CompilerSettings.getInstance().verboseASTTree){
-            return String.format("<SubExpr>%s</SubExpr>",child);
+            return String.format("<SubExpr>%s</SubExpr>", child);
         } else
             return child.toString();
     }
