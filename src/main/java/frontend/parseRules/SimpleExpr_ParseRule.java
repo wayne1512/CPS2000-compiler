@@ -28,6 +28,8 @@ public class SimpleExpr_ParseRule implements ParseRule<ASTNode>{
             op = BinaryOpASTNode.OpType.add;
         else if (lookahead.getType() == Token.TokenType.Subtract)
             op = BinaryOpASTNode.OpType.sub;
+        else if (lookahead.getType() == Token.TokenType.Or)
+            op = BinaryOpASTNode.OpType.or;
 
 
         //no operand - take the empty string

@@ -29,6 +29,8 @@ public class Term_ParseRule implements ParseRule<ASTNode>{
             op = BinaryOpASTNode.OpType.mul;
         else if (lookahead.getType() == Token.TokenType.Divide)
             op = BinaryOpASTNode.OpType.div;
+        else if (lookahead.getType() == Token.TokenType.And)
+            op = BinaryOpASTNode.OpType.and;
 
 
         //no operand - take the empty string

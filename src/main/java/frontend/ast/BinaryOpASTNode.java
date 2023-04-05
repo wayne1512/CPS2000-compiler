@@ -29,6 +29,8 @@ public class BinaryOpASTNode extends ASTNode{
         add("+"),
 
         sub("-"),
+        and("&"),
+        or("|"),
 
         //relops
         LT("<"),

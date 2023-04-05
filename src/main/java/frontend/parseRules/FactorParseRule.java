@@ -32,6 +32,10 @@ public class FactorParseRule implements ParseRule<FactorAstNode>{
             case BracOpen:
                 child = new SubExprParseRule().parse(pc);
                 break;
+            case Not:
+            case Subtract:
+                child = new UnaryParseRule().parse(pc);
+                break;
             case PadRandI:
                 throw new NotImplementedException("todo");
 
