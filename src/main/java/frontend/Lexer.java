@@ -128,6 +128,9 @@ public class Lexer{
         acceptedStates.put("bracClose", lexeme -> TokenType.BracClose);
         acceptedStates.put("curlyBracOpen", lexeme -> TokenType.CurlyBracOpen);
         acceptedStates.put("curlyBracClose", lexeme -> TokenType.CurlyBracClose);
+        acceptedStates.put("colon", lexeme -> TokenType.Colon);
+        acceptedStates.put("semiColon", lexeme -> TokenType.SemiColon);
+        acceptedStates.put("comma", lexeme -> TokenType.Comma);
 
     }
 

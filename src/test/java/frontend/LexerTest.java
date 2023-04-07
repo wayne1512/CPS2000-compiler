@@ -64,6 +64,9 @@ class LexerTest{
         singleTokenTestMap.put(")", TokenType.BracClose);
         singleTokenTestMap.put("{", TokenType.CurlyBracOpen);
         singleTokenTestMap.put("}", TokenType.CurlyBracClose);
+        singleTokenTestMap.put(";", TokenType.SemiColon);
+        singleTokenTestMap.put(":", TokenType.Colon);
+        singleTokenTestMap.put(",", TokenType.Comma);
 
         singleTokenTestMap.put("__print", TokenType.Print);
         singleTokenTestMap.put("__width", TokenType.PadWidth);

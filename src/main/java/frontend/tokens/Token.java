@@ -76,6 +76,9 @@ public class Token{
         BracClose,
         CurlyBracOpen,
         CurlyBracClose,
+        SemiColon,
+        Colon,
+        Comma,
 
 
         //vm operations
