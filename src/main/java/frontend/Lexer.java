@@ -81,6 +81,10 @@ public class Lexer{
                     return TokenType.PadRandI;
                 case "__delay":
                     return TokenType.Delay;
+                case "__pixel":
+                    return TokenType.Pixel;
+                case "__pixelr":
+                    return TokenType.PixelRange;
                 default:
                     return null;
             }
@@ -108,6 +112,10 @@ public class Lexer{
                     return TokenType.Or;
                 case "not":
                     return TokenType.Not;
+                case "let":
+                    return TokenType.Let;
+                case "return":
+                    return TokenType.Retrn;
                 default:
                     return TokenType.Identifier;
             }
@@ -131,6 +139,7 @@ public class Lexer{
         acceptedStates.put("colon", lexeme -> TokenType.Colon);
         acceptedStates.put("semiColon", lexeme -> TokenType.SemiColon);
         acceptedStates.put("comma", lexeme -> TokenType.Comma);
+        acceptedStates.put("equals", lexeme -> TokenType.Equals);
 
     }
 

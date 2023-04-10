@@ -63,6 +63,7 @@ public class Token{
         And,
         Or,
         Not,
+        Let,
 
         //relops
         LT,
@@ -80,6 +81,7 @@ public class Token{
         SemiColon,
         Colon,
         Comma,
+        Equals,
 
 
         //vm operations

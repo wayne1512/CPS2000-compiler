@@ -37,6 +37,7 @@ class LexerTest{
         singleTokenTestMap.put("or", TokenType.Or);
         singleTokenTestMap.put("not", TokenType.Not);
         singleTokenTestMap.put("return", TokenType.Retrn);
+        singleTokenTestMap.put("let", TokenType.Let);
 
 
         singleTokenTestMap.put("a", TokenType.Identifier);
@@ -68,6 +69,7 @@ class LexerTest{
         singleTokenTestMap.put(";", TokenType.SemiColon);
         singleTokenTestMap.put(":", TokenType.Colon);
         singleTokenTestMap.put(",", TokenType.Comma);
+        singleTokenTestMap.put("=", TokenType.Equals);
 
         singleTokenTestMap.put("__print", TokenType.Print);
         singleTokenTestMap.put("__width", TokenType.PadWidth);
