@@ -2,8 +2,7 @@ package frontend;
 
 import exceptions.SyntaxErrorException;
 import frontend.ast.ASTNode;
-import frontend.parseRules.ExprParseRule;
-import frontend.parseRules.ParseRule;
+import frontend.parseRules.*;
 import frontend.tokens.Token;
 
 import java.util.LinkedList;
@@ -30,7 +29,7 @@ public class Parser{
     }
 
     public ASTNode parse() throws SyntaxErrorException{
-        ParseRule<? extends ASTNode> startRule = new ExprParseRule();
+        ParseRule<? extends ASTNode> startRule = new ActualParamsParseRule();
 
         return startRule.parse(new ParserContext(this));
     }
