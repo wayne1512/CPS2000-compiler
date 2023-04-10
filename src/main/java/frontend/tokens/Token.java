@@ -45,6 +45,7 @@ public class Token{
         //reserved words
         True,
         False,
+        Retrn,
         FloatType,
         IntegerType,
         BoolType,
@@ -88,6 +89,8 @@ public class Token{
         PadWidth,
         Print,
         Delay,
+        PixelRange,
+        Pixel
 
     }
 }

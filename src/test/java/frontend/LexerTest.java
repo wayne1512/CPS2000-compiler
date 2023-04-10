@@ -36,6 +36,7 @@ class LexerTest{
         singleTokenTestMap.put("and", TokenType.And);
         singleTokenTestMap.put("or", TokenType.Or);
         singleTokenTestMap.put("not", TokenType.Not);
+        singleTokenTestMap.put("return", TokenType.Retrn);
 
 
         singleTokenTestMap.put("a", TokenType.Identifier);
@@ -74,6 +75,8 @@ class LexerTest{
         singleTokenTestMap.put("__read", TokenType.PadRead);
         singleTokenTestMap.put("__randi", TokenType.PadRandI);
         singleTokenTestMap.put("__delay", TokenType.Delay);
+        singleTokenTestMap.put("__pixel", TokenType.Pixel);
+        singleTokenTestMap.put("__pixelr", TokenType.PixelRange);
 
         return singleTokenTestMap.entrySet().stream().map(set -> Arguments.of(set.getKey(), set.getValue()));
 
