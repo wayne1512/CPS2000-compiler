@@ -87,7 +87,7 @@ public class Token{
         PadRead,
         PadWidth,
         Print,
-        Delay
+        Delay,
 
     }
 }
