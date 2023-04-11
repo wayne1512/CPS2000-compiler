@@ -2,32 +2,32 @@ package frontend.parseRules;
 
 import exceptions.SyntaxErrorException;
 import frontend.ParserContext;
-import frontend.ast.TypeLiteralASTNode;
+import frontend.ast.TypeLiteralAstNode;
 import frontend.tokens.Token;
 
-public class TypeLiteralParseRule implements ParseRule<TypeLiteralASTNode>{
+public class TypeLiteralParseRule implements ParseRule<TypeLiteralAstNode>{
     @Override
-    public TypeLiteralASTNode parse(ParserContext pc) throws SyntaxErrorException{
+    public TypeLiteralAstNode parse(ParserContext pc) throws SyntaxErrorException{
         Token t = pc.consumeToken();
 
-        TypeLiteralASTNode.Type val = null;
+        TypeLiteralAstNode.Type val = null;
 
         switch (t.getLexeme()) {
             case "float":
-                val = TypeLiteralASTNode.Type.Float;
+                val = TypeLiteralAstNode.Type.Float;
                 break;
             case "int":
-                val = TypeLiteralASTNode.Type.Int;
+                val = TypeLiteralAstNode.Type.Int;
                 break;
             case "bool":
-                val = TypeLiteralASTNode.Type.Bool;
+                val = TypeLiteralAstNode.Type.Bool;
                 break;
             case "colour":
-                val = TypeLiteralASTNode.Type.Colour;
+                val = TypeLiteralAstNode.Type.Colour;
                 break;
         }
 
 
-        return new TypeLiteralASTNode(t.getTokenStart(), t.getTokenEnd(), val);
+        return new TypeLiteralAstNode(t.getTokenStart(), t.getTokenEnd(), val);
     }
 }

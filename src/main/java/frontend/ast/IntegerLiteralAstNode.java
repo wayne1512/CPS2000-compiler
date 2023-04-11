@@ -1,9 +1,9 @@
 package frontend.ast;
 
-public class IntegerLiteralASTNode extends ASTNode{
+public class IntegerLiteralAstNode extends ASTNode{
     private final int val;
 
-    public IntegerLiteralASTNode(long sourceStart, long sourceEnd, int val){
+    public IntegerLiteralAstNode(long sourceStart, long sourceEnd, int val){
         super(sourceStart, sourceEnd);
         this.val = val;
     }

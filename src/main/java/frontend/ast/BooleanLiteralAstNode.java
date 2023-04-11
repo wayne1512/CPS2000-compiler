@@ -1,9 +1,9 @@
 package frontend.ast;
 
-public class BooleanLiteralASTNode extends ASTNode{
+public class BooleanLiteralAstNode extends ASTNode{
     private final boolean val;
 
-    public BooleanLiteralASTNode(long sourceStart, long sourceEnd, boolean val){
+    public BooleanLiteralAstNode(long sourceStart, long sourceEnd, boolean val){
         super(sourceStart, sourceEnd);
         this.val = val;
     }

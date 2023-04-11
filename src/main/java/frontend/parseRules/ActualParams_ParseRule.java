@@ -4,8 +4,6 @@ import exceptions.SyntaxErrorException;
 import frontend.ParserContext;
 import frontend.ast.ASTNode;
 import frontend.ast.ActualParamsAstNode;
-import frontend.ast.BinaryOpASTNode;
-import frontend.ast.FactorAstNode;
 import frontend.tokens.Token;
 
 import java.util.ArrayList;

@@ -1,9 +1,9 @@
 package frontend.ast;
 
-public class FloatLiteralASTNode extends ASTNode{
+public class FloatLiteralAstNode extends ASTNode{
     private final float val;
 
-    public FloatLiteralASTNode(long sourceStart, long sourceEnd, float val){
+    public FloatLiteralAstNode(long sourceStart, long sourceEnd, float val){
         super(sourceStart, sourceEnd);
         this.val = val;
     }

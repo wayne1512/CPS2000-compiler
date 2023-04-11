@@ -3,15 +3,12 @@ package frontend.parseRules;
 import exceptions.SyntaxErrorException;
 import frontend.ParserContext;
 import frontend.ast.ASTNode;
-import frontend.ast.LiteralASTNode;
-import frontend.ast.PadHeightAstNode;
-import frontend.ast.PadReadAstNode;
+import frontend.ast.LiteralAstNode;
 import frontend.tokens.Token;
-import org.apache.commons.lang3.NotImplementedException;
 
-public class LiteralParseRule implements ParseRule<LiteralASTNode>{
+public class LiteralParseRule implements ParseRule<LiteralAstNode>{
     @Override
-    public LiteralASTNode parse(ParserContext pc) throws SyntaxErrorException{
+    public LiteralAstNode parse(ParserContext pc) throws SyntaxErrorException{
 
         Token t = pc.lookahead(0);
 
@@ -45,7 +42,7 @@ public class LiteralParseRule implements ParseRule<LiteralASTNode>{
         if (child == null)
             pc.throwUnexpectedTokenException(t);
 
-        return new LiteralASTNode(t.getTokenStart(), t.getTokenEnd(), child);
+        return new LiteralAstNode(t.getTokenStart(), t.getTokenEnd(), child);
 
     }
 }

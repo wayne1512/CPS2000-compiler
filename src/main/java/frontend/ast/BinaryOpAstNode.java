@@ -1,6 +1,6 @@
 package frontend.ast;
 
-public class BinaryOpASTNode extends ASTNode{
+public class BinaryOpAstNode extends ASTNode{
 
 
     OpType opType;
@@ -9,7 +9,7 @@ public class BinaryOpASTNode extends ASTNode{
     ASTNode left;
     ASTNode right;
 
-    public BinaryOpASTNode(long sourceStart, long sourceEnd, OpType opType, ASTNode left, ASTNode right){
+    public BinaryOpAstNode(long sourceStart, long sourceEnd, OpType opType, ASTNode left, ASTNode right){
         super(sourceStart, sourceEnd);
         this.opType = opType;
         this.left = left;

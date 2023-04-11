@@ -1,12 +1,12 @@
 package frontend.ast;
 
-public class VarDeclASTNode extends ASTNode{
-    IdentifierASTNode identifier;
+public class VarDeclAstNode extends ASTNode{
+    IdentifierAstNode identifier;
     ASTNode type;
 
     ASTNode expr;
 
-    public VarDeclASTNode(long sourceStart, long sourceEnd, IdentifierASTNode identifier, ASTNode type, ASTNode expr) {
+    public VarDeclAstNode(long sourceStart, long sourceEnd, IdentifierAstNode identifier, ASTNode type, ASTNode expr) {
         super(sourceStart, sourceEnd);
         this.identifier = identifier;
         this.type = type;

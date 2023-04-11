@@ -4,8 +4,7 @@ import exceptions.SyntaxErrorException;
 import frontend.ParserContext;
 import frontend.ast.ASTNode;
 import frontend.ast.AssignmentAstNode;
-import frontend.ast.IdentifierASTNode;
-import frontend.ast.PixelAstNode;
+import frontend.ast.IdentifierAstNode;
 import frontend.tokens.Token;
 
 public class AssignmentParseRule implements ParseRule<AssignmentAstNode>{
@@ -15,7 +14,7 @@ public class AssignmentParseRule implements ParseRule<AssignmentAstNode>{
         if (ident.getType()!= Token.TokenType.Identifier)
             pc.throwUnexpectedTokenException(ident);
 
-        IdentifierASTNode identifier = new IdentifierParseRule().parse(pc);
+        IdentifierAstNode identifier = new IdentifierParseRule().parse(pc);
 
         Token equal = pc.consumeToken();
         if (equal.getType()!= Token.TokenType.Equals)

@@ -1,9 +1,9 @@
 package frontend.ast;
 
-public class ColourLiteralASTNode extends ASTNode{
+public class ColourLiteralAstNode extends ASTNode{
     private final String val;
 
-    public ColourLiteralASTNode(long sourceStart, long sourceEnd, String val){
+    public ColourLiteralAstNode(long sourceStart, long sourceEnd, String val){
         super(sourceStart, sourceEnd);
         this.val = val;
     }

@@ -2,14 +2,14 @@ package frontend.parseRules;
 
 import exceptions.SyntaxErrorException;
 import frontend.ParserContext;
-import frontend.ast.FloatLiteralASTNode;
+import frontend.ast.FloatLiteralAstNode;
 import frontend.tokens.Token;
 
-public class FloatLiteralParseRule implements ParseRule<FloatLiteralASTNode>{
+public class FloatLiteralParseRule implements ParseRule<FloatLiteralAstNode>{
 
     @Override
-    public FloatLiteralASTNode parse(ParserContext pc) throws SyntaxErrorException{
+    public FloatLiteralAstNode parse(ParserContext pc) throws SyntaxErrorException{
         Token t = pc.consumeToken();
-        return new FloatLiteralASTNode(t.getTokenStart(), t.getTokenEnd(), Float.parseFloat(t.getLexeme()));
+        return new FloatLiteralAstNode(t.getTokenStart(), t.getTokenEnd(), Float.parseFloat(t.getLexeme()));
     }
 }

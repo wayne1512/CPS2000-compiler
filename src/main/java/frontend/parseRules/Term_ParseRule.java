@@ -3,7 +3,7 @@ package frontend.parseRules;
 import exceptions.SyntaxErrorException;
 import frontend.ParserContext;
 import frontend.ast.ASTNode;
-import frontend.ast.BinaryOpASTNode;
+import frontend.ast.BinaryOpAstNode;
 import frontend.ast.FactorAstNode;
 import frontend.tokens.Token;
 
@@ -19,18 +19,18 @@ public class Term_ParseRule implements ParseRule<ASTNode>{
     public ASTNode parse(ParserContext pc) throws SyntaxErrorException{
         Token lookahead = pc.lookahead(0);
 
-        BinaryOpASTNode.OpType op = null;
+        BinaryOpAstNode.OpType op = null;
 
         //no operand - take the empty string
         if (lookahead == null)
             return left;
 
         if (lookahead.getType() == Token.TokenType.Multiply)
-            op = BinaryOpASTNode.OpType.mul;
+            op = BinaryOpAstNode.OpType.mul;
         else if (lookahead.getType() == Token.TokenType.Divide)
-            op = BinaryOpASTNode.OpType.div;
+            op = BinaryOpAstNode.OpType.div;
         else if (lookahead.getType() == Token.TokenType.And)
-            op = BinaryOpASTNode.OpType.and;
+            op = BinaryOpAstNode.OpType.and;
 
 
         //no operand - take the empty string
@@ -41,7 +41,7 @@ public class Term_ParseRule implements ParseRule<ASTNode>{
 
         FactorAstNode factor = new FactorParseRule().parse(pc);
 
-        ASTNode newLeft = new BinaryOpASTNode(left.getSourceStart(), factor.getSourceEnd(), op, left, factor);
+        ASTNode newLeft = new BinaryOpAstNode(left.getSourceStart(), factor.getSourceEnd(), op, left, factor);
 
 
         return new Term_ParseRule(newLeft).parse(pc);

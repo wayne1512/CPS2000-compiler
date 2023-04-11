@@ -1,9 +1,9 @@
 package frontend.ast;
 
-public class IdentifierASTNode extends ASTNode{
+public class IdentifierAstNode extends ASTNode{
     private final String val;
 
-    public IdentifierASTNode(long sourceStart, long sourceEnd, String val){
+    public IdentifierAstNode(long sourceStart, long sourceEnd, String val){
         super(sourceStart, sourceEnd);
         this.val = val;
     }

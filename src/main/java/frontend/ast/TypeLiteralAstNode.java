@@ -1,9 +1,9 @@
 package frontend.ast;
 
-public class TypeLiteralASTNode extends ASTNode{
+public class TypeLiteralAstNode extends ASTNode{
     private final Type val;
 
-    public TypeLiteralASTNode(long sourceStart, long sourceEnd, Type val){
+    public TypeLiteralAstNode(long sourceStart, long sourceEnd, Type val){
         super(sourceStart, sourceEnd);
         this.val = val;
     }

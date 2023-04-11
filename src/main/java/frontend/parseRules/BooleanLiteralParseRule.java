@@ -2,13 +2,13 @@ package frontend.parseRules;
 
 import exceptions.SyntaxErrorException;
 import frontend.ParserContext;
-import frontend.ast.BooleanLiteralASTNode;
+import frontend.ast.BooleanLiteralAstNode;
 import frontend.tokens.Token;
 
-public class BooleanLiteralParseRule implements ParseRule<BooleanLiteralASTNode>{
+public class BooleanLiteralParseRule implements ParseRule<BooleanLiteralAstNode>{
     @Override
-    public BooleanLiteralASTNode parse(ParserContext pc) throws SyntaxErrorException{
+    public BooleanLiteralAstNode parse(ParserContext pc) throws SyntaxErrorException{
         Token t = pc.consumeToken();
-        return new BooleanLiteralASTNode(t.getTokenStart(), t.getTokenEnd(), Boolean.parseBoolean(t.getLexeme()));
+        return new BooleanLiteralAstNode(t.getTokenStart(), t.getTokenEnd(), Boolean.parseBoolean(t.getLexeme()));
     }
 }

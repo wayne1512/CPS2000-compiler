@@ -2,11 +2,11 @@ package frontend.ast;
 
 import frontend.CompilerSettings;
 
-public class LiteralASTNode extends ASTNode{
+public class SubExprAstNode extends ASTNode{
 
     ASTNode child;
 
-    public LiteralASTNode(long sourceStart, long sourceEnd, ASTNode child){
+    public SubExprAstNode(long sourceStart, long sourceEnd, ASTNode child){
         super(sourceStart, sourceEnd);
         this.child = child;
     }
@@ -14,7 +14,7 @@ public class LiteralASTNode extends ASTNode{
     @Override
     public String toString(){
         if (CompilerSettings.getInstance().verboseASTTree){
-            return String.format("<Literal>%s</Literal>", child);
+            return String.format("<SubExpr>%s</SubExpr>", child);
         } else
             return child.toString();
     }

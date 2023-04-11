@@ -5,9 +5,9 @@ import frontend.ParserContext;
 import frontend.ast.*;
 import frontend.tokens.Token;
 
-public class VarDeclParseRule implements ParseRule<VarDeclASTNode>{
+public class VarDeclParseRule implements ParseRule<VarDeclAstNode>{
     @Override
-    public VarDeclASTNode parse(ParserContext pc) throws SyntaxErrorException{
+    public VarDeclAstNode parse(ParserContext pc) throws SyntaxErrorException{
 
         Token let = pc.consumeToken();
         if (let.getType() != Token.TokenType.Let)
@@ -17,13 +17,13 @@ public class VarDeclParseRule implements ParseRule<VarDeclASTNode>{
         if (ident.getType()!= Token.TokenType.Identifier)
             pc.throwUnexpectedTokenException(ident);
 
-        IdentifierASTNode identifier = new IdentifierParseRule().parse(pc);
+        IdentifierAstNode identifier = new IdentifierParseRule().parse(pc);
 
         Token colon = pc.consumeToken();
         if (colon.getType()!= Token.TokenType.Colon)
             pc.throwUnexpectedTokenException(colon);
 
-        TypeLiteralASTNode type = new TypeLiteralParseRule().parse(pc);
+        TypeLiteralAstNode type = new TypeLiteralParseRule().parse(pc);
 
         Token equal = pc.consumeToken();
         if (equal.getType()!= Token.TokenType.Equals)
@@ -31,6 +31,6 @@ public class VarDeclParseRule implements ParseRule<VarDeclASTNode>{
 
         ASTNode expr = new ExprParseRule().parse(pc);
 
-        return new VarDeclASTNode(let.getTokenStart(),expr.getSourceEnd(),identifier,type,expr);
+        return new VarDeclAstNode(let.getTokenStart(),expr.getSourceEnd(),identifier,type,expr);
     }
 }

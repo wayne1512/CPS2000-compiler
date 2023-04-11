@@ -3,7 +3,7 @@ package frontend.parseRules;
 import exceptions.SyntaxErrorException;
 import frontend.ParserContext;
 import frontend.ast.ASTNode;
-import frontend.ast.BinaryOpASTNode;
+import frontend.ast.BinaryOpAstNode;
 import frontend.tokens.Token;
 
 public class Expr_ParseRule implements ParseRule<ASTNode>{
@@ -18,24 +18,24 @@ public class Expr_ParseRule implements ParseRule<ASTNode>{
     public ASTNode parse(ParserContext pc) throws SyntaxErrorException{
         Token lookahead = pc.lookahead(0);
 
-        BinaryOpASTNode.OpType op = null;
+        BinaryOpAstNode.OpType op = null;
 
         //no operand - take the empty string
         if (lookahead == null)
             return left;
 
         if (lookahead.getType() == Token.TokenType.LT)
-            op = BinaryOpASTNode.OpType.LT;
+            op = BinaryOpAstNode.OpType.LT;
         else if (lookahead.getType() == Token.TokenType.GT)
-            op = BinaryOpASTNode.OpType.GT;
+            op = BinaryOpAstNode.OpType.GT;
         else if (lookahead.getType() == Token.TokenType.EQ)
-            op = BinaryOpASTNode.OpType.EQ;
+            op = BinaryOpAstNode.OpType.EQ;
         else if (lookahead.getType() == Token.TokenType.NE)
-            op = BinaryOpASTNode.OpType.NE;
+            op = BinaryOpAstNode.OpType.NE;
         else if (lookahead.getType() == Token.TokenType.GTE)
-            op = BinaryOpASTNode.OpType.GTE;
+            op = BinaryOpAstNode.OpType.GTE;
         else if (lookahead.getType() == Token.TokenType.LTE)
-            op = BinaryOpASTNode.OpType.LTE;
+            op = BinaryOpAstNode.OpType.LTE;
 
 
         //no operand - take the empty string
@@ -46,7 +46,7 @@ public class Expr_ParseRule implements ParseRule<ASTNode>{
 
         ASTNode term = new SimpleExprParseRule().parse(pc);
 
-        ASTNode newLeft = new BinaryOpASTNode(left.getSourceStart(), term.getSourceEnd(), op, left, term);
+        ASTNode newLeft = new BinaryOpAstNode(left.getSourceStart(), term.getSourceEnd(), op, left, term);
 
 
         return new Expr_ParseRule(newLeft).parse(pc);
