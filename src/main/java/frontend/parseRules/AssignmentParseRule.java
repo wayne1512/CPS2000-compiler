@@ -10,9 +10,6 @@ import frontend.tokens.Token;
 public class AssignmentParseRule implements ParseRule<AssignmentAstNode>{
     @Override
     public AssignmentAstNode parse(ParserContext pc) throws SyntaxErrorException{
-        Token ident = pc.lookahead(0);
-        if (ident.getType()!= Token.TokenType.Identifier)
-            pc.throwUnexpectedTokenException(ident);
 
         IdentifierAstNode identifier = new IdentifierParseRule().parse(pc);
 
@@ -22,6 +19,6 @@ public class AssignmentParseRule implements ParseRule<AssignmentAstNode>{
 
         ASTNode expr = new ExprParseRule().parse(pc);
 
-        return new AssignmentAstNode(ident.getTokenStart(),expr.getSourceEnd(),identifier,expr);
+        return new AssignmentAstNode(identifier.getSourceStart(),expr.getSourceEnd(),identifier,expr);
     }
 }

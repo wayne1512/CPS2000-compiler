@@ -1,1 +1,1 @@
-{a = b+1;let x:int=5;b = __width;}
+{a = b+1;let x:int=5;b = __width;a=1*b();}
