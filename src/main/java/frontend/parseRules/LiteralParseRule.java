@@ -4,6 +4,8 @@ import exceptions.SyntaxErrorException;
 import frontend.ParserContext;
 import frontend.ast.ASTNode;
 import frontend.ast.LiteralASTNode;
+import frontend.ast.PadHeightAstNode;
+import frontend.ast.PadReadAstNode;
 import frontend.tokens.Token;
 import org.apache.commons.lang3.NotImplementedException;
 
@@ -30,10 +32,13 @@ public class LiteralParseRule implements ParseRule<LiteralASTNode>{
                 child = new TypeLiteralParseRule().parse(pc);
                 break;
             case PadWidth:
+                child = new PadWidthParseRule().parse(pc);
+                break;
             case PadHeight:
-            case PadRandI:
-                //todo
-                throw new NotImplementedException("todo");
+                child = new PadHeightParseRule().parse(pc);
+                break;
+            case PadRead:
+                child = new PadReadParseRule().parse(pc);
 
         }
 

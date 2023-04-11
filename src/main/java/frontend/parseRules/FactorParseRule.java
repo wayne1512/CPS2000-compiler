@@ -37,7 +37,8 @@ public class FactorParseRule implements ParseRule<FactorAstNode>{
                 child = new UnaryParseRule().parse(pc);
                 break;
             case PadRandI:
-                throw new NotImplementedException("todo");
+                child = new PadRandIParseRule().parse(pc);
+                break;
 
         }
 
