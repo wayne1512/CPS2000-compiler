@@ -10,7 +10,7 @@ public class WhileParseRule implements ParseRule<WhileAstNode>{
     public WhileAstNode parse(ParserContext pc) throws SyntaxErrorException{
 
         Token whileToken = pc.consumeToken();
-        if (whileToken.getType() != Token.TokenType.For)
+        if (whileToken.getType() != Token.TokenType.While)
             pc.throwUnexpectedTokenException(whileToken);
 
         Token openBracToken = pc.consumeToken();
