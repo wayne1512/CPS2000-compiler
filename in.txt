@@ -1,1 +1,1 @@
-__delay 5
+a:float,b:int

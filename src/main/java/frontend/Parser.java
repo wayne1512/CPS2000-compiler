@@ -29,7 +29,7 @@ public class Parser{
     }
 
     public ASTNode parse() throws SyntaxErrorException{
-        ParseRule<? extends ASTNode> startRule = new DelayParseRule();
+        ParseRule<? extends ASTNode> startRule = new FormalParamsParseRule();
 
         return startRule.parse(new ParserContext(this));
     }
