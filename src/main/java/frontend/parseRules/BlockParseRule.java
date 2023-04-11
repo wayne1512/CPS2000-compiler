@@ -5,10 +5,10 @@ import frontend.ParserContext;
 import frontend.ast.*;
 import frontend.tokens.Token;
 
-public class BlockParseRule implements ParseRule<ASTNode>{
+public class BlockParseRule implements ParseRule<BlockAstNode>{
 
     @Override
-    public ASTNode parse(ParserContext pc) throws SyntaxErrorException{
+    public BlockAstNode parse(ParserContext pc) throws SyntaxErrorException{
         Token openCurly = pc.consumeToken();
 
         if (openCurly.getType() != Token.TokenType.CurlyBracOpen)

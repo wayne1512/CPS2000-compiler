@@ -48,6 +48,8 @@ public class StatementParseRule implements ParseRule<StatementAstNode>{
                 child = new BlockParseRule().parse(pc);
                 break;
             case If:
+                child = new IfParseRule().parse(pc);
+                break;
             case For:
             case While:
             case Fun:
