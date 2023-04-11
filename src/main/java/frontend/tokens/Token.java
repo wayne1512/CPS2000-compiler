@@ -16,7 +16,7 @@ public class Token{
 
     @Override
     public String toString(){
-        return lexeme + " - " + this.getClass().getSimpleName();
+        return lexeme + " - " + this.type;
     }
 
     public long getTokenStart(){
@@ -46,10 +46,16 @@ public class Token{
         True,
         False,
         Retrn,
+        If,
+        Else,
+        For,
+        While,
+        Fun,
         FloatType,
         IntegerType,
         BoolType,
         ColourType,
+
 
         //identifier
         Identifier,

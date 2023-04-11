@@ -38,6 +38,11 @@ class LexerTest{
         singleTokenTestMap.put("not", TokenType.Not);
         singleTokenTestMap.put("return", TokenType.Retrn);
         singleTokenTestMap.put("let", TokenType.Let);
+        singleTokenTestMap.put("if", TokenType.If);
+        singleTokenTestMap.put("else", TokenType.Else);
+        singleTokenTestMap.put("for", TokenType.For);
+        singleTokenTestMap.put("while", TokenType.While);
+        singleTokenTestMap.put("fun", TokenType.Fun);
 
 
         singleTokenTestMap.put("a", TokenType.Identifier);

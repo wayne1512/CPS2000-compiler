@@ -13,10 +13,6 @@ public class VarDeclParseRule implements ParseRule<VarDeclAstNode>{
         if (let.getType() != Token.TokenType.Let)
             pc.throwUnexpectedTokenException(let);
 
-        Token ident = pc.consumeToken();
-        if (ident.getType()!= Token.TokenType.Identifier)
-            pc.throwUnexpectedTokenException(ident);
-
         IdentifierAstNode identifier = new IdentifierParseRule().parse(pc);
 
         Token colon = pc.consumeToken();

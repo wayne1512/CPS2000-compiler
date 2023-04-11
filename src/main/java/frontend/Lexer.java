@@ -116,6 +116,16 @@ public class Lexer{
                     return TokenType.Let;
                 case "return":
                     return TokenType.Retrn;
+                case "fun":
+                    return TokenType.Fun;
+                case "if":
+                    return TokenType.If;
+                case "else":
+                    return TokenType.Else;
+                case "for":
+                    return TokenType.For;
+                case "while":
+                    return TokenType.While;
                 default:
                     return TokenType.Identifier;
             }

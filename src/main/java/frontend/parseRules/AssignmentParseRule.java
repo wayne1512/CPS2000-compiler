@@ -10,7 +10,7 @@ import frontend.tokens.Token;
 public class AssignmentParseRule implements ParseRule<AssignmentAstNode>{
     @Override
     public AssignmentAstNode parse(ParserContext pc) throws SyntaxErrorException{
-        Token ident = pc.consumeToken();
+        Token ident = pc.lookahead(0);
         if (ident.getType()!= Token.TokenType.Identifier)
             pc.throwUnexpectedTokenException(ident);
 
