@@ -1,1 +1,1 @@
-for(;i<3;){__print i;}
+while(i<3){__print i;}

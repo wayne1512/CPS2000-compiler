@@ -54,6 +54,8 @@ public class StatementParseRule implements ParseRule<StatementAstNode>{
                 child = new ForParseRule().parse(pc);
                 break;
             case While:
+                child = new WhileParseRule().parse(pc);
+                break;
             case Fun:
                 throw new NotImplementedException("todo");
         }
