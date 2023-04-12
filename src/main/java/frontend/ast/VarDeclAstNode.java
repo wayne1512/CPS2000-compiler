@@ -15,7 +15,7 @@ public class VarDeclAstNode extends ASTNode{
 
     @Override
     public String toString(){
-        return String.format("<Decl>%s%s%s</Decl>", identifier,type,expr);
+        return String.format("<VarDecl>%s%s%s</VarDecl>", identifier,type,expr);
     }
 
 }

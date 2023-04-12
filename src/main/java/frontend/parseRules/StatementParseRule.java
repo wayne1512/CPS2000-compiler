@@ -3,6 +3,7 @@ package frontend.parseRules;
 import exceptions.SyntaxErrorException;
 import frontend.ParserContext;
 import frontend.ast.ASTNode;
+import frontend.ast.FunDeclAstNode;
 import frontend.ast.StatementAstNode;
 import frontend.tokens.Token;
 import org.apache.commons.lang3.NotImplementedException;
@@ -57,7 +58,8 @@ public class StatementParseRule implements ParseRule<StatementAstNode>{
                 child = new WhileParseRule().parse(pc);
                 break;
             case Fun:
-                throw new NotImplementedException("todo");
+                child = new FunDeclParseRule().parse(pc);
+                break;
         }
 
         if (child == null)

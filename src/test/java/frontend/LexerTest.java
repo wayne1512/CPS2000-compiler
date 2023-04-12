@@ -58,6 +58,7 @@ class LexerTest{
         singleTokenTestMap.put("*", TokenType.Multiply);
         singleTokenTestMap.put("+", TokenType.Add);
         singleTokenTestMap.put("-", TokenType.Subtract);
+        singleTokenTestMap.put("->", TokenType.Arrow);
         singleTokenTestMap.put(">", TokenType.GT);
         singleTokenTestMap.put("<", TokenType.LT);
         singleTokenTestMap.put("==", TokenType.EQ);

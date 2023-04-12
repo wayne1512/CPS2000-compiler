@@ -142,6 +142,7 @@ public class Lexer{
         acceptedStates.put("divide", lexeme -> TokenType.Divide);
         acceptedStates.put("add", lexeme -> TokenType.Add);
         acceptedStates.put("subtract", lexeme -> TokenType.Subtract);
+        acceptedStates.put("arrow", lexeme -> TokenType.Arrow);
         acceptedStates.put("bracOpen", lexeme -> TokenType.BracOpen);
         acceptedStates.put("bracClose", lexeme -> TokenType.BracClose);
         acceptedStates.put("curlyBracOpen", lexeme -> TokenType.CurlyBracOpen);

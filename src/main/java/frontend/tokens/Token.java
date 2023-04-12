@@ -66,6 +66,7 @@ public class Token{
         Multiply,
         Add,
         Subtract,
+        Arrow,
         And,
         Or,
         Not,
