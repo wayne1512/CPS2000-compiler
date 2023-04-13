@@ -44,13 +44,13 @@ public class StatementList_ParseRule implements ParseRule<StatementListAstNode>{
             return left;
 
 
-        StatementAstNode param = new StatementParseRule().parse(pc);
+        StatementAstNode stmt = new StatementParseRule().parse(pc);
 
-        ArrayList<StatementAstNode> paramList = new ArrayList<>(Arrays.asList(left.children));
-        paramList.add(param);
-        StatementAstNode[] paramArr = paramList.toArray(new StatementAstNode[0]);
+        ArrayList<StatementAstNode> stmtList = new ArrayList<>(Arrays.asList(left.children));
+        stmtList.add(stmt);
+        StatementAstNode[] stmtArr = stmtList.toArray(new StatementAstNode[0]);
 
-        StatementListAstNode newLeft = new StatementListAstNode(left.getSourceStart(), param.getSourceEnd(), paramArr);
+        StatementListAstNode newLeft = new StatementListAstNode(left.getSourceStart(), stmt.getSourceEnd(), stmtArr);
 
 
         return new StatementList_ParseRule(newLeft).parse(pc);
