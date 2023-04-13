@@ -10,7 +10,7 @@ public class PadHeightParseRule implements ParseRule<PadHeightAstNode> {
     public PadHeightAstNode parse(ParserContext pc) throws SyntaxErrorException {
         Token t = pc.consumeTokenSkipComments();
 
-        if (t.getType() != Token.TokenType.PadWidth)
+        if (t.getType() != Token.TokenType.PadHeight)
             pc.throwUnexpectedTokenException(t);
         
         return new PadHeightAstNode(t.getTokenStart(),t.getTokenEnd());
