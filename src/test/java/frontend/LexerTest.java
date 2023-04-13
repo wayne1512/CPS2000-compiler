@@ -86,6 +86,18 @@ class LexerTest{
         singleTokenTestMap.put("__pixel", TokenType.Pixel);
         singleTokenTestMap.put("__pixelr", TokenType.PixelRange);
 
+
+        singleTokenTestMap.put("//anything I want", TokenType.SingleLineComment);
+        singleTokenTestMap.put("/// slashes in the comment", TokenType.SingleLineComment);
+        singleTokenTestMap.put("/**/", TokenType.SingleLineComment);
+        singleTokenTestMap.put("/***/", TokenType.SingleLineComment);
+        singleTokenTestMap.put("/* */", TokenType.SingleLineComment);
+        singleTokenTestMap.put("/*anything I want/\n" +
+                "Anything you want*/", TokenType.MultiLineComment);
+
+
+
+
         return singleTokenTestMap.entrySet().stream().map(set -> Arguments.of(set.getKey(), set.getValue()));
 
     }

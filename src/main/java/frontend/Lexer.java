@@ -190,7 +190,7 @@ public class Lexer{
             if (c == null)
                 break;
 
-            String charClass = classifierMap.get(c);
+            String charClass = getCharClass(c);
             lexeme.append(c);
 
             if (acceptedStates.containsKey(currentState)){
@@ -221,6 +221,17 @@ public class Lexer{
         }
 
         return new Token(acceptedStates.get(currentState).getType(lexeme.toString()), tokenStart, cp.getPointer(), lexeme.toString());
+    }
+
+    private static String getCharClass(Character c) {
+
+        if ("\r\n\f".contains(c.toString()))
+            return "NewLine";
+
+        if (Character.isWhitespace(c))
+            return "Whitespace";
+
+        return classifierMap.get(c);
     }
 
     protected String transitionState(String state, String charClass){

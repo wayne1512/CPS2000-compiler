@@ -99,7 +99,10 @@ public class Token{
         Print,
         Delay,
         PixelRange,
-        Pixel
+        Pixel,
+
+        SingleLineComment,
+        MultiLineComment
 
     }
 }
