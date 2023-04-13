@@ -5,13 +5,12 @@ import frontend.ParserContext;
 import frontend.ast.ASTNode;
 import frontend.ast.FactorAstNode;
 import frontend.tokens.Token;
-import org.apache.commons.lang3.NotImplementedException;
 
 public class FactorParseRule implements ParseRule<FactorAstNode>{
     @Override
     public FactorAstNode parse(ParserContext pc) throws SyntaxErrorException{
 
-        Token t = pc.lookahead(0);
+        Token t = pc.lookaheadSkipComments(0);
 
         ASTNode child = null;
 
@@ -28,7 +27,7 @@ public class FactorParseRule implements ParseRule<FactorAstNode>{
                 break;
             case Identifier: {
                 //check if it is a variable or a function call
-                Token t1 = pc.lookahead(1);
+                Token t1 = pc.lookaheadSkipComments(1);
 
                 if (t1.getType() == Token.TokenType.BracOpen)
                     //function

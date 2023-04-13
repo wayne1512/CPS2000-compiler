@@ -9,17 +9,17 @@ public class IfParseRule implements ParseRule<IfAstNode>{
     @Override
     public IfAstNode parse(ParserContext pc) throws SyntaxErrorException{
 
-        Token ifToken = pc.consumeToken();
+        Token ifToken = pc.consumeTokenSkipComments();
         if (ifToken.getType() != Token.TokenType.If)
             pc.throwUnexpectedTokenException(ifToken);
 
-        Token openBracToken = pc.consumeToken();
+        Token openBracToken = pc.consumeTokenSkipComments();
         if (openBracToken.getType() != Token.TokenType.BracOpen)
             pc.throwUnexpectedTokenException(openBracToken);
 
         ASTNode conditionExpr = new ExprParseRule().parse(pc);
 
-        Token closeBracToken = pc.consumeToken();
+        Token closeBracToken = pc.consumeTokenSkipComments();
         if (closeBracToken.getType() != Token.TokenType.BracClose)
             pc.throwUnexpectedTokenException(closeBracToken);
 
@@ -28,7 +28,7 @@ public class IfParseRule implements ParseRule<IfAstNode>{
 
 
         BlockAstNode elseBlock = null;
-        Token elseToken = pc.lookahead(0);
+        Token elseToken = pc.lookaheadSkipComments(0);
         if (elseToken.getType() == Token.TokenType.Else)
             elseBlock = new BlockParseRule().parse(pc);
 

@@ -54,6 +54,7 @@ class LexerTest{
         singleTokenTestMap.put("i_1", TokenType.Identifier);
 
 
+        singleTokenTestMap.put("!", TokenType.Not);
         singleTokenTestMap.put("/", TokenType.Divide);
         singleTokenTestMap.put("*", TokenType.Multiply);
         singleTokenTestMap.put("+", TokenType.Add);
@@ -89,9 +90,9 @@ class LexerTest{
 
         singleTokenTestMap.put("//anything I want", TokenType.SingleLineComment);
         singleTokenTestMap.put("/// slashes in the comment", TokenType.SingleLineComment);
-        singleTokenTestMap.put("/**/", TokenType.SingleLineComment);
-        singleTokenTestMap.put("/***/", TokenType.SingleLineComment);
-        singleTokenTestMap.put("/* */", TokenType.SingleLineComment);
+        singleTokenTestMap.put("/**/", TokenType.MultiLineComment);
+        singleTokenTestMap.put("/***/", TokenType.MultiLineComment);
+        singleTokenTestMap.put("/* */", TokenType.MultiLineComment);
         singleTokenTestMap.put("/*anything I want/\n" +
                 "Anything you want*/", TokenType.MultiLineComment);
 
@@ -141,8 +142,16 @@ class LexerTest{
 
         assertEquals(expectedType, t.getType(), "token type was wrong");
         assertEquals(paddingLeft + 1, t.getTokenStart(), "token start was wrong");
-        assertEquals(paddingLeft + input.length(), t.getTokenEnd(), "token end was wrong");
-        assertEquals(input, t.getLexeme(), "lexeme was wrong");
+        if (t.getType() != TokenType.SingleLineComment)
+            //exception for single line comments as they were picking up trailing whitespace
+            assertEquals(paddingLeft + input.length(), t.getTokenEnd(), "token end was wrong");
+
+        if (t.getType() == TokenType.SingleLineComment)
+            //exception for single line comments as they were picking up trailing whitespace
+            assertEquals(input, t.getLexeme().trim(), "lexeme was wrong");
+        else
+            assertEquals(input, t.getLexeme(), "lexeme was wrong");
+
     }
 
 

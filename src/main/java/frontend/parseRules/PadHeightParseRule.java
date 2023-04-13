@@ -8,7 +8,7 @@ import frontend.tokens.Token;
 public class PadHeightParseRule implements ParseRule<PadHeightAstNode> {
     @Override
     public PadHeightAstNode parse(ParserContext pc) throws SyntaxErrorException {
-        Token t = pc.consumeToken();
+        Token t = pc.consumeTokenSkipComments();
 
         if (t.getType() != Token.TokenType.PadWidth)
             pc.throwUnexpectedTokenException(t);

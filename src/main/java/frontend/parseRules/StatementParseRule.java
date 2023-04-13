@@ -3,16 +3,14 @@ package frontend.parseRules;
 import exceptions.SyntaxErrorException;
 import frontend.ParserContext;
 import frontend.ast.ASTNode;
-import frontend.ast.FunDeclAstNode;
 import frontend.ast.StatementAstNode;
 import frontend.tokens.Token;
-import org.apache.commons.lang3.NotImplementedException;
 
 public class StatementParseRule implements ParseRule<StatementAstNode>{
     @Override
     public StatementAstNode parse(ParserContext pc) throws SyntaxErrorException{
 
-        Token t = pc.lookahead(0);
+        Token t = pc.lookaheadSkipComments(0);
 
         ASTNode child = null;
 
@@ -70,7 +68,7 @@ public class StatementParseRule implements ParseRule<StatementAstNode>{
     }
 
     private static Token consumeSemicolon(ParserContext pc) throws SyntaxErrorException{
-        Token t = pc.consumeToken();
+        Token t = pc.consumeTokenSkipComments();
         if (t.getType() != Token.TokenType.SemiColon)
             pc.throwUnexpectedTokenException(t);
 

@@ -9,19 +9,19 @@ public class VarDeclParseRule implements ParseRule<VarDeclAstNode>{
     @Override
     public VarDeclAstNode parse(ParserContext pc) throws SyntaxErrorException{
 
-        Token let = pc.consumeToken();
+        Token let = pc.consumeTokenSkipComments();
         if (let.getType() != Token.TokenType.Let)
             pc.throwUnexpectedTokenException(let);
 
         IdentifierAstNode identifier = new IdentifierParseRule().parse(pc);
 
-        Token colon = pc.consumeToken();
+        Token colon = pc.consumeTokenSkipComments();
         if (colon.getType()!= Token.TokenType.Colon)
             pc.throwUnexpectedTokenException(colon);
 
         TypeLiteralAstNode type = new TypeLiteralParseRule().parse(pc);
 
-        Token equal = pc.consumeToken();
+        Token equal = pc.consumeTokenSkipComments();
         if (equal.getType()!= Token.TokenType.Equals)
             pc.throwUnexpectedTokenException(equal);
 

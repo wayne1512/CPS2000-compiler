@@ -130,8 +130,7 @@ public class Lexer{
                     return TokenType.Identifier;
             }
         });
-        acceptedStates.put("equals", null);
-        acceptedStates.put("exclamation", null);
+        acceptedStates.put("exclamation", lexeme -> TokenType.Not);
         acceptedStates.put("GT", lexeme -> TokenType.GT);
         acceptedStates.put("LT", lexeme -> TokenType.LT);
         acceptedStates.put("EQ", lexeme -> TokenType.EQ);
@@ -151,6 +150,8 @@ public class Lexer{
         acceptedStates.put("semiColon", lexeme -> TokenType.SemiColon);
         acceptedStates.put("comma", lexeme -> TokenType.Comma);
         acceptedStates.put("equals", lexeme -> TokenType.Equals);
+        acceptedStates.put("singleLineComment", lexeme -> TokenType.SingleLineComment);
+        acceptedStates.put("multiLineComment", lexeme -> TokenType.MultiLineComment);
 
     }
 
@@ -229,7 +230,7 @@ public class Lexer{
             return "NewLine";
 
         if (Character.isWhitespace(c))
-            return "Whitespace";
+            return "WhiteSpace";
 
         return classifierMap.get(c);
     }
@@ -240,7 +241,7 @@ public class Lexer{
         int col = Arrays.asList(transitionClassHeaders).indexOf(charClass);
 
         if (row == -1)
-            throw new RuntimeException("state is not defined in trasition function " + state);
+            throw new RuntimeException("state is not defined in transition function " + state);
 
         if (col == -1)
             return "";

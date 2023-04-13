@@ -9,7 +9,7 @@ import frontend.tokens.Token;
 public class PrintParseRule implements ParseRule<PrintAstNode>{
     @Override
     public PrintAstNode parse(ParserContext pc) throws SyntaxErrorException{
-        Token t = pc.consumeToken();
+        Token t = pc.consumeTokenSkipComments();
         if (t.getType()!= Token.TokenType.Print)
             pc.throwUnexpectedTokenException(t);
 

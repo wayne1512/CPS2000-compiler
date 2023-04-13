@@ -9,7 +9,7 @@ public class ColourLiteralParseRule implements ParseRule<ColourLiteralAstNode>{
 
     @Override
     public ColourLiteralAstNode parse(ParserContext pc) throws SyntaxErrorException{
-        Token t = pc.consumeToken();
+        Token t = pc.consumeTokenSkipComments();
         return new ColourLiteralAstNode(t.getTokenStart(), t.getTokenEnd(), t.getLexeme());
     }
 }

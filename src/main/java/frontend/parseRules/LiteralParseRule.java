@@ -10,7 +10,7 @@ public class LiteralParseRule implements ParseRule<LiteralAstNode>{
     @Override
     public LiteralAstNode parse(ParserContext pc) throws SyntaxErrorException{
 
-        Token t = pc.lookahead(0);
+        Token t = pc.lookaheadSkipComments(0);
 
         ASTNode child = null;
 

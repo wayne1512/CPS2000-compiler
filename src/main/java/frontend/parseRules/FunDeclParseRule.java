@@ -9,26 +9,26 @@ public class FunDeclParseRule implements ParseRule<FunDeclAstNode>{
     @Override
     public FunDeclAstNode parse(ParserContext pc) throws SyntaxErrorException{
 
-        Token funToken = pc.consumeToken();
+        Token funToken = pc.consumeTokenSkipComments();
         if (funToken.getType() != Token.TokenType.Fun)
             pc.throwUnexpectedTokenException(funToken);
 
         IdentifierAstNode identifier = new IdentifierParseRule().parse(pc);
 
-        Token openBracToken = pc.consumeToken();
+        Token openBracToken = pc.consumeTokenSkipComments();
         if (openBracToken.getType() != Token.TokenType.BracOpen)
             pc.throwUnexpectedTokenException(openBracToken);
 
         FormalParamsAstNode params = null;
-        Token possibleCloseBracket = pc.lookahead(0);
+        Token possibleCloseBracket = pc.lookaheadSkipComments(0);
         if (possibleCloseBracket.getType() != Token.TokenType.BracClose)
             params = new FormalParamsParseRule().parse(pc);
 
-        Token closeBracToken = pc.consumeToken();
+        Token closeBracToken = pc.consumeTokenSkipComments();
         if (closeBracToken.getType() != Token.TokenType.BracClose)
             pc.throwUnexpectedTokenException(closeBracToken);
 
-        Token arrowToken = pc.consumeToken();
+        Token arrowToken = pc.consumeTokenSkipComments();
         if (arrowToken.getType() != Token.TokenType.Arrow)
             pc.throwUnexpectedTokenException(arrowToken);
 

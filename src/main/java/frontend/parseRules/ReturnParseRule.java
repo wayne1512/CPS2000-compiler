@@ -9,7 +9,7 @@ import frontend.tokens.Token;
 public class ReturnParseRule implements ParseRule<ReturnAstNode>{
     @Override
     public ReturnAstNode parse(ParserContext pc) throws SyntaxErrorException{
-        Token padRandiToken = pc.consumeToken();
+        Token padRandiToken = pc.consumeTokenSkipComments();
         if (padRandiToken.getType()!= Token.TokenType.Retrn)
             pc.throwUnexpectedTokenException(padRandiToken);
 

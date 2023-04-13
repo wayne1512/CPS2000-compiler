@@ -9,7 +9,7 @@ public class FloatLiteralParseRule implements ParseRule<FloatLiteralAstNode>{
 
     @Override
     public FloatLiteralAstNode parse(ParserContext pc) throws SyntaxErrorException{
-        Token t = pc.consumeToken();
+        Token t = pc.consumeTokenSkipComments();
         return new FloatLiteralAstNode(t.getTokenStart(), t.getTokenEnd(), Float.parseFloat(t.getLexeme()));
     }
 }

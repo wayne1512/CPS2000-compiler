@@ -2,7 +2,6 @@ package frontend.parseRules;
 
 import exceptions.SyntaxErrorException;
 import frontend.ParserContext;
-import frontend.ast.FormalParameterAstNode;
 import frontend.ast.StatementAstNode;
 import frontend.ast.StatementListAstNode;
 import frontend.tokens.Token;
@@ -39,7 +38,7 @@ public class StatementList_ParseRule implements ParseRule<StatementListAstNode>{
 
     @Override
     public StatementListAstNode parse(ParserContext pc) throws SyntaxErrorException{
-        Token lookahead = pc.lookahead(0);
+        Token lookahead = pc.lookaheadSkipComments(0);
 
         if (lookahead == null || !statementFirstToken.contains(lookahead.getType()))
             return left;

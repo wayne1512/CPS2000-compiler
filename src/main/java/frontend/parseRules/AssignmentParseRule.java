@@ -13,7 +13,7 @@ public class AssignmentParseRule implements ParseRule<AssignmentAstNode>{
 
         IdentifierAstNode identifier = new IdentifierParseRule().parse(pc);
 
-        Token equal = pc.consumeToken();
+        Token equal = pc.consumeTokenSkipComments();
         if (equal.getType()!= Token.TokenType.Equals)
             pc.throwUnexpectedTokenException(equal);
 

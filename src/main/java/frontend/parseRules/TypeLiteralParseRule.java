@@ -8,7 +8,7 @@ import frontend.tokens.Token;
 public class TypeLiteralParseRule implements ParseRule<TypeLiteralAstNode>{
     @Override
     public TypeLiteralAstNode parse(ParserContext pc) throws SyntaxErrorException{
-        Token t = pc.consumeToken();
+        Token t = pc.consumeTokenSkipComments();
 
         TypeLiteralAstNode.Type val = null;
 

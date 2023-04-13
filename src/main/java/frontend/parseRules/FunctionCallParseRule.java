@@ -2,7 +2,6 @@ package frontend.parseRules;
 
 import exceptions.SyntaxErrorException;
 import frontend.ParserContext;
-import frontend.ast.ASTNode;
 import frontend.ast.ActualParamsAstNode;
 import frontend.ast.FunctionCallAstNode;
 import frontend.ast.IdentifierAstNode;
@@ -14,18 +13,18 @@ public class FunctionCallParseRule implements ParseRule<FunctionCallAstNode>{
 
         IdentifierAstNode identifier = new IdentifierParseRule().parse(pc);
 
-        Token openBrac = pc.consumeToken();
+        Token openBrac = pc.consumeTokenSkipComments();
         if (openBrac.getType()!= Token.TokenType.BracOpen)
             pc.throwUnexpectedTokenException(openBrac);
 
         ActualParamsAstNode params = null;
 
-        Token paramsLookahead = pc.lookahead(0);
+        Token paramsLookahead = pc.lookaheadSkipComments(0);
         if (paramsLookahead.getType() != Token.TokenType.BracClose)
             //parse the parameters
             params = new ActualParamsParseRule().parse(pc);
 
-        Token closeBrac = pc.consumeToken();
+        Token closeBrac = pc.consumeTokenSkipComments();
         if (closeBrac.getType()!= Token.TokenType.BracClose)
             pc.throwUnexpectedTokenException(closeBrac);
 

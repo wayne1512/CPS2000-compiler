@@ -16,7 +16,7 @@ public class Expr_ParseRule implements ParseRule<ASTNode>{
 
     @Override
     public ASTNode parse(ParserContext pc) throws SyntaxErrorException{
-        Token lookahead = pc.lookahead(0);
+        Token lookahead = pc.lookaheadSkipComments(0);
 
         BinaryOpAstNode.OpType op = null;
 
@@ -42,7 +42,7 @@ public class Expr_ParseRule implements ParseRule<ASTNode>{
         if (op == null)
             return left;
         else
-            pc.consumeToken();
+            pc.consumeTokenSkipComments();
 
         ASTNode term = new SimpleExprParseRule().parse(pc);
 

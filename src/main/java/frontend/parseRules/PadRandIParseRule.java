@@ -4,13 +4,12 @@ import exceptions.SyntaxErrorException;
 import frontend.ParserContext;
 import frontend.ast.ASTNode;
 import frontend.ast.PadRandiAstNode;
-import frontend.ast.PadReadAstNode;
 import frontend.tokens.Token;
 
 public class PadRandIParseRule implements ParseRule<PadRandiAstNode>{
     @Override
     public PadRandiAstNode parse(ParserContext pc) throws SyntaxErrorException{
-        Token padRandiToken = pc.consumeToken();
+        Token padRandiToken = pc.consumeTokenSkipComments();
         if (padRandiToken.getType()!= Token.TokenType.PadRandI)
             pc.throwUnexpectedTokenException(padRandiToken);
 

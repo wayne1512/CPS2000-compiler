@@ -9,13 +9,13 @@ import frontend.tokens.Token;
 public class PadReadParseRule implements ParseRule<PadReadAstNode>{
     @Override
     public PadReadAstNode parse(ParserContext pc) throws SyntaxErrorException{
-        Token padReadToken = pc.consumeToken();
+        Token padReadToken = pc.consumeTokenSkipComments();
         if (padReadToken.getType()!= Token.TokenType.PadRead)
             pc.throwUnexpectedTokenException(padReadToken);
 
         ASTNode x = new ExprParseRule().parse(pc);
 
-        Token comma = pc.consumeToken();
+        Token comma = pc.consumeTokenSkipComments();
         if (comma.getType()!= Token.TokenType.Comma)
             pc.throwUnexpectedTokenException(padReadToken);
 

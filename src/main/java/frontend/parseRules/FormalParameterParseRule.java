@@ -11,7 +11,7 @@ public class FormalParameterParseRule implements ParseRule<FormalParameterAstNod
 
         IdentifierAstNode identifier = new IdentifierParseRule().parse(pc);
 
-        Token colon = pc.consumeToken();
+        Token colon = pc.consumeTokenSkipComments();
         if (colon.getType()!= Token.TokenType.Colon)
             pc.throwUnexpectedTokenException(colon);
 

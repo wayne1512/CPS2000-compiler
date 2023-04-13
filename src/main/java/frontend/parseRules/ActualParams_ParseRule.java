@@ -19,13 +19,13 @@ public class ActualParams_ParseRule implements ParseRule<ActualParamsAstNode>{
 
     @Override
     public ActualParamsAstNode parse(ParserContext pc) throws SyntaxErrorException{
-        Token lookahead = pc.lookahead(0);
+        Token lookahead = pc.lookaheadSkipComments(0);
 
         if (lookahead == null || lookahead.getType() != Token.TokenType.Comma)
             return left;
 
         //consume comma
-        pc.consumeToken();
+        pc.consumeTokenSkipComments();
 
         ASTNode expr = new ExprParseRule().parse(pc);
 

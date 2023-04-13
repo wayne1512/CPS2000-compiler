@@ -9,7 +9,7 @@ public class BlockParseRule implements ParseRule<BlockAstNode>{
 
     @Override
     public BlockAstNode parse(ParserContext pc) throws SyntaxErrorException{
-        Token openCurly = pc.consumeToken();
+        Token openCurly = pc.consumeTokenSkipComments();
 
         if (openCurly.getType() != Token.TokenType.CurlyBracOpen)
             //error
@@ -17,7 +17,7 @@ public class BlockParseRule implements ParseRule<BlockAstNode>{
 
         StatementListAstNode child = new StatementListParseRule().parse(pc);
 
-        Token closeCurly = pc.consumeToken();
+        Token closeCurly = pc.consumeTokenSkipComments();
 
         if (closeCurly.getType() != Token.TokenType.CurlyBracClose)
             //error

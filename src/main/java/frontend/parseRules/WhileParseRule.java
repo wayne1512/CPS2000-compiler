@@ -9,18 +9,18 @@ public class WhileParseRule implements ParseRule<WhileAstNode>{
     @Override
     public WhileAstNode parse(ParserContext pc) throws SyntaxErrorException{
 
-        Token whileToken = pc.consumeToken();
+        Token whileToken = pc.consumeTokenSkipComments();
         if (whileToken.getType() != Token.TokenType.While)
             pc.throwUnexpectedTokenException(whileToken);
 
-        Token openBracToken = pc.consumeToken();
+        Token openBracToken = pc.consumeTokenSkipComments();
         if (openBracToken.getType() != Token.TokenType.BracOpen)
             pc.throwUnexpectedTokenException(openBracToken);
 
 
         ASTNode conditionExpr = new ExprParseRule().parse(pc);
 
-        Token closeBracToken = pc.consumeToken();
+        Token closeBracToken = pc.consumeTokenSkipComments();
         if (closeBracToken.getType() != Token.TokenType.BracClose)
             pc.throwUnexpectedTokenException(closeBracToken);
 

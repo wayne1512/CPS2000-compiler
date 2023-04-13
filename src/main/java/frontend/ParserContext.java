@@ -10,12 +10,37 @@ public class ParserContext{
         this.p = p;
     }
 
-    public Token consumeToken() throws SyntaxErrorException{
-        return p.consumeToken();
+    public Token consumeTokenSkipComments() throws SyntaxErrorException{
+        Token t = null;
+        do{
+            t = p.consumeToken();
+        }while (t.getType() == Token.TokenType.SingleLineComment || t.getType() == Token.TokenType.MultiLineComment);
+
+        return t;
     }
 
-    public Token lookahead(int amount) throws SyntaxErrorException{
-        return p.lookahead(amount);
+    public Token lookaheadSkipComments(int amount) throws SyntaxErrorException{
+
+        int amountAfterSkippingComments = -1;
+
+        int nonCommentTokensPassed = 0;
+
+        Token t = null;
+        while (nonCommentTokensPassed <= amount){
+
+            amountAfterSkippingComments++;
+            t = p.lookahead(amountAfterSkippingComments);
+
+            if (t==null)
+                return null;
+
+            if (t.getType() != Token.TokenType.SingleLineComment && t.getType() != Token.TokenType.MultiLineComment)
+                nonCommentTokensPassed++;
+        }
+
+
+
+        return p.lookahead(amountAfterSkippingComments);
     }
 
     public void throwUnexpectedTokenException(Token t) throws SyntaxErrorException{

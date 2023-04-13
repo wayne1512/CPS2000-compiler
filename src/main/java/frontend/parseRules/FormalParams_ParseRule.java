@@ -2,8 +2,6 @@ package frontend.parseRules;
 
 import exceptions.SyntaxErrorException;
 import frontend.ParserContext;
-import frontend.ast.ASTNode;
-import frontend.ast.ActualParamsAstNode;
 import frontend.ast.FormalParameterAstNode;
 import frontend.ast.FormalParamsAstNode;
 import frontend.tokens.Token;
@@ -21,13 +19,13 @@ public class FormalParams_ParseRule implements ParseRule<FormalParamsAstNode>{
 
     @Override
     public FormalParamsAstNode parse(ParserContext pc) throws SyntaxErrorException{
-        Token lookahead = pc.lookahead(0);
+        Token lookahead = pc.lookaheadSkipComments(0);
 
         if (lookahead == null || lookahead.getType() != Token.TokenType.Comma)
             return left;
 
         //consume comma
-        pc.consumeToken();
+        pc.consumeTokenSkipComments();
 
         FormalParameterAstNode param = new FormalParameterParseRule().parse(pc);
 

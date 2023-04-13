@@ -9,7 +9,7 @@ import frontend.tokens.Token;
 public class DelayParseRule implements ParseRule<DelayAstNode>{
     @Override
     public DelayAstNode parse(ParserContext pc) throws SyntaxErrorException{
-        Token t = pc.consumeToken();
+        Token t = pc.consumeTokenSkipComments();
         if (t.getType()!= Token.TokenType.Delay)
             pc.throwUnexpectedTokenException(t);
 

@@ -11,7 +11,7 @@ public class UnaryParseRule implements ParseRule<ASTNode>{
 
     @Override
     public ASTNode parse(ParserContext pc) throws SyntaxErrorException{
-        Token t = pc.consumeToken();
+        Token t = pc.consumeTokenSkipComments();
 
         if (t.getType() != Token.TokenType.Subtract && t.getType()!= Token.TokenType.Not)
             //error
