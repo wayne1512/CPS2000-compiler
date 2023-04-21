@@ -13,11 +13,6 @@ public class WhileAstNode extends ASTNode{
     }
 
     @Override
-    public String toString(){
-        return String.format("<For>%s%s</For>", expr,block);
-    }
-
-    @Override
     public <R> R acceptVisitor(Visitor<R> visitor){
         return visitor.visitWhileAstNode(this);
     }

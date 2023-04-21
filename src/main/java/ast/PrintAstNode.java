@@ -13,11 +13,6 @@ public class PrintAstNode extends ASTNode{
     }
 
     @Override
-    public String toString(){
-        return String.format("<PadPrint>%s</PadPrint>", x);
-    }
-
-    @Override
     public <R> R acceptVisitor(Visitor<R> visitor){
         return visitor.visitPrintAstNode(this);
     }

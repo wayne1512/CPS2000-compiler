@@ -15,11 +15,6 @@ public class PadReadAstNode extends ASTNode{
     }
 
     @Override
-    public String toString(){
-        return String.format("<PadRead>%s%s</PadRead>", x,y);
-    }
-
-    @Override
     public <R> R acceptVisitor(Visitor<R> visitor){
         return visitor.visitPadReadAstNode(this);
     }

@@ -15,8 +15,4 @@ public class BlockAstNode extends ASTNode{
         return visitor.visitBlockAstNode(this);
     }
 
-    @Override
-    public String toString(){
-        return "<Block>"+child+"</Block>";
-    }
 }

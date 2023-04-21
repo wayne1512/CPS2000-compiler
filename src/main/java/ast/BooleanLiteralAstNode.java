@@ -3,7 +3,7 @@ package ast;
 import backend.Visitor;
 
 public class BooleanLiteralAstNode extends ASTNode{
-    private final boolean val;
+    final boolean val;
 
     public BooleanLiteralAstNode(long sourceStart, long sourceEnd, boolean val){
         super(sourceStart, sourceEnd);
@@ -14,10 +14,6 @@ public class BooleanLiteralAstNode extends ASTNode{
         return val;
     }
 
-    @Override
-    public String toString(){
-        return String.format("<Bool>%b</Bool>", val);
-    }
 
     @Override
     public <R> R acceptVisitor(Visitor<R> visitor){

@@ -28,11 +28,6 @@ public class PixelRangeAstNode extends ASTNode{
     }
 
     @Override
-    public String toString(){
-        return String.format("<PixelRange>%s%s%s%s%s<PixelRange>", x,y,width,height,colour);
-    }
-
-    @Override
     public <R> R acceptVisitor(Visitor<R> visitor){
         return visitor.visitPixelRangeAstNode(this);
     }

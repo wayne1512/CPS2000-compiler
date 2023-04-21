@@ -13,11 +13,6 @@ public class ReturnAstNode extends ASTNode{
     }
 
     @Override
-    public String toString(){
-        return String.format("<Return>%s</Return>", x);
-    }
-
-    @Override
     public <R> R acceptVisitor(Visitor<R> visitor){
         return visitor.visitReturnAstNode(this);
     }

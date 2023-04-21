@@ -13,11 +13,6 @@ public class DelayAstNode extends ASTNode{
     }
 
     @Override
-    public String toString(){
-        return String.format("<PadDelay>%s</PadDelay>", x);
-    }
-
-    @Override
     public <R> R acceptVisitor(Visitor<R> visitor){
         return visitor.visitDelayAstNode(this);
     }

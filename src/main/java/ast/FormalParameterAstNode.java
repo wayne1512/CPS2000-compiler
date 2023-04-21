@@ -12,11 +12,6 @@ public class FormalParameterAstNode extends ASTNode{
     }
 
     @Override
-    public String toString(){
-        return String.format("<FormalParam>%s%s</FormalParam>", identifier,type);
-    }
-
-    @Override
     public <R> R acceptVisitor(Visitor<R> visitor){
         return visitor.visitFormalParameterAstNode(this);
     }

@@ -13,11 +13,6 @@ public class AssignmentAstNode extends ASTNode{
     }
 
     @Override
-    public String toString(){
-        return String.format("<Assign>%s%s</Assign>", identifier,expr);
-    }
-
-    @Override
     public <R> R acceptVisitor(Visitor<R> visitor){
         return visitor.visitAssignmentAstNode(this);
     }

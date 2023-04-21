@@ -16,11 +16,6 @@ public class IfAstNode extends ASTNode{
     }
 
     @Override
-    public String toString(){
-        return String.format("<If>%s%s%s</If>", condition,thenBlock,elseBlock);
-    }
-
-    @Override
     public <R> R acceptVisitor(Visitor<R> visitor){
         return visitor.visitIfAstNode(this);
     }

@@ -1,152 +1,81 @@
 package backend;
 
 import ast.*;
-import org.apache.commons.lang3.NotImplementedException;
 
 /**
  *
  * @param <R> result type
  */
-public class Visitor<R>{
-    public R visitActualParamsAstNode(ActualParamsAstNode n){
-        throw new NotImplementedException();
-    }
+public interface Visitor<R>{
+    R visitActualParamsAstNode(ActualParamsAstNode n);
 
-    public R visitAssignmentAstNode(AssignmentAstNode n){
-        throw new NotImplementedException();
-    }
+    R visitAssignmentAstNode(AssignmentAstNode n);
 
-    public R visitBinaryOpAstNode(BinaryOpAstNode n){
-        throw new NotImplementedException();
-    }
+    R visitBinaryOpAstNode(BinaryOpAstNode n);
 
-    public R visitBlockAstNode(BlockAstNode n){
-        throw new NotImplementedException();
-    }
+    R visitBlockAstNode(BlockAstNode n);
 
-    public R visitBooleanLiteralAstNode(BooleanLiteralAstNode n){
-        throw new NotImplementedException();
-    }
+    R visitBooleanLiteralAstNode(BooleanLiteralAstNode n);
 
-    public R visitColourLiteralAstNode(ColourLiteralAstNode n){
-        throw new NotImplementedException();
-    }
+    R visitColourLiteralAstNode(ColourLiteralAstNode n);
 
-    public R visitDelayAstNode(DelayAstNode n){
-        throw new NotImplementedException();
-    }
+    R visitDelayAstNode(DelayAstNode n);
 
-    public R visitFactorAstNode(FactorAstNode n){
-        throw new NotImplementedException();
-    }
+    R visitFactorAstNode(FactorAstNode n);
 
-    public R visitFloatLiteralAstNode(FloatLiteralAstNode n){
-        throw new NotImplementedException();
-    }
+    R visitFloatLiteralAstNode(FloatLiteralAstNode n);
 
-    public R visitForAstNode(ForAstNode n){
-        throw new NotImplementedException();
-    }
+    R visitForAstNode(ForAstNode n);
 
-    public R visitFormalParameterAstNode(FormalParameterAstNode n){
-        throw new NotImplementedException();
-    }
+    R visitFormalParameterAstNode(FormalParameterAstNode n);
 
-    public R visitFormalParamsAstNode(FormalParamsAstNode n){
-        throw new NotImplementedException();
-    }
+    R visitFormalParamsAstNode(FormalParamsAstNode n);
 
-    public R visitFunctionCallAstNode(FunctionCallAstNode n){
-        throw new NotImplementedException();
-    }
+    R visitFunctionCallAstNode(FunctionCallAstNode n);
 
-    public R visitFunDeclAstNode(FunDeclAstNode n){
-        throw new NotImplementedException();
-    }
+    R visitFunDeclAstNode(FunDeclAstNode n);
 
-    public R visitIdentifierAstNode(IdentifierAstNode n){
-        throw new NotImplementedException();
-    }
+    R visitIdentifierAstNode(IdentifierAstNode n);
 
-    public R visitIfAstNode(IfAstNode n){
-        throw new NotImplementedException();
-    }
+    R visitIfAstNode(IfAstNode n);
 
-    public R visitIntegerLiteralAstNode(IntegerLiteralAstNode n){
-        throw new NotImplementedException();
-    }
+    R visitIntegerLiteralAstNode(IntegerLiteralAstNode n);
 
-    public R visitLiteralAstNode(LiteralAstNode n){
-        throw new NotImplementedException();
-    }
+    R visitLiteralAstNode(LiteralAstNode n);
 
-    public R visitNegativeAstNode(NegativeAstNode n){
-        throw new NotImplementedException();
-    }
+    R visitNegativeAstNode(NegativeAstNode n);
 
-    public R visitNotAstNode(NotAstNode n){
-        throw new NotImplementedException();
-    }
+    R visitNotAstNode(NotAstNode n);
 
-    public R visitPadHeightAstNode(PadHeightAstNode n){
-        throw new NotImplementedException();
-    }
+    R visitPadHeightAstNode(PadHeightAstNode n);
 
-    public R visitPadRandiAstNode(PadRandiAstNode n){
-        throw new NotImplementedException();
-    }
+    R visitPadRandiAstNode(PadRandiAstNode n);
 
-    public R visitPadReadAstNode(PadReadAstNode n){
-        throw new NotImplementedException();
-    }
+    R visitPadReadAstNode(PadReadAstNode n);
 
-    public R visitPadWidthAstNode(PadWidthAstNode n){
-        throw new NotImplementedException();
-    }
+    R visitPadWidthAstNode(PadWidthAstNode n);
 
-    public R visitPixelAstNode(PixelAstNode n){
-        throw new NotImplementedException();
-    }
+    R visitPixelAstNode(PixelAstNode n);
 
-    public R visitPixelRangeAstNode(PixelRangeAstNode n){
-        throw new NotImplementedException();
-    }
+    R visitPixelRangeAstNode(PixelRangeAstNode n);
 
-    public R visitPrintAstNode(PrintAstNode n){
-        throw new NotImplementedException();
-    }
+    R visitPrintAstNode(PrintAstNode n);
 
-    public R visitProgramAstNode(ProgramAstNode n){
-        throw new NotImplementedException();
-    }
+    R visitProgramAstNode(ProgramAstNode n);
 
-    public R visitReturnAstNode(ReturnAstNode n){
-        throw new NotImplementedException();
-    }
+    R visitReturnAstNode(ReturnAstNode n);
 
-    public R visitStatementAstNode(StatementAstNode n){
-        throw new NotImplementedException();
-    }
+    R visitStatementAstNode(StatementAstNode n);
 
-    public R visitStatementListAstNode(StatementListAstNode n){
-        throw new NotImplementedException();
-    }
+    R visitStatementListAstNode(StatementListAstNode n);
 
-    public R visitSubExprAstNode(SubExprAstNode n){
-        throw new NotImplementedException();
-    }
+    R visitSubExprAstNode(SubExprAstNode n);
 
-    public R visitTypeLiteralAstNode(TypeLiteralAstNode n){
-        throw new NotImplementedException();
-    }
+    R visitTypeLiteralAstNode(TypeLiteralAstNode n);
 
-    public R visitVarDeclAstNode(VarDeclAstNode n){
-        throw new NotImplementedException();
-    }
+    R visitVarDeclAstNode(VarDeclAstNode n);
 
-    public R visitWhileAstNode(WhileAstNode n){
-        throw new NotImplementedException();
-    }
+    R visitWhileAstNode(WhileAstNode n);
 
 
 }

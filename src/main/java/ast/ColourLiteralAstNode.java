@@ -15,11 +15,6 @@ public class ColourLiteralAstNode extends ASTNode{
     }
 
     @Override
-    public String toString(){
-        return String.format("<Colour>%s</Colour>", val);
-    }
-
-    @Override
     public <R> R acceptVisitor(Visitor<R> visitor){
         return visitor.visitColourLiteralAstNode(this);
     }

@@ -16,11 +16,6 @@ public class VarDeclAstNode extends ASTNode{
     }
 
     @Override
-    public String toString(){
-        return String.format("<VarDecl>%s%s%s</VarDecl>", identifier,type,expr);
-    }
-
-    @Override
     public <R> R acceptVisitor(Visitor<R> visitor){
         return visitor.visitVarDeclAstNode(this);
     }

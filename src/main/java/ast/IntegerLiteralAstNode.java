@@ -15,11 +15,6 @@ public class IntegerLiteralAstNode extends ASTNode{
     }
 
     @Override
-    public String toString(){
-        return String.format("<Int>%d</Int>", val);
-    }
-
-    @Override
     public <R> R acceptVisitor(Visitor<R> visitor){
         return visitor.visitIntegerLiteralAstNode(this);
     }

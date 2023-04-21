@@ -13,11 +13,6 @@ public class PadRandiAstNode extends ASTNode{
     }
 
     @Override
-    public String toString(){
-        return String.format("<PadRandI>%s</PadRandI>", x);
-    }
-
-    @Override
     public <R> R acceptVisitor(Visitor<R> visitor){
         return visitor.visitPadRandiAstNode(this);
     }

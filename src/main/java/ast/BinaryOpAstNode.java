@@ -18,11 +18,6 @@ public class BinaryOpAstNode extends ASTNode{
         this.right = right;
     }
 
-    @Override
-    public String toString(){
-        return String.format("<BinaryOp type = \"%s\">%s%s</BinaryOp>", opType.humanReadableName, left, right);
-    }
-
 
     @Override
     public <R> R acceptVisitor(Visitor<R> visitor){

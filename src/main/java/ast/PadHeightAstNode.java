@@ -8,11 +8,6 @@ public class PadHeightAstNode extends ASTNode {
     }
 
     @Override
-    public String toString() {
-        return "<PadHeight/>";
-    }
-
-    @Override
     public <R> R acceptVisitor(Visitor<R> visitor){
         return visitor.visitPadHeightAstNode(this);
     }

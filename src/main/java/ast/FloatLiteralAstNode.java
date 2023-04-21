@@ -16,11 +16,6 @@ public class FloatLiteralAstNode extends ASTNode{
 
 
     @Override
-    public String toString(){
-        return String.format("<Float>%f</Float>", val);
-    }
-
-    @Override
     public <R> R acceptVisitor(Visitor<R> visitor){
         return visitor.visitFloatLiteralAstNode(this);
     }

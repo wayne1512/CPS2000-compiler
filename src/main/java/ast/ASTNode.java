@@ -19,9 +19,6 @@ public abstract class ASTNode{
         return sourceEnd;
     }
 
-    @Override
-    public abstract String toString();
-
     public abstract <R> R acceptVisitor(Visitor<R> visitor);
 
 

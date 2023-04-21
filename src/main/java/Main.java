@@ -1,4 +1,5 @@
 import ast.ASTNode;
+import ast.ToXMLVisitor;
 import exceptions.SyntaxErrorException;
 import frontend.CharacterProvider;
 import frontend.FileCharacterProvider;
@@ -19,7 +20,7 @@ public class Main{
             Lexer lexer = new Lexer(cp);
             Parser parser = new Parser(lexer);
             ASTNode root = parser.parse();
-            System.out.println(root);
+            System.out.println(root.acceptVisitor(new ToXMLVisitor()));
 
 
         } catch (IOException e) {

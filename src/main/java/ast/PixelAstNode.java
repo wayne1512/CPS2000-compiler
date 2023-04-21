@@ -17,11 +17,6 @@ public class PixelAstNode extends ASTNode{
     }
 
     @Override
-    public String toString(){
-        return String.format("<Pixel>%s%s%s<Pixel>", x,y,colour);
-    }
-
-    @Override
     public <R> R acceptVisitor(Visitor<R> visitor){
         return visitor.visitPixelAstNode(this);
     }

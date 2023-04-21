@@ -17,11 +17,6 @@ public class ForAstNode extends ASTNode{
     }
 
     @Override
-    public String toString(){
-        return String.format("<For>%s%s%s%s</For>", decl,expr,assignment,block);
-    }
-
-    @Override
     public <R> R acceptVisitor(Visitor<R> visitor){
         return visitor.visitForAstNode(this);
     }

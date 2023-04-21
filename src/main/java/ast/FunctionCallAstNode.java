@@ -13,11 +13,6 @@ public class FunctionCallAstNode extends ASTNode{
     }
 
     @Override
-    public String toString(){
-        return String.format("<FunctionCall>%s%s</FunctionCall>", identifier,params);
-    }
-
-    @Override
     public <R> R acceptVisitor(Visitor<R> visitor){
         return visitor.visitFunctionCallAstNode(this);
     }

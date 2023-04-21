@@ -11,11 +11,6 @@ public class ProgramAstNode extends ASTNode{
     }
 
     @Override
-    public String toString(){
-        return "<Program>"+child+"</Program>";
-    }
-
-    @Override
     public <R> R acceptVisitor(Visitor<R> visitor){
         return visitor.visitProgramAstNode(this);
     }
