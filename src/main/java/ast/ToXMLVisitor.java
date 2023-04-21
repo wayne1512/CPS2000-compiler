@@ -42,21 +42,26 @@ public class ToXMLVisitor implements Visitor<String>{
     }
 
     @Override
-//todo fix indentation
-    public String visitBinaryOpAstNode(BinaryOpAstNode n){
+    public String visitBinaryOpAstNode(BinaryOpAstNode n) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(performIndentation()).append(String.format("<BinaryOp type=\"%s\">", n.opType.humanReadableName));
         indent++;
-        String s = String.format("<BinaryOp type = \"%s\">%s%s</BinaryOp>", n.opType.humanReadableName, n.left.acceptVisitor(this), n.right.acceptVisitor(this));
+        sb.append(n.left.acceptVisitor(this));
+        sb.append(n.right.acceptVisitor(this));
         indent--;
-        return performIndentation() + s;
+        sb.append(performIndentation()).append("</BinaryOp>");
+        return sb.toString();
     }
 
     @Override
-//todo fix indentation
     public String visitBlockAstNode(BlockAstNode n){
+        StringBuilder sb = new StringBuilder();
+        sb.append(performIndentation()).append("<Block>");
         indent++;
-        String s = "<Block>" + n.child.acceptVisitor(this) + "</Block>";
+        sb.append(n.child.acceptVisitor(this));
         indent--;
-        return performIndentation() + s;
+        sb.append(performIndentation()).append("</Block>");
+        return sb.toString();
     }
 
     @Override
@@ -78,12 +83,14 @@ public class ToXMLVisitor implements Visitor<String>{
     }
 
     @Override
-//todo fix indentation
     public String visitDelayAstNode(DelayAstNode n){
+        StringBuilder sb = new StringBuilder();
+        sb.append(performIndentation()).append("<PadDelay>");
         indent++;
-        String s = String.format("<PadDelay>%s</PadDelay>", n.x.acceptVisitor(this));
+        sb.append(n.x.acceptVisitor(this));
         indent--;
-        return performIndentation() + s;
+        sb.append(performIndentation()).append("</PadDelay>");
+        return sb.toString();
     }
 
     @Override
@@ -107,13 +114,19 @@ public class ToXMLVisitor implements Visitor<String>{
     }
 
     @Override
-//todo fix indentation
-    public String visitForAstNode(ForAstNode n){
+    public String visitForAstNode(ForAstNode n) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(performIndentation()).append("<For>");
         indent++;
-        String s = String.format("<For>%s%s%s%s</For>", n.decl.acceptVisitor(this), n.expr.acceptVisitor(this), n.assignment.acceptVisitor(this), n.block.acceptVisitor(this));
+        sb.append((n.decl != null)?n.decl.acceptVisitor(this):simulateVisitNullNode());
+        sb.append(n.expr.acceptVisitor(this));
+        sb.append((n.assignment != null)?n.assignment.acceptVisitor(this):simulateVisitNullNode());
+        sb.append(n.block.acceptVisitor(this));
         indent--;
-        return performIndentation() + s;
+        sb.append(performIndentation()).append("</For>");
+        return sb.toString();
     }
+
 
     @Override
 //todo fix indentation
@@ -125,22 +138,31 @@ public class ToXMLVisitor implements Visitor<String>{
     }
 
     @Override
-//todo fix indentation
-    public String visitFormalParamsAstNode(FormalParamsAstNode n){
+    public String visitFormalParamsAstNode(FormalParamsAstNode n) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(performIndentation()).append("<FormalParams>");
         indent++;
-        String s = "<FormalParams>" + Arrays.stream(n.children).map((ASTNode node )->node.acceptVisitor(this)).collect(Collectors.joining()) + "</FormalParams>";
+        for (ASTNode node : n.children) {
+            sb.append(node.acceptVisitor(this));
+        }
         indent--;
-        return performIndentation() + s;
+        sb.append(performIndentation()).append("</FormalParams>");
+        return sb.toString();
     }
 
+
     @Override
-//todo fix indentation
-    public String visitFunctionCallAstNode(FunctionCallAstNode n){
+    public String visitFunctionCallAstNode(FunctionCallAstNode n) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(performIndentation()).append("<FunctionCall>");
         indent++;
-        String s = String.format("<FunctionCall>%s%s</FunctionCall>", n.identifier.acceptVisitor(this), n.params.acceptVisitor(this));
+        sb.append(n.identifier.acceptVisitor(this));
+        sb.append(n.params.acceptVisitor(this));
         indent--;
-        return performIndentation() + s;
+        sb.append(performIndentation()).append("</FunctionCall>");
+        return sb.toString();
     }
+
 
     @Override
     public String visitFunDeclAstNode(FunDeclAstNode n){
@@ -168,12 +190,16 @@ public class ToXMLVisitor implements Visitor<String>{
     }
 
     @Override
-//todo fix indentation
-    public String visitIfAstNode(IfAstNode n){
+    public String visitIfAstNode(IfAstNode n) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(performIndentation()).append("<If>");
         indent++;
-        String s = String.format("<If>%s%s%s</If>", n.condition.acceptVisitor(this), n.thenBlock.acceptVisitor(this), n.elseBlock.acceptVisitor(this));
+        sb.append(n.condition.acceptVisitor(this));
+        sb.append(n.thenBlock.acceptVisitor(this));
+        sb.append(n.elseBlock.acceptVisitor(this));
         indent--;
-        return performIndentation() + s;
+        sb.append(performIndentation()).append("</If>");
+        return sb.toString();
     }
 
     @Override
@@ -186,90 +212,106 @@ public class ToXMLVisitor implements Visitor<String>{
     }
 
     @Override
-//todo fix indentation
-    public String visitLiteralAstNode(LiteralAstNode n){
-
-            indent++;
-            String s = String.format("<Literal>%s</Literal>", n.child.acceptVisitor(this));
-            indent--;
-            return performIndentation() + s;
-    }
-
-    @Override
-//todo fix indentation
-    public String visitNegativeAstNode(NegativeAstNode n){
+    public String visitLiteralAstNode(LiteralAstNode n) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(performIndentation()).append("<Literal>");
         indent++;
-        String s = String.format("<Negative>%s</Negative>", n.child.acceptVisitor(this));
+        sb.append(n.child.acceptVisitor(this));
         indent--;
-        return performIndentation() + s;
+        sb.append(performIndentation()).append("</Literal>");
+        return sb.toString();
     }
 
     @Override
-//todo fix indentation
-    public String visitNotAstNode(NotAstNode n){
+    public String visitNegativeAstNode(NegativeAstNode n) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(performIndentation()).append("<Negative>");
         indent++;
-        String s = String.format("<Not>%s</Not>", n.child.acceptVisitor(this));
+        sb.append(n.child.acceptVisitor(this));
         indent--;
-        return performIndentation() + s;
+        sb.append(performIndentation()).append("</Negative>");
+        return sb.toString();
     }
 
     @Override
-//todo fix indentation
-    public String visitPadHeightAstNode(PadHeightAstNode n){
+    public String visitNotAstNode(NotAstNode n) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(performIndentation()).append("<Not>");
         indent++;
-        String s = "<PadHeight/>";
+        sb.append(n.child.acceptVisitor(this));
         indent--;
-        return performIndentation() + s;
+        sb.append(performIndentation()).append("</Not>");
+        return sb.toString();
     }
 
     @Override
-//todo fix indentation
-    public String visitPadRandiAstNode(PadRandiAstNode n){
+    public String visitPadHeightAstNode(PadHeightAstNode n) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(performIndentation()).append("<PadHeight/>");
+        return sb.toString();
+    }
+
+    @Override
+    public String visitPadRandiAstNode(PadRandiAstNode n) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(performIndentation()).append("<PadRandI>");
         indent++;
-        String s = String.format("<PadRandI>%s</PadRandI>", n.x.acceptVisitor(this));
+        sb.append(n.x.acceptVisitor(this));
         indent--;
-        return performIndentation() + s;
+        sb.append(performIndentation()).append("</PadRandI>");
+        return sb.toString();
     }
 
     @Override
-//todo fix indentation
-    public String visitPadReadAstNode(PadReadAstNode n){
+    public String visitPadReadAstNode(PadReadAstNode n) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(performIndentation()).append("<PadRead>");
         indent++;
-        String s = String.format("<PadRead>%s%s</PadRead>", n.x.acceptVisitor(this), n.y.acceptVisitor(this));
+        sb.append(n.x.acceptVisitor(this));
+        sb.append(n.y.acceptVisitor(this));
         indent--;
-        return performIndentation() + s;
+        sb.append(performIndentation()).append("</PadRead>");
+        return sb.toString();
     }
 
     @Override
-//todo fix indentation
-    public String visitPadWidthAstNode(PadWidthAstNode n){
+    public String visitPadWidthAstNode(PadWidthAstNode n) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(performIndentation()).append("<PadWidth/>");
+        return sb.toString();
+    }
+
+    @Override
+    public String visitPixelAstNode(PixelAstNode n) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(performIndentation()).append("<Pixel>");
         indent++;
-        String s = "<PadWidth/>";
+        sb.append(n.x.acceptVisitor(this));
+        sb.append(n.y.acceptVisitor(this));
+        sb.append(n.colour.acceptVisitor(this));
         indent--;
-        return performIndentation() + s;
+        sb.append(performIndentation()).append("</Pixel>");
+        return sb.toString();
     }
 
     @Override
-//todo fix indentation
-    public String visitPixelAstNode(PixelAstNode n){
+    public String visitPixelRangeAstNode(PixelRangeAstNode n) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(performIndentation()).append("<PixelRange>");
         indent++;
-        String s = String.format("<Pixel>%s%s%s<Pixel>", n.x.acceptVisitor(this), n.y.acceptVisitor(this), n.colour.acceptVisitor(this));
+        sb.append(n.x.acceptVisitor(this));
+        sb.append(n.y.acceptVisitor(this));
+        sb.append(n.width.acceptVisitor(this));
+        sb.append(n.height.acceptVisitor(this));
+        sb.append(n.colour.acceptVisitor(this));
         indent--;
-        return performIndentation() + s;
+        sb.append(performIndentation()).append("</PixelRange>");
+        return sb.toString();
     }
 
-    @Override
-//todo fix indentation
-    public String visitPixelRangeAstNode(PixelRangeAstNode n){
-        indent++;
-        String s = String.format("<PixelRange>%s%s%s%s%s<PixelRange>", n.x.acceptVisitor(this), n.y.acceptVisitor(this), n.width.acceptVisitor(this), n.height.acceptVisitor(this), n.colour.acceptVisitor(this));
-        indent--;
-        return performIndentation() + s;
-    }
 
     @Override
-//todo fix indentation
-    public String visitPrintAstNode(PrintAstNode n){
+    public String visitPrintAstNode(PrintAstNode n) {
         StringBuilder sb = new StringBuilder();
         sb.append(performIndentation()).append("<PadPrint>");
         indent++;
@@ -279,8 +321,8 @@ public class ToXMLVisitor implements Visitor<String>{
         return sb.toString();
     }
 
+
     @Override
-//todo fix indentation
     public String visitProgramAstNode(ProgramAstNode n){
         StringBuilder sb = new StringBuilder();
         sb.append(performIndentation()).append("<Program>");
@@ -330,13 +372,14 @@ public class ToXMLVisitor implements Visitor<String>{
     }
 
     @Override
-//todo fix indentation
-    public String visitSubExprAstNode(SubExprAstNode n){
-            indent++;
-            String s = String.format("<SubExpr>%s</SubExpr>", n.child.acceptVisitor(this));
-            indent--;
-            return performIndentation() + s;
-
+    public String visitSubExprAstNode(SubExprAstNode n) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(performIndentation()).append("<SubExpr>");
+        indent++;
+        sb.append(n.child.acceptVisitor(this));
+        indent--;
+        sb.append(performIndentation()).append("</SubExpr>");
+        return sb.toString();
     }
 
     @Override
@@ -349,21 +392,28 @@ public class ToXMLVisitor implements Visitor<String>{
     }
 
     @Override
-//todo fix indentation
-    public String visitVarDeclAstNode(VarDeclAstNode n){
+    public String visitVarDeclAstNode(VarDeclAstNode n) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(performIndentation()).append("<VarDecl>");
         indent++;
-        String s = String.format("<VarDecl>%s%s%s</VarDecl>", n.identifier.acceptVisitor(this), n.type.acceptVisitor(this), n.expr.acceptVisitor(this));
+        sb.append(n.identifier.acceptVisitor(this));
+        sb.append(n.type.acceptVisitor(this));
+        sb.append(n.expr.acceptVisitor(this));
         indent--;
-        return performIndentation() + s;
+        sb.append(performIndentation()).append("</VarDecl>");
+        return sb.toString();
     }
 
     @Override
-//todo fix indentation
-    public String visitWhileAstNode(WhileAstNode n){
+    public String visitWhileAstNode(WhileAstNode n) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(performIndentation()).append("<While>");
         indent++;
-        String s = String.format("<While>%s%s</While>", n.expr.acceptVisitor(this), n.block.acceptVisitor(this));
+        sb.append(n.expr.acceptVisitor(this));
+        sb.append(n.block.acceptVisitor(this));
         indent--;
-        return performIndentation() + s;
+        sb.append(performIndentation()).append("</While>");
+        return sb.toString();
     }
 
     public String simulateVisitNullNode(){
