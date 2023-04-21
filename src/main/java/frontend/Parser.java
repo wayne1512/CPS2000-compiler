@@ -1,8 +1,9 @@
 package frontend;
 
+import ast.ASTNode;
 import exceptions.SyntaxErrorException;
-import frontend.ast.ASTNode;
-import frontend.parseRules.*;
+import frontend.parseRules.ParseRule;
+import frontend.parseRules.StatementListParseRule;
 import frontend.tokens.Token;
 
 import java.util.LinkedList;

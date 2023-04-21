@@ -1,8 +1,8 @@
 package frontend.parseRules;
 
+import ast.*;
 import exceptions.SyntaxErrorException;
 import frontend.ParserContext;
-import frontend.ast.*;
 import frontend.tokens.Token;
 
 public class ForParseRule implements ParseRule<ForAstNode>{

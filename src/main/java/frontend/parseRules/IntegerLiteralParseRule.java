@@ -1,8 +1,8 @@
 package frontend.parseRules;
 
+import ast.IntegerLiteralAstNode;
 import exceptions.SyntaxErrorException;
 import frontend.ParserContext;
-import frontend.ast.IntegerLiteralAstNode;
 import frontend.tokens.Token;
 
 public class IntegerLiteralParseRule implements ParseRule<IntegerLiteralAstNode>{

@@ -1,8 +1,11 @@
 package frontend.parseRules;
 
+import ast.ASTNode;
+import ast.IdentifierAstNode;
+import ast.TypeLiteralAstNode;
+import ast.VarDeclAstNode;
 import exceptions.SyntaxErrorException;
 import frontend.ParserContext;
-import frontend.ast.*;
 import frontend.tokens.Token;
 
 public class VarDeclParseRule implements ParseRule<VarDeclAstNode>{

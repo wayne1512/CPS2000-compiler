@@ -1,8 +1,8 @@
 package frontend.parseRules;
 
+import ast.BooleanLiteralAstNode;
 import exceptions.SyntaxErrorException;
 import frontend.ParserContext;
-import frontend.ast.BooleanLiteralAstNode;
 import frontend.tokens.Token;
 
 public class BooleanLiteralParseRule implements ParseRule<BooleanLiteralAstNode>{

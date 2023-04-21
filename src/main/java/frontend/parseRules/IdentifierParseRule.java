@@ -1,8 +1,8 @@
 package frontend.parseRules;
 
+import ast.IdentifierAstNode;
 import exceptions.SyntaxErrorException;
 import frontend.ParserContext;
-import frontend.ast.IdentifierAstNode;
 import frontend.tokens.Token;
 
 public class IdentifierParseRule implements ParseRule<IdentifierAstNode>{

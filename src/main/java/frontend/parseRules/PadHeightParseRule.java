@@ -1,8 +1,8 @@
 package frontend.parseRules;
 
+import ast.PadHeightAstNode;
 import exceptions.SyntaxErrorException;
 import frontend.ParserContext;
-import frontend.ast.PadHeightAstNode;
 import frontend.tokens.Token;
 
 public class PadHeightParseRule implements ParseRule<PadHeightAstNode> {

@@ -1,9 +1,9 @@
 package frontend.parseRules;
 
+import ast.ASTNode;
+import ast.SubExprAstNode;
 import exceptions.SyntaxErrorException;
 import frontend.ParserContext;
-import frontend.ast.ASTNode;
-import frontend.ast.SubExprAstNode;
 import frontend.tokens.Token;
 
 public class SubExprParseRule implements ParseRule<SubExprAstNode>{

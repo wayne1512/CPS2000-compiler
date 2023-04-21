@@ -1,9 +1,9 @@
 package frontend.parseRules;
 
+import ast.ASTNode;
+import ast.DelayAstNode;
 import exceptions.SyntaxErrorException;
 import frontend.ParserContext;
-import frontend.ast.ASTNode;
-import frontend.ast.DelayAstNode;
 import frontend.tokens.Token;
 
 public class DelayParseRule implements ParseRule<DelayAstNode>{

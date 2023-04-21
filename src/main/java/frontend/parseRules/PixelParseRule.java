@@ -1,9 +1,9 @@
 package frontend.parseRules;
 
+import ast.ASTNode;
+import ast.PixelAstNode;
 import exceptions.SyntaxErrorException;
 import frontend.ParserContext;
-import frontend.ast.ASTNode;
-import frontend.ast.PixelAstNode;
 import frontend.tokens.Token;
 
 public class PixelParseRule implements ParseRule<PixelAstNode>{

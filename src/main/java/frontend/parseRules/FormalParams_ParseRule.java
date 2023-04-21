@@ -1,9 +1,9 @@
 package frontend.parseRules;
 
+import ast.FormalParameterAstNode;
+import ast.FormalParamsAstNode;
 import exceptions.SyntaxErrorException;
 import frontend.ParserContext;
-import frontend.ast.FormalParameterAstNode;
-import frontend.ast.FormalParamsAstNode;
 import frontend.tokens.Token;
 
 import java.util.ArrayList;

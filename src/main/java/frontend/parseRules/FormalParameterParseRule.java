@@ -1,8 +1,10 @@
 package frontend.parseRules;
 
+import ast.FormalParameterAstNode;
+import ast.IdentifierAstNode;
+import ast.TypeLiteralAstNode;
 import exceptions.SyntaxErrorException;
 import frontend.ParserContext;
-import frontend.ast.*;
 import frontend.tokens.Token;
 
 public class FormalParameterParseRule implements ParseRule<FormalParameterAstNode>{

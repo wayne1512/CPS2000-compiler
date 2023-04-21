@@ -1,9 +1,9 @@
+import ast.ASTNode;
 import exceptions.SyntaxErrorException;
 import frontend.CharacterProvider;
 import frontend.FileCharacterProvider;
 import frontend.Lexer;
 import frontend.Parser;
-import frontend.ast.ASTNode;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

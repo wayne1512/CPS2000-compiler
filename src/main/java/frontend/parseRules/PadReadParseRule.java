@@ -1,9 +1,9 @@
 package frontend.parseRules;
 
+import ast.ASTNode;
+import ast.PadReadAstNode;
 import exceptions.SyntaxErrorException;
 import frontend.ParserContext;
-import frontend.ast.ASTNode;
-import frontend.ast.PadReadAstNode;
 import frontend.tokens.Token;
 
 public class PadReadParseRule implements ParseRule<PadReadAstNode>{

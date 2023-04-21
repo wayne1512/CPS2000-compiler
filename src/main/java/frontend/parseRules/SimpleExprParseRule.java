@@ -1,8 +1,8 @@
 package frontend.parseRules;
 
+import ast.ASTNode;
 import exceptions.SyntaxErrorException;
 import frontend.ParserContext;
-import frontend.ast.ASTNode;
 
 public class SimpleExprParseRule implements ParseRule<ASTNode>{
     @Override

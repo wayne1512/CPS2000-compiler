@@ -1,8 +1,10 @@
 package frontend.parseRules;
 
+import ast.ASTNode;
+import ast.BlockAstNode;
+import ast.IfAstNode;
 import exceptions.SyntaxErrorException;
 import frontend.ParserContext;
-import frontend.ast.*;
 import frontend.tokens.Token;
 
 public class IfParseRule implements ParseRule<IfAstNode>{

@@ -1,10 +1,10 @@
 package frontend.parseRules;
 
+import ast.ASTNode;
+import ast.NegativeAstNode;
+import ast.NotAstNode;
 import exceptions.SyntaxErrorException;
 import frontend.ParserContext;
-import frontend.ast.ASTNode;
-import frontend.ast.NegativeAstNode;
-import frontend.ast.NotAstNode;
 import frontend.tokens.Token;
 
 public class UnaryParseRule implements ParseRule<ASTNode>{

@@ -1,10 +1,10 @@
 package frontend.parseRules;
 
+import ast.ASTNode;
+import ast.BinaryOpAstNode;
+import ast.FactorAstNode;
 import exceptions.SyntaxErrorException;
 import frontend.ParserContext;
-import frontend.ast.ASTNode;
-import frontend.ast.BinaryOpAstNode;
-import frontend.ast.FactorAstNode;
 import frontend.tokens.Token;
 
 public class Term_ParseRule implements ParseRule<ASTNode>{

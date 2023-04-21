@@ -1,10 +1,10 @@
 package frontend.parseRules;
 
+import ast.ActualParamsAstNode;
+import ast.FunctionCallAstNode;
+import ast.IdentifierAstNode;
 import exceptions.SyntaxErrorException;
 import frontend.ParserContext;
-import frontend.ast.ActualParamsAstNode;
-import frontend.ast.FunctionCallAstNode;
-import frontend.ast.IdentifierAstNode;
 import frontend.tokens.Token;
 
 public class FunctionCallParseRule implements ParseRule<FunctionCallAstNode>{

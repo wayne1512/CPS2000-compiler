@@ -1,9 +1,9 @@
 package frontend.parseRules;
 
+import ast.ASTNode;
+import ast.BinaryOpAstNode;
 import exceptions.SyntaxErrorException;
 import frontend.ParserContext;
-import frontend.ast.ASTNode;
-import frontend.ast.BinaryOpAstNode;
 import frontend.tokens.Token;
 
 public class SimpleExpr_ParseRule implements ParseRule<ASTNode>{

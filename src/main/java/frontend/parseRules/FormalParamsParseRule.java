@@ -1,11 +1,9 @@
 package frontend.parseRules;
 
+import ast.FormalParameterAstNode;
+import ast.FormalParamsAstNode;
 import exceptions.SyntaxErrorException;
 import frontend.ParserContext;
-import frontend.ast.ASTNode;
-import frontend.ast.ActualParamsAstNode;
-import frontend.ast.FormalParameterAstNode;
-import frontend.ast.FormalParamsAstNode;
 
 public class FormalParamsParseRule implements ParseRule<FormalParamsAstNode>{
     @Override

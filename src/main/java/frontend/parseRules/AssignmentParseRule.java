@@ -1,10 +1,10 @@
 package frontend.parseRules;
 
+import ast.ASTNode;
+import ast.AssignmentAstNode;
+import ast.IdentifierAstNode;
 import exceptions.SyntaxErrorException;
 import frontend.ParserContext;
-import frontend.ast.ASTNode;
-import frontend.ast.AssignmentAstNode;
-import frontend.ast.IdentifierAstNode;
 import frontend.tokens.Token;
 
 public class AssignmentParseRule implements ParseRule<AssignmentAstNode>{

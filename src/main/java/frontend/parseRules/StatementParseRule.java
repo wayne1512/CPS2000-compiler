@@ -1,9 +1,9 @@
 package frontend.parseRules;
 
+import ast.ASTNode;
+import ast.StatementAstNode;
 import exceptions.SyntaxErrorException;
 import frontend.ParserContext;
-import frontend.ast.ASTNode;
-import frontend.ast.StatementAstNode;
 import frontend.tokens.Token;
 
 public class StatementParseRule implements ParseRule<StatementAstNode>{

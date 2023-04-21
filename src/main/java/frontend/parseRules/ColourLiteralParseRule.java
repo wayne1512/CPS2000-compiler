@@ -1,8 +1,8 @@
 package frontend.parseRules;
 
+import ast.ColourLiteralAstNode;
 import exceptions.SyntaxErrorException;
 import frontend.ParserContext;
-import frontend.ast.ColourLiteralAstNode;
 import frontend.tokens.Token;
 
 public class ColourLiteralParseRule implements ParseRule<ColourLiteralAstNode>{

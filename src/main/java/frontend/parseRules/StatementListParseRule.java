@@ -1,10 +1,9 @@
 package frontend.parseRules;
 
+import ast.StatementAstNode;
+import ast.StatementListAstNode;
 import exceptions.SyntaxErrorException;
 import frontend.ParserContext;
-import frontend.ast.FormalParameterAstNode;
-import frontend.ast.StatementAstNode;
-import frontend.ast.StatementListAstNode;
 
 public class StatementListParseRule implements ParseRule<StatementListAstNode>{
     @Override

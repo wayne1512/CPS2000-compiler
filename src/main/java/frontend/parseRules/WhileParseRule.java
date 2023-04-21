@@ -1,8 +1,10 @@
 package frontend.parseRules;
 
+import ast.ASTNode;
+import ast.BlockAstNode;
+import ast.WhileAstNode;
 import exceptions.SyntaxErrorException;
 import frontend.ParserContext;
-import frontend.ast.*;
 import frontend.tokens.Token;
 
 public class WhileParseRule implements ParseRule<WhileAstNode>{
