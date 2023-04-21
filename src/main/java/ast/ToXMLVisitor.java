@@ -87,13 +87,14 @@ public class ToXMLVisitor implements Visitor<String>{
     }
 
     @Override
-//todo fix indentation
     public String visitFactorAstNode(FactorAstNode n){
-
-            indent++;
-            String s = String.format("<Factor>%s</Factor>", n.child.acceptVisitor(this));
-            indent--;
-            return performIndentation() + s;
+        StringBuilder sb = new StringBuilder();
+        sb.append(performIndentation()).append("<Factor>");
+        indent++;
+        sb.append(n.child.acceptVisitor(this));
+        indent--;
+        sb.append(performIndentation()).append("</Factor>");
+        return sb.toString();
     }
 
     @Override
@@ -156,12 +157,14 @@ public class ToXMLVisitor implements Visitor<String>{
     }
 
     @Override
-//todo fix indentation
     public String visitIdentifierAstNode(IdentifierAstNode n){
+        StringBuilder sb = new StringBuilder();
+        sb.append(performIndentation()).append("<Id>");
         indent++;
-        String s = String.format("<Id>%s</Id>", n.getVal());
+        sb.append(performIndentation()).append(n.getVal());
         indent--;
-        return performIndentation() + s;
+        sb.append(performIndentation()).append("</Id>");
+        return sb.toString();
     }
 
     @Override
@@ -267,28 +270,36 @@ public class ToXMLVisitor implements Visitor<String>{
     @Override
 //todo fix indentation
     public String visitPrintAstNode(PrintAstNode n){
+        StringBuilder sb = new StringBuilder();
+        sb.append(performIndentation()).append("<PadPrint>");
         indent++;
-        String s = String.format("<PadPrint>%s</PadPrint>", n.x.acceptVisitor(this));
+        sb.append(n.x.acceptVisitor(this));
         indent--;
-        return performIndentation() + s;
+        sb.append(performIndentation()).append("</PadPrint>");
+        return sb.toString();
     }
 
     @Override
 //todo fix indentation
     public String visitProgramAstNode(ProgramAstNode n){
+        StringBuilder sb = new StringBuilder();
+        sb.append(performIndentation()).append("<Program>");
         indent++;
-        String s = "<Program>" + n.child.acceptVisitor(this) + "</Program>";
+        sb.append(n.child.acceptVisitor(this));
         indent--;
-        return performIndentation() + s;
+        sb.append(performIndentation()).append("</Program>");
+        return sb.toString();
     }
 
     @Override
-//todo fix indentation
     public String visitReturnAstNode(ReturnAstNode n){
+        StringBuilder sb = new StringBuilder();
+        sb.append(performIndentation()).append("<Return>");
         indent++;
-        String s = String.format("<Return>%s</Return>", n.x.acceptVisitor(this));
+        sb.append(n.x.acceptVisitor(this));
         indent--;
-        return performIndentation() + s;
+        sb.append(performIndentation()).append("</Return>");
+        return sb.toString();
     }
 
     @Override

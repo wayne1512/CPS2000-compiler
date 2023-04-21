@@ -3,6 +3,7 @@ package frontend;
 import ast.ASTNode;
 import exceptions.SyntaxErrorException;
 import frontend.parseRules.ParseRule;
+import frontend.parseRules.ProgramParseRule;
 import frontend.parseRules.StatementListParseRule;
 import frontend.tokens.Token;
 
@@ -30,7 +31,7 @@ public class Parser{
     }
 
     public ASTNode parse() throws SyntaxErrorException{
-        ParseRule<? extends ASTNode> startRule = new StatementListParseRule();
+        ParseRule<? extends ASTNode> startRule = new ProgramParseRule();
 
         return startRule.parse(new ParserContext(this));
     }
