@@ -1,5 +1,6 @@
 package ast;
 
+import backend.Visitor;
 import frontend.CompilerSettings;
 
 public class StatementAstNode extends ASTNode{
@@ -17,5 +18,10 @@ public class StatementAstNode extends ASTNode{
             return String.format("<Statement>%s</Statement>", child);
         } else
             return child.toString();
+    }
+
+    @Override
+    public <R> R acceptVisitor(Visitor<R> visitor){
+        return visitor.visitStatementAstNode(this);
     }
 }

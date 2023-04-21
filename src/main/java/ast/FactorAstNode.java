@@ -1,5 +1,6 @@
 package ast;
 
+import backend.Visitor;
 import frontend.CompilerSettings;
 
 public class FactorAstNode extends ASTNode{
@@ -15,6 +16,11 @@ public class FactorAstNode extends ASTNode{
             return String.format("<Factor>%s</Factor>", child);
         } else
             return child.toString();
+    }
+
+    @Override
+    public <R> R acceptVisitor(Visitor<R> visitor){
+        return visitor.visitFactorAstNode(this);
     }
 
 }

@@ -1,5 +1,7 @@
 package ast;
 
+import backend.Visitor;
+
 public class FunDeclAstNode extends ASTNode{
     IdentifierAstNode identifier;
     FormalParamsAstNode params;
@@ -19,4 +21,8 @@ public class FunDeclAstNode extends ASTNode{
         return String.format("<FunctionDecl>%s%s%s%s</FunctionDecl>", identifier,params,type,codeBlock);
     }
 
+    @Override
+    public <R> R acceptVisitor(Visitor<R> visitor){
+        return visitor.visitFunDeclAstNode(this);
+    }
 }

@@ -1,5 +1,7 @@
 package ast;
 
+import backend.Visitor;
+
 public class BooleanLiteralAstNode extends ASTNode{
     private final boolean val;
 
@@ -15,5 +17,10 @@ public class BooleanLiteralAstNode extends ASTNode{
     @Override
     public String toString(){
         return String.format("<Bool>%b</Bool>", val);
+    }
+
+    @Override
+    public <R> R acceptVisitor(Visitor<R> visitor){
+        return visitor.visitBooleanLiteralAstNode(this);
     }
 }

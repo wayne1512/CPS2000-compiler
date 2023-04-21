@@ -1,5 +1,7 @@
 package ast;
 
+import backend.Visitor;
+
 public class WhileAstNode extends ASTNode{
     ASTNode expr;
     BlockAstNode block;
@@ -15,4 +17,8 @@ public class WhileAstNode extends ASTNode{
         return String.format("<For>%s%s</For>", expr,block);
     }
 
+    @Override
+    public <R> R acceptVisitor(Visitor<R> visitor){
+        return visitor.visitWhileAstNode(this);
+    }
 }

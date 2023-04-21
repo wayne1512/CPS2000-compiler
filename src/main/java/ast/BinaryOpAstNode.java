@@ -1,5 +1,7 @@
 package ast;
 
+import backend.Visitor;
+
 public class BinaryOpAstNode extends ASTNode{
 
 
@@ -21,6 +23,11 @@ public class BinaryOpAstNode extends ASTNode{
         return String.format("<BinaryOp type = \"%s\">%s%s</BinaryOp>", opType.humanReadableName, left, right);
     }
 
+
+    @Override
+    public <R> R acceptVisitor(Visitor<R> visitor){
+        return visitor.visitBinaryOpAstNode(this);
+    }
 
     public enum OpType{
         mul("*"),
@@ -47,6 +54,7 @@ public class BinaryOpAstNode extends ASTNode{
             this.humanReadableName = humanReadableName;
         }
     }
+
 
 
 }

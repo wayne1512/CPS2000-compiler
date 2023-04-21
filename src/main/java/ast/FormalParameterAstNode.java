@@ -1,5 +1,7 @@
 package ast;
 
+import backend.Visitor;
+
 public class FormalParameterAstNode extends ASTNode{
     IdentifierAstNode identifier;
     ASTNode type;
@@ -14,4 +16,8 @@ public class FormalParameterAstNode extends ASTNode{
         return String.format("<FormalParam>%s%s</FormalParam>", identifier,type);
     }
 
+    @Override
+    public <R> R acceptVisitor(Visitor<R> visitor){
+        return visitor.visitFormalParameterAstNode(this);
+    }
 }

@@ -1,5 +1,7 @@
 package ast;
 
+import backend.Visitor;
+
 public class FunctionCallAstNode extends ASTNode{
     IdentifierAstNode identifier;
     ActualParamsAstNode params;
@@ -15,4 +17,8 @@ public class FunctionCallAstNode extends ASTNode{
         return String.format("<FunctionCall>%s%s</FunctionCall>", identifier,params);
     }
 
+    @Override
+    public <R> R acceptVisitor(Visitor<R> visitor){
+        return visitor.visitFunctionCallAstNode(this);
+    }
 }

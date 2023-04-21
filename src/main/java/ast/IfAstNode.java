@@ -1,5 +1,7 @@
 package ast;
 
+import backend.Visitor;
+
 public class IfAstNode extends ASTNode{
     ASTNode condition;
     BlockAstNode thenBlock;
@@ -18,4 +20,8 @@ public class IfAstNode extends ASTNode{
         return String.format("<If>%s%s%s</If>", condition,thenBlock,elseBlock);
     }
 
+    @Override
+    public <R> R acceptVisitor(Visitor<R> visitor){
+        return visitor.visitIfAstNode(this);
+    }
 }

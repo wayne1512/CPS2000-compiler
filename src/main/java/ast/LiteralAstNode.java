@@ -1,5 +1,6 @@
 package ast;
 
+import backend.Visitor;
 import frontend.CompilerSettings;
 
 public class LiteralAstNode extends ASTNode{
@@ -17,5 +18,10 @@ public class LiteralAstNode extends ASTNode{
             return String.format("<Literal>%s</Literal>", child);
         } else
             return child.toString();
+    }
+
+    @Override
+    public <R> R acceptVisitor(Visitor<R> visitor){
+        return visitor.visitLiteralAstNode(this);
     }
 }

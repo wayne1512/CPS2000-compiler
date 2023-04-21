@@ -1,5 +1,7 @@
 package ast;
 
+import backend.Visitor;
+
 public class TypeLiteralAstNode extends ASTNode{
     private final Type val;
 
@@ -15,6 +17,11 @@ public class TypeLiteralAstNode extends ASTNode{
     @Override
     public String toString(){
         return String.format("<Type>%s</Type>", val);
+    }
+
+    @Override
+    public <R> R acceptVisitor(Visitor<R> visitor){
+        return visitor.visitTypeLiteralAstNode(this);
     }
 
     public enum Type{

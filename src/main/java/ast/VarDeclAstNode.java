@@ -1,5 +1,7 @@
 package ast;
 
+import backend.Visitor;
+
 public class VarDeclAstNode extends ASTNode{
     IdentifierAstNode identifier;
     ASTNode type;
@@ -18,4 +20,8 @@ public class VarDeclAstNode extends ASTNode{
         return String.format("<VarDecl>%s%s%s</VarDecl>", identifier,type,expr);
     }
 
+    @Override
+    public <R> R acceptVisitor(Visitor<R> visitor){
+        return visitor.visitVarDeclAstNode(this);
+    }
 }

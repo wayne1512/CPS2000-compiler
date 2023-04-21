@@ -1,5 +1,7 @@
 package ast;
 
+import backend.Visitor;
+
 public class ForAstNode extends ASTNode{
     VarDeclAstNode decl;
     ASTNode expr;
@@ -19,4 +21,8 @@ public class ForAstNode extends ASTNode{
         return String.format("<For>%s%s%s%s</For>", decl,expr,assignment,block);
     }
 
+    @Override
+    public <R> R acceptVisitor(Visitor<R> visitor){
+        return visitor.visitForAstNode(this);
+    }
 }

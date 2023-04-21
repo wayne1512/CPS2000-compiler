@@ -1,5 +1,7 @@
 package ast;
 
+import backend.Visitor;
+
 public class IdentifierAstNode extends ASTNode{
     private final String val;
 
@@ -15,5 +17,10 @@ public class IdentifierAstNode extends ASTNode{
     @Override
     public String toString(){
         return String.format("<Id>%s</Id>", val);
+    }
+
+    @Override
+    public <R> R acceptVisitor(Visitor<R> visitor){
+        return visitor.visitIdentifierAstNode(this);
     }
 }

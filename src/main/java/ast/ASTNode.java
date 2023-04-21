@@ -1,5 +1,7 @@
 package ast;
 
+import backend.Visitor;
+
 public abstract class ASTNode{
     //start and end in source code - used to debug compiler and error if needed
     long sourceStart, sourceEnd;
@@ -19,4 +21,8 @@ public abstract class ASTNode{
 
     @Override
     public abstract String toString();
+
+    public abstract <R> R acceptVisitor(Visitor<R> visitor);
+
+
 }

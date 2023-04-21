@@ -1,5 +1,7 @@
 package ast;
 
+import backend.Visitor;
+
 public class NegativeAstNode extends ASTNode{
 
     ASTNode child;
@@ -12,5 +14,10 @@ public class NegativeAstNode extends ASTNode{
     @Override
     public String toString(){
         return String.format("<Negative>%s</Negative>", child);
+    }
+
+    @Override
+    public <R> R acceptVisitor(Visitor<R> visitor){
+        return visitor.visitNegativeAstNode(this);
     }
 }

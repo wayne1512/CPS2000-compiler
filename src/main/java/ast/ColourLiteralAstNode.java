@@ -1,5 +1,7 @@
 package ast;
 
+import backend.Visitor;
+
 public class ColourLiteralAstNode extends ASTNode{
     private final String val;
 
@@ -15,5 +17,10 @@ public class ColourLiteralAstNode extends ASTNode{
     @Override
     public String toString(){
         return String.format("<Colour>%s</Colour>", val);
+    }
+
+    @Override
+    public <R> R acceptVisitor(Visitor<R> visitor){
+        return visitor.visitColourLiteralAstNode(this);
     }
 }
