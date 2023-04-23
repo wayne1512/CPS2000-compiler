@@ -3,7 +3,7 @@ package ast;
 import backend.Visitor;
 
 public class FactorAstNode extends ASTNode{
-    ASTNode child;
+    public ASTNode child;
 
     public FactorAstNode(long sourceStart, long sourceEnd, ASTNode child){
         super(sourceStart, sourceEnd);

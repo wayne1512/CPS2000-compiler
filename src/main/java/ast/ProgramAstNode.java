@@ -3,7 +3,7 @@ package ast;
 import backend.Visitor;
 
 public class ProgramAstNode extends ASTNode{
-    StatementListAstNode child;
+    public StatementListAstNode child;
 
     public ProgramAstNode(long sourceStart, long sourceEnd, StatementListAstNode child){
         super(sourceStart, sourceEnd);

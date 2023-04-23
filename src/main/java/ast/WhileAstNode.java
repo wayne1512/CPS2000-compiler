@@ -3,8 +3,8 @@ package ast;
 import backend.Visitor;
 
 public class WhileAstNode extends ASTNode{
-    ASTNode expr;
-    BlockAstNode block;
+    public ASTNode expr;
+    public BlockAstNode block;
 
     public WhileAstNode(long sourceStart, long sourceEnd, ASTNode expr, BlockAstNode block){
         super(sourceStart, sourceEnd);

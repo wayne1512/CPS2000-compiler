@@ -3,8 +3,8 @@ package ast;
 import backend.Visitor;
 
 public class AssignmentAstNode extends ASTNode{
-    IdentifierAstNode identifier;
-    ASTNode expr;
+    public IdentifierAstNode identifier;
+    public ASTNode expr;
 
     public AssignmentAstNode(long sourceStart, long sourceEnd, IdentifierAstNode identifier, ASTNode expr) {
         super(sourceStart, sourceEnd);

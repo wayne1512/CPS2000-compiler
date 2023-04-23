@@ -3,10 +3,10 @@ package ast;
 import backend.Visitor;
 
 public class FunDeclAstNode extends ASTNode{
-    IdentifierAstNode identifier;
-    FormalParamsAstNode params;
-    TypeLiteralAstNode type;
-    BlockAstNode codeBlock;
+    public IdentifierAstNode identifier;
+    public FormalParamsAstNode params;
+    public TypeLiteralAstNode type;
+    public BlockAstNode codeBlock;
 
     public FunDeclAstNode(long sourceStart, long sourceEnd, IdentifierAstNode identifier, FormalParamsAstNode params, TypeLiteralAstNode type, BlockAstNode codeBlock){
         super(sourceStart, sourceEnd);

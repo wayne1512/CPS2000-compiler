@@ -3,10 +3,10 @@ package ast;
 import backend.Visitor;
 
 public class IfAstNode extends ASTNode{
-    ASTNode condition;
-    BlockAstNode thenBlock;
+    public ASTNode condition;
+    public BlockAstNode thenBlock;
 
-    BlockAstNode elseBlock;
+    public BlockAstNode elseBlock;
 
     public IfAstNode(long sourceStart, long sourceEnd, ASTNode condition, BlockAstNode thenBlock, BlockAstNode elseBlock){
         super(sourceStart, sourceEnd);

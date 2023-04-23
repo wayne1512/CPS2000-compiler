@@ -3,10 +3,10 @@ package ast;
 import backend.Visitor;
 
 public class ForAstNode extends ASTNode{
-    VarDeclAstNode decl;
-    ASTNode expr;
-    AssignmentAstNode assignment;
-    BlockAstNode block;
+    public VarDeclAstNode decl;
+    public ASTNode expr;
+    public AssignmentAstNode assignment;
+    public BlockAstNode block;
 
     public ForAstNode(long sourceStart, long sourceEnd, VarDeclAstNode decl, ASTNode expr, AssignmentAstNode assignment, BlockAstNode block){
         super(sourceStart, sourceEnd);

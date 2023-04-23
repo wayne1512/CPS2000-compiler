@@ -3,8 +3,8 @@ package ast;
 import backend.Visitor;
 
 public class FunctionCallAstNode extends ASTNode{
-    IdentifierAstNode identifier;
-    ActualParamsAstNode params;
+    public IdentifierAstNode identifier;
+    public ActualParamsAstNode params;
 
     public FunctionCallAstNode(long sourceStart, long sourceEnd, IdentifierAstNode identifier, ActualParamsAstNode params){
         super(sourceStart, sourceEnd);

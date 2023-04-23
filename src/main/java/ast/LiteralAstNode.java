@@ -4,7 +4,7 @@ import backend.Visitor;
 
 public class LiteralAstNode extends ASTNode{
 
-    ASTNode child;
+    public ASTNode child;
 
     public LiteralAstNode(long sourceStart, long sourceEnd, ASTNode child){
         super(sourceStart, sourceEnd);

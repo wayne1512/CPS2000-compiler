@@ -1,5 +1,5 @@
 import ast.ASTNode;
-import ast.ToXMLVisitor;
+import backend.ToXMLVisitor;
 import exceptions.SyntaxErrorException;
 import frontend.CharacterProvider;
 import frontend.FileCharacterProvider;

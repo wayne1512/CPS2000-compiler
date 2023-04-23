@@ -1,5 +1,6 @@
-package ast;
+package backend;
 
+import ast.*;
 import backend.Visitor;
 
 import java.util.Arrays;
@@ -69,7 +70,7 @@ public class ToXMLVisitor implements Visitor<String>{
         StringBuilder sb = new StringBuilder();
         sb.append(performIndentation()).append("<Bool>");
         indent++;
-        sb.append(performIndentation()).append(n.val);
+        sb.append(performIndentation()).append(n.getVal());
         indent--;
         sb.append(performIndentation()).append("</Bool>");
         return sb.toString();

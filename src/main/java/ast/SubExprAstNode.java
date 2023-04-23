@@ -4,7 +4,7 @@ import backend.Visitor;
 
 public class SubExprAstNode extends ASTNode{
 
-    ASTNode child;
+    public ASTNode child;
 
     public SubExprAstNode(long sourceStart, long sourceEnd, ASTNode child){
         super(sourceStart, sourceEnd);

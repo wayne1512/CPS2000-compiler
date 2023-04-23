@@ -4,7 +4,7 @@ import backend.Visitor;
 
 public class NotAstNode extends ASTNode{
 
-    ASTNode child;
+    public ASTNode child;
 
     public NotAstNode(long sourceStart, long sourceEnd, ASTNode child){
         super(sourceStart, sourceEnd);

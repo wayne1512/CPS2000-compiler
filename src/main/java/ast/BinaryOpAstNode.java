@@ -5,11 +5,11 @@ import backend.Visitor;
 public class BinaryOpAstNode extends ASTNode{
 
 
-    OpType opType;
+    public OpType opType;
 
     //temporarily allows any node
-    ASTNode left;
-    ASTNode right;
+    public ASTNode left;
+    public ASTNode right;
 
     public BinaryOpAstNode(long sourceStart, long sourceEnd, OpType opType, ASTNode left, ASTNode right){
         super(sourceStart, sourceEnd);
@@ -43,7 +43,7 @@ public class BinaryOpAstNode extends ASTNode{
         GTE(">=");
 
 
-        final String humanReadableName;
+        public final String humanReadableName;
 
         OpType(String humanReadableName){
             this.humanReadableName = humanReadableName;

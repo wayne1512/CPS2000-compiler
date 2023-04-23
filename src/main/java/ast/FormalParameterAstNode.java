@@ -3,8 +3,8 @@ package ast;
 import backend.Visitor;
 
 public class FormalParameterAstNode extends ASTNode{
-    IdentifierAstNode identifier;
-    ASTNode type;
+    public IdentifierAstNode identifier;
+    public ASTNode type;
     public FormalParameterAstNode(long sourceStart, long sourceEnd, IdentifierAstNode identifier, ASTNode type) {
         super(sourceStart, sourceEnd);
         this.identifier = identifier;
