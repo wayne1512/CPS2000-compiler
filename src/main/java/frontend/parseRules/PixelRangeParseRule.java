@@ -1,7 +1,7 @@
 package frontend.parseRules;
 
 import ast.ASTNode;
-import ast.PixelRangeAstNode;
+import ast.nodes.PixelRangeAstNode;
 import exceptions.SyntaxErrorException;
 import frontend.ParserContext;
 import frontend.tokens.Token;

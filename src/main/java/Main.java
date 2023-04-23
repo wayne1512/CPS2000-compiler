@@ -1,4 +1,7 @@
 import ast.ASTNode;
+import ast.nodes.ColourLiteralAstNode;
+import ast.nodes.LiteralAstNode;
+import backend.Sematic.SemanticVisitor;
 import backend.ToXMLVisitor;
 import exceptions.SyntaxErrorException;
 import frontend.CharacterProvider;
@@ -14,6 +17,13 @@ public class Main{
 
         final String dir = System.getProperty("user.dir");
         System.out.println("current dir = " + dir);
+
+        SemanticVisitor semanticVisitor = new SemanticVisitor();
+        ASTNode r = new LiteralAstNode(0,0,new ColourLiteralAstNode(0,0,"#123123"));
+
+        SemanticVisitor.VisitResult res = r.acceptVisitor(semanticVisitor);
+        System.out.println(res);
+
 
         try (CharacterProvider cp = new FileCharacterProvider("in.txt")) {
 

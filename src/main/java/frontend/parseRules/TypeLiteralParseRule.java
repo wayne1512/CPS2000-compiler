@@ -1,6 +1,7 @@
 package frontend.parseRules;
 
-import ast.TypeLiteralAstNode;
+import ast.Type;
+import ast.nodes.TypeLiteralAstNode;
 import exceptions.SyntaxErrorException;
 import frontend.ParserContext;
 import frontend.tokens.Token;
@@ -10,20 +11,20 @@ public class TypeLiteralParseRule implements ParseRule<TypeLiteralAstNode>{
     public TypeLiteralAstNode parse(ParserContext pc) throws SyntaxErrorException{
         Token t = pc.consumeTokenSkipComments();
 
-        TypeLiteralAstNode.Type val = null;
+        Type val = null;
 
         switch (t.getLexeme()) {
             case "float":
-                val = TypeLiteralAstNode.Type.Float;
+                val = Type.Float;
                 break;
             case "int":
-                val = TypeLiteralAstNode.Type.Int;
+                val = Type.Int;
                 break;
             case "bool":
-                val = TypeLiteralAstNode.Type.Bool;
+                val = Type.Bool;
                 break;
             case "colour":
-                val = TypeLiteralAstNode.Type.Colour;
+                val = Type.Colour;
                 break;
         }
 

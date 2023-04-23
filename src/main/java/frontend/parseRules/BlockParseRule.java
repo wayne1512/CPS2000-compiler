@@ -1,7 +1,7 @@
 package frontend.parseRules;
 
-import ast.BlockAstNode;
-import ast.StatementListAstNode;
+import ast.nodes.BlockAstNode;
+import ast.nodes.StatementListAstNode;
 import exceptions.SyntaxErrorException;
 import frontend.ParserContext;
 import frontend.tokens.Token;

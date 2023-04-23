@@ -1,6 +1,6 @@
 package backend;
 
-import ast.*;
+import ast.nodes.*;
 
 /**
  *

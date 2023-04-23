@@ -1,8 +1,8 @@
 package frontend.parseRules;
 
 import ast.ASTNode;
-import ast.BlockAstNode;
-import ast.WhileAstNode;
+import ast.nodes.BlockAstNode;
+import ast.nodes.WhileAstNode;
 import exceptions.SyntaxErrorException;
 import frontend.ParserContext;
 import frontend.tokens.Token;

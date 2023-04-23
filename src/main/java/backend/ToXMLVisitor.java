@@ -1,7 +1,7 @@
 package backend;
 
 import ast.*;
-import backend.Visitor;
+import ast.nodes.*;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;

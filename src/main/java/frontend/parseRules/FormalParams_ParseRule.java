@@ -1,7 +1,7 @@
 package frontend.parseRules;
 
-import ast.FormalParameterAstNode;
-import ast.FormalParamsAstNode;
+import ast.nodes.FormalParameterAstNode;
+import ast.nodes.FormalParamsAstNode;
 import exceptions.SyntaxErrorException;
 import frontend.ParserContext;
 import frontend.tokens.Token;
