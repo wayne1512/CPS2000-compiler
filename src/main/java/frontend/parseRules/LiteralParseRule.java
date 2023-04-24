@@ -1,6 +1,7 @@
 package frontend.parseRules;
 
 import ast.ASTNode;
+import ast.nodes.ColourLiteralAstNode;
 import ast.nodes.LiteralAstNode;
 import exceptions.SyntaxErrorException;
 import frontend.ParserContext;
@@ -26,7 +27,7 @@ public class LiteralParseRule implements ParseRule<LiteralAstNode>{
                 child = new FloatLiteralParseRule().parse(pc);
                 break;
             case Colour:
-                child = new TypeLiteralParseRule().parse(pc);
+                child = new ColourLiteralParseRule().parse(pc);
                 break;
             case PadWidth:
                 child = new PadWidthParseRule().parse(pc);

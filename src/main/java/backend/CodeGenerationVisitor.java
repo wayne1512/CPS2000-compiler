@@ -1,11 +1,9 @@
 package backend;
 
+import ast.ASTNode;
 import ast.nodes.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.StringJoiner;
+import java.util.*;
 
 public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.VisitResult>{
     @Override
@@ -45,7 +43,7 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
 
     @Override
     public VisitResult visitFactorAstNode(FactorAstNode n){
-        return null;
+        return n.child.acceptVisitor(this);
     }
 
     @Override
@@ -97,7 +95,7 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
     //pushed the literal to the OP stack
     public VisitResult visitLiteralAstNode(LiteralAstNode n){
         VisitResult visitResult = n.child.acceptVisitor(this);
-        return new VisitResult(new String[]{"push " + visitResult.instructions[0]});
+        return new VisitResult(new String[]{"push " + visitResult.instructions[0]+debugComment(n)});
     }
 
     @Override
@@ -145,7 +143,7 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
     public VisitResult visitPrintAstNode(PrintAstNode n){
         VisitResult visitResult = n.x.acceptVisitor(this);
         List<String> instructions = new ArrayList<>(Arrays.asList(visitResult.instructions));
-        instructions.add("print");
+        instructions.add("print"+debugComment(n));
         return new VisitResult(instructions.toArray(new String[0]));
     }
 
@@ -165,12 +163,22 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
 
     @Override
     public VisitResult visitStatementAstNode(StatementAstNode n){
-        return null;
+        return n.child.acceptVisitor(this);
     }
 
     @Override
     public VisitResult visitStatementListAstNode(StatementListAstNode n){
-        return null;
+        List<String> instructions = new ArrayList<>();
+
+        for (StatementAstNode statement : n.children) {
+
+            VisitResult childVisitResult = statement.acceptVisitor(this);
+
+            instructions.addAll(Arrays.asList(childVisitResult.instructions));
+        }
+
+        return new VisitResult(instructions.toArray(new String[0]));
+
     }
 
     @Override
@@ -192,10 +200,14 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
     public VisitResult visitWhileAstNode(WhileAstNode n){
         return null;
     }
+    
+    public String debugComment(ASTNode n){
+        return String.format(Locale.US,"    //(%d-%d) %s",n.getSourceStart(),n.getSourceEnd(),n.getClass().getSimpleName());
+    }
 
     public static class VisitResult{
 
-        String[] instructions;
+        public String[] instructions;
 
         public VisitResult(String[] instructions){
             this.instructions = instructions;

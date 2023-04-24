@@ -1,6 +1,7 @@
 import ast.ASTNode;
 import ast.nodes.ColourLiteralAstNode;
 import ast.nodes.LiteralAstNode;
+import backend.CodeGenerationVisitor;
 import backend.Sematic.SemanticVisitor;
 import backend.ToXMLVisitor;
 import exceptions.SyntaxErrorException;
@@ -30,7 +31,19 @@ public class Main{
             Lexer lexer = new Lexer(cp);
             Parser parser = new Parser(lexer);
             ASTNode root = parser.parse();
+
+
+
             System.out.println(root.acceptVisitor(new ToXMLVisitor()));
+
+            //perform a semantic check pass
+            root.acceptVisitor(new SemanticVisitor());
+
+            //generate the code
+            String[] generated = root.acceptVisitor(new CodeGenerationVisitor()).instructions;
+            for (String s : generated) {
+                System.out.println(s);
+            }
 
 
         } catch (IOException e) {
