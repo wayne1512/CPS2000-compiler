@@ -2,7 +2,9 @@ package backend;
 
 import ast.nodes.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.StringJoiner;
 
 public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.VisitResult>{
@@ -92,8 +94,10 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
     }
 
     @Override
+    //pushed the literal to the OP stack
     public VisitResult visitLiteralAstNode(LiteralAstNode n){
-        return null;
+        VisitResult visitResult = n.child.acceptVisitor(this);
+        return new VisitResult(new String[]{"push " + visitResult.instructions[0]});
     }
 
     @Override
@@ -137,13 +141,21 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
     }
 
     @Override
+    //prints the value at the top of the OP stack
     public VisitResult visitPrintAstNode(PrintAstNode n){
-        return null;
+        VisitResult visitResult = n.x.acceptVisitor(this);
+        List<String> instructions = new ArrayList<>(Arrays.asList(visitResult.instructions));
+        instructions.add("print");
+        return new VisitResult(instructions.toArray(new String[0]));
     }
 
     @Override
     public VisitResult visitProgramAstNode(ProgramAstNode n){
-        return null;
+        VisitResult visitResult = n.child.acceptVisitor(this);
+        List<String> instructions = new ArrayList<>(Arrays.asList(".main"));
+        instructions.addAll(Arrays.asList(visitResult.instructions));
+        instructions.add("halt");
+        return new VisitResult(instructions.toArray(new String[0]));
     }
 
     @Override
