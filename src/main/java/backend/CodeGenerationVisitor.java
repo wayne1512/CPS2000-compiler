@@ -2,6 +2,7 @@ package backend;
 
 import ast.ASTNode;
 import ast.nodes.*;
+import org.apache.commons.lang3.NotImplementedException;
 
 import java.util.*;
 
@@ -18,7 +19,60 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
 
     @Override
     public VisitResult visitBinaryOpAstNode(BinaryOpAstNode n){
-        return null;
+        VisitResult visitResultL = n.left.acceptVisitor(this);
+        VisitResult visitResultR = n.right.acceptVisitor(this);
+        List<String> instructions = new ArrayList<>();
+
+        instructions.addAll(Arrays.asList(visitResultL.instructions));
+        instructions.addAll(Arrays.asList(visitResultR.instructions));
+
+
+        String op = " ";
+
+        switch (n.opType){
+            case mul:
+                op = "mul";
+                break;
+            case div:
+                op = "div";
+                break;
+            case add:
+                op = "add";
+                break;
+            case sub:
+                op="sub";
+                break;
+            case LT:
+                op="lt";
+                break;
+            case LTE:
+                op ="le";
+                break;
+            case GT:
+                op = "gt";
+                break;
+            case GTE:
+                op = "ge";
+                break;
+            case EQ:
+                op = "eq";
+                break;
+            case NE:
+                op="neq";
+                break;
+            case and:
+                op = "and";
+                break;
+            case or:
+                op="or";
+                break;
+            default:
+                throw new NotImplementedException();
+        }
+
+        instructions.add(op+debugComment(n));
+
+        return new VisitResult(instructions.toArray(new String[0]));
     }
 
     @Override
@@ -100,12 +154,19 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
 
     @Override
     public VisitResult visitNegativeAstNode(NegativeAstNode n){
-        return null;
+        VisitResult visitResult = n.child.acceptVisitor(this);
+        List<String> instructions = new ArrayList<>(Arrays.asList(visitResult.instructions));
+        instructions.add("push -1 // *-1 for negative");
+        instructions.add("mul"+debugComment(n));
+        return new VisitResult(instructions.toArray(new String[0]));
     }
 
     @Override
     public VisitResult visitNotAstNode(NotAstNode n){
-        return null;
+        VisitResult visitResult = n.child.acceptVisitor(this);
+        List<String> instructions = new ArrayList<>(Arrays.asList(visitResult.instructions));
+        instructions.add("not");
+        return new VisitResult(instructions.toArray(new String[0]));
     }
 
     @Override

@@ -183,7 +183,7 @@ public class Lexer{
             Character c = cp.next();
 
             if (lexeme.length() == 0 && c != null){
-                while (Character.isWhitespace(c))
+                while (c!=null && Character.isWhitespace(c))
                     c = cp.next();
                 tokenStart = cp.getPointer();
             }
