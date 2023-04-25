@@ -19,12 +19,13 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
 
     @Override
     public VisitResult visitBinaryOpAstNode(BinaryOpAstNode n){
-        VisitResult visitResultL = n.left.acceptVisitor(this);
         VisitResult visitResultR = n.right.acceptVisitor(this);
+        VisitResult visitResultL = n.left.acceptVisitor(this);
+
         List<String> instructions = new ArrayList<>();
 
-        instructions.addAll(Arrays.asList(visitResultL.instructions));
         instructions.addAll(Arrays.asList(visitResultR.instructions));
+        instructions.addAll(Arrays.asList(visitResultL.instructions));
 
 
         String op = " ";
