@@ -13,6 +13,9 @@ public class ParserContext{
     public Token consumeTokenSkipComments() throws SyntaxErrorException{
         Token t = null;
         do{
+            //end of file
+            if (p.lookahead(0) == null)
+                return null;
             t = p.consumeToken();
         }while (t.getType() == Token.TokenType.SingleLineComment || t.getType() == Token.TokenType.MultiLineComment);
 

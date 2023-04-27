@@ -118,7 +118,10 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
 
     @Override
     public VisitResult visitDelayAstNode(DelayAstNode n){
-        return null;
+        VisitResult visitResult = n.x.acceptVisitor(this);
+        List<String> instructions = new ArrayList<>(Arrays.asList(visitResult.instructions));
+        instructions.add("delay"+debugComment(n));
+        return new VisitResult(instructions.toArray(new String[0]));
     }
 
     @Override
@@ -175,7 +178,7 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
             }
         }
 
-        throw new RuntimeException("memory address for identifier "+ n.getVal() +"was not found, this should have been caught by the semantic analyzer");
+        throw new RuntimeException("memory address for identifier '"+ n.getVal() +"' was not found, this should have been caught by the semantic analyzer");
 
     }
 
@@ -193,6 +196,12 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
     //pushed the literal to the OP stack
     public VisitResult visitLiteralAstNode(LiteralAstNode n){
         VisitResult visitResult = n.child.acceptVisitor(this);
+
+        if (n.child instanceof PadWidthAstNode||n.child instanceof PadHeightAstNode||n.child instanceof PadRandiAstNode)
+            //exception for width, height and randi as they do not need the push command
+            return visitResult;
+
+
         return new VisitResult(new String[]{"push " + visitResult.instructions[0]+debugComment(n)});
     }
 
@@ -215,12 +224,15 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
 
     @Override
     public VisitResult visitPadHeightAstNode(PadHeightAstNode n){
-        return null;
+        return new VisitResult(new String[]{"height"});
     }
 
     @Override
     public VisitResult visitPadRandiAstNode(PadRandiAstNode n){
-        return null;
+        VisitResult visitResult = n.x.acceptVisitor(this);
+        List<String> instructions = new ArrayList<>(Arrays.asList(visitResult.instructions));
+        instructions.add("irnd"+debugComment(n));
+        return new VisitResult(instructions.toArray(new String[0]));
     }
 
     @Override
@@ -230,17 +242,37 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
 
     @Override
     public VisitResult visitPadWidthAstNode(PadWidthAstNode n){
-        return null;
+        return new VisitResult(new String[]{"width"});
     }
 
     @Override
     public VisitResult visitPixelAstNode(PixelAstNode n){
-        return null;
+
+        List<String> instructions = new ArrayList<>();
+
+        instructions.addAll(Arrays.asList(n.colour.acceptVisitor(this).instructions));
+        instructions.addAll(Arrays.asList(n.y.acceptVisitor(this).instructions));
+        instructions.addAll(Arrays.asList(n.x.acceptVisitor(this).instructions));
+
+        instructions.add("pixel" + debugComment(n));
+
+        return new VisitResult(instructions.toArray(new String[0]));
+
     }
 
     @Override
     public VisitResult visitPixelRangeAstNode(PixelRangeAstNode n){
-        return null;
+        List<String> instructions = new ArrayList<>();
+
+        instructions.addAll(Arrays.asList(n.colour.acceptVisitor(this).instructions));
+        instructions.addAll(Arrays.asList(n.height.acceptVisitor(this).instructions));
+        instructions.addAll(Arrays.asList(n.width.acceptVisitor(this).instructions));
+        instructions.addAll(Arrays.asList(n.y.acceptVisitor(this).instructions));
+        instructions.addAll(Arrays.asList(n.x.acceptVisitor(this).instructions));
+
+        instructions.add("pixelr" + debugComment(n));
+
+        return new VisitResult(instructions.toArray(new String[0]));
     }
 
     @Override
@@ -306,7 +338,7 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
 
     @Override
     public VisitResult visitSubExprAstNode(SubExprAstNode n){
-        return null;
+        return n.child.acceptVisitor(this);
     }
 
     @Override
@@ -351,10 +383,6 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
         public String[] instructions;
 
         public VisitResult(String[] instructions){
-            this.instructions = instructions;
-        }
-
-        public VisitResult(String[] instructions, Stack<HashMap<String, Type>> memory){
             this.instructions = instructions;
         }
 

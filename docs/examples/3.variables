@@ -1,0 +1,14 @@
+let i:integer = 5;
+let f:float = 2.0;
+let c:colour = #ffffff;
+let b:boolean = false;
+__print i;
+__print f;
+__print c;
+__print b;
+{
+    __print i;
+    __print f;
+    __print c;
+    __print b;
+}
