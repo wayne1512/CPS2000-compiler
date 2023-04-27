@@ -1,12 +1,18 @@
 package backend;
 
 import ast.ASTNode;
+import ast.Type;
 import ast.nodes.*;
 import org.apache.commons.lang3.NotImplementedException;
 
 import java.util.*;
 
 public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.VisitResult>{
+
+
+    //to be used as a symbol table
+    Stack<List<String>> memory = new Stack<>();
+
     @Override
     public VisitResult visitActualParamsAstNode(ActualParamsAstNode n){
         return null;
@@ -78,7 +84,26 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
 
     @Override
     public VisitResult visitBlockAstNode(BlockAstNode n){
-        return null;
+        //open new frame in symbol table
+        memory.push(new ArrayList<>());
+
+
+        VisitResult visitResult = n.child.acceptVisitor(this);
+
+
+
+
+        List<String> instructions = new ArrayList<>();
+
+
+        //open a stack frame and remove the frame from the symbol table
+        instructions.add("push " + memory.pop().size() + " // stack frame for program");
+        instructions.add("oframe"+debugComment(n));
+        instructions.addAll(Arrays.asList(visitResult.instructions));
+        //close the stack frame
+        instructions.add("cframe");
+
+        return new VisitResult(instructions.toArray(new String[0]));
     }
 
     @Override
@@ -133,7 +158,25 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
 
     @Override
     public VisitResult visitIdentifierAstNode(IdentifierAstNode n){
-        return null;
+
+
+        int frameIndex = 0;
+        int indexInFrame = 0;
+
+
+        for (int i = memory.size() - 1; i >= 0; i--){
+            List<String> frame = memory.get(i);
+
+            //if found in this frame
+            if (frame.contains(n.getVal())){
+                indexInFrame = frame.indexOf(n.getVal());
+                frameIndex = memory.size() - (i + 1);
+                return new VisitResult(new String[]{"push ["+indexInFrame+":"+frameIndex+"]" + debugComment(n)});
+            }
+        }
+
+        throw new RuntimeException("memory address for identifier "+ n.getVal() +"was not found, this should have been caught by the semantic analyzer");
+
     }
 
     @Override
@@ -211,10 +254,28 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
 
     @Override
     public VisitResult visitProgramAstNode(ProgramAstNode n){
+
+        //open new frame in symbol table
+        memory.push(new ArrayList<>());
+
+
         VisitResult visitResult = n.child.acceptVisitor(this);
+
+
+
+
         List<String> instructions = new ArrayList<>(Arrays.asList(".main"));
+
+
+        //open a stack frame and remove the frame from the symbol table
+        instructions.add("push " + memory.pop().size() + " // stack frame for program");
+        instructions.add("oframe");
         instructions.addAll(Arrays.asList(visitResult.instructions));
+        //close the stack frame
+        instructions.add("cframe");
+        //halt
         instructions.add("halt");
+
         return new VisitResult(instructions.toArray(new String[0]));
     }
 
@@ -255,7 +316,25 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
 
     @Override
     public VisitResult visitVarDeclAstNode(VarDeclAstNode n){
-        return null;
+        List<String> instructions = new ArrayList<>();
+
+        VisitResult exprVisitRes = n.expr.acceptVisitor(this);
+
+        String identifier = n.identifier.getVal();
+
+        //add it to the symbol table
+        memory.peek().add(identifier);
+
+        //push the result of the expr
+        instructions.addAll(Arrays.asList(exprVisitRes.instructions));
+
+        instructions.add("push " + memory.peek().indexOf(identifier) +" //index of " +identifier);
+        instructions.add("push 0" + "//in stack frame 0");
+        instructions.add("st" + debugComment(n));
+
+
+
+        return new VisitResult(instructions.toArray(new String[0]));
     }
 
     @Override
@@ -272,6 +351,10 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
         public String[] instructions;
 
         public VisitResult(String[] instructions){
+            this.instructions = instructions;
+        }
+
+        public VisitResult(String[] instructions, Stack<HashMap<String, Type>> memory){
             this.instructions = instructions;
         }
 
