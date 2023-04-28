@@ -208,7 +208,7 @@ public class ToXMLVisitor implements Visitor<String>{
         indent++;
         sb.append(n.condition.acceptVisitor(this));
         sb.append(n.thenBlock.acceptVisitor(this));
-        sb.append(n.elseBlock.acceptVisitor(this));
+        sb.append(n.elseBlock !=null?n.elseBlock.acceptVisitor(this):simulateVisitNullNode());
         indent--;
         sb.append(performIndentation()).append("</If>");
         return sb.toString();

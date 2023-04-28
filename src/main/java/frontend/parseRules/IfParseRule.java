@@ -31,8 +31,12 @@ public class IfParseRule implements ParseRule<IfAstNode>{
 
         BlockAstNode elseBlock = null;
         Token elseToken = pc.lookaheadSkipComments(0);
-        if (elseToken.getType() == Token.TokenType.Else)
+        if (elseToken.getType() == Token.TokenType.Else){
+            //consume else
+            pc.consumeTokenSkipComments();
+
             elseBlock = new BlockParseRule().parse(pc);
+        }
 
         //get the end of the astnode
         long srsEnd = elseBlock!=null?elseBlock.getSourceEnd():thenBlock.getSourceEnd();

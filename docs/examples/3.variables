@@ -13,8 +13,8 @@ __print b;
     __print b;
 
     i = 10;
-    f = 10.0;
-    c = #00000A;
+    f = 10.1;
+    c = #00000F;
     b = true;
 
     __print i;

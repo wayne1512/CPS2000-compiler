@@ -126,7 +126,7 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
 
 
         //open a stack frame and remove the frame from the symbol table
-        instructions.add("push " + memory.pop().size() + " // stack frame for program");
+        instructions.add("push " + memory.pop().size() + " // stack frame for block");
         instructions.add("oframe"+debugComment(n));
         instructions.addAll(Arrays.asList(visitResult.instructions));
         //close the stack frame
@@ -211,9 +211,45 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
 
     }
 
+
+    /*
+    * condition
+    push location of start of then block [A]
+    cjmp to 'then' block - if condition was true
+    * else block (or empty if the else was not specified)
+    push location of instruction after the 'then' block ends [B]
+    jmp to skip the 'then' block
+    * [A] then block
+    [B]...
+
+     */
     @Override
     public VisitResult visitIfAstNode(IfAstNode n){
-        return null;
+        VisitResult conditionVisitRes = n.condition.acceptVisitor(this);
+        VisitResult thenVisitRes = n.thenBlock.acceptVisitor(this);
+        VisitResult elseVisitRes = null;
+
+        List<String> thenInstructions = Arrays.asList(thenVisitRes.instructions);
+        List<String> elseInstructions = new ArrayList<>();
+
+        if (n.elseBlock != null){
+            elseVisitRes = n.elseBlock.acceptVisitor(this);
+            elseInstructions.addAll(Arrays.asList(elseVisitRes.instructions));
+        }
+        elseInstructions.add("push #PC+" + (thenInstructions.size()+2)); //skip then block and go to the instruction AFTER the then block
+        elseInstructions.add("jmp //end else block");
+
+        List<String> instructions = new ArrayList<>(Arrays.asList(conditionVisitRes.instructions));
+
+        int elseLength = elseInstructions.size();
+        instructions.add("push #PC+"+ (elseLength+2)); //skip else block and go directly to then block
+        instructions.add("cjmp2" + debugComment(n));
+        instructions.addAll(elseInstructions);
+        instructions.addAll(thenInstructions);
+
+
+        return new VisitResult(instructions.toArray(new String[0]));
+
     }
 
     @Override
