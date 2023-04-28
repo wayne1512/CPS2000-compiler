@@ -1,7 +1,7 @@
 __print 2+1; //3
 __print 10+-5; //5
 __print 37-40; //-3
-__print 2.0/3.0; //1.5
+__print 2.0/3.0; //0.6666...
 __print 2*3; //6
 __print 2*-4; //-8
 __print true or true; //true
