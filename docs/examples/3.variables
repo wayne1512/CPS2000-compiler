@@ -11,4 +11,14 @@ __print b;
     __print f;
     __print c;
     __print b;
+
+    i = 10;
+    f = 10.0;
+    c = #00000A;
+    b = true;
+
+    __print i;
+    __print f;
+    __print c;
+    __print b;
 }

@@ -20,7 +20,36 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
 
     @Override
     public VisitResult visitAssignmentAstNode(AssignmentAstNode n){
-        return null;
+
+        List<String> instructions = new ArrayList<>();
+
+        VisitResult exprVisitRes = n.expr.acceptVisitor(this);
+
+        String identifier = n.identifier.getVal();
+
+        int frameIndex = 0;
+        int indexInFrame = 0;
+
+
+        for (int i = memory.size() - 1; i >= 0; i--){
+            List<String> frame = memory.get(i);
+
+            //if found in this frame
+            if (frame.contains(identifier)){
+                indexInFrame = frame.indexOf(identifier);
+                frameIndex = memory.size() - (i + 1);
+            }
+        }
+        //push the result of the expr
+        instructions.addAll(Arrays.asList(exprVisitRes.instructions));
+
+        instructions.add("push " + indexInFrame +" //index of " +identifier);
+        instructions.add("push " + frameIndex + "//in stack frame");
+        instructions.add("st" + debugComment(n));
+
+
+
+        return new VisitResult(instructions.toArray(new String[0]));
     }
 
     @Override

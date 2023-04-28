@@ -1,11 +1,24 @@
-__pixel 5,10,#ff0000; //red pixel
+let i:integer = 5;
+let f:float = 2.0;
+let c:colour = #ffffff;
+let b:boolean = false;
+__print i;
+__print f;
+__print c;
+__print b;
+{
+    __print i;
+    __print f;
+    __print c;
+    __print b;
 
-//fill top right corner with green
-let width:integer = __width;
-let height:integer = __height;
-__pixelr width/2,height/2,width-1,height-1,#00FF00;
+    i = 10;
+    f = 10.1;
+    c = #00000F;
+    b = true;
 
-__delay 5000;
-
-//set a random pixel in the bottom right corner to blue
-__pixel __randi 5, __randi 5, #0000FF;
+    __print i;
+    __print f;
+    __print c;
+    __print b;
+}
