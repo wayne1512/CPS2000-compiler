@@ -1,7 +1,6 @@
 package backend;
 
 import ast.ASTNode;
-import ast.Type;
 import ast.nodes.*;
 import org.apache.commons.lang3.NotImplementedException;
 
@@ -21,8 +20,6 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
     @Override
     public VisitResult visitAssignmentAstNode(AssignmentAstNode n){
 
-        List<String> instructions = new ArrayList<>();
-
         VisitResult exprVisitRes = n.expr.acceptVisitor(this);
 
         String identifier = n.identifier.getVal();
@@ -41,7 +38,7 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
             }
         }
         //push the result of the expr
-        instructions.addAll(Arrays.asList(exprVisitRes.instructions));
+        List<String> instructions = new ArrayList<>(Arrays.asList(exprVisitRes.instructions));
 
         instructions.add("push " + indexInFrame +" //index of " +identifier);
         instructions.add("push " + frameIndex + "//in stack frame");
@@ -63,7 +60,7 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
         instructions.addAll(Arrays.asList(visitResultL.instructions));
 
 
-        String op = " ";
+        String op;
 
         switch (n.opType){
             case mul:
@@ -163,9 +160,52 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
         return new VisitResult(new String[]{String.valueOf(n.getVal())});
     }
 
+    /*
+    * decl
+    * [A] expr
+    not
+    push location of to the 1st instruction after block [B]
+    cjmp2 to [B] - if expr was false
+    * block
+    * assignment
+    push location of expr [A]
+    jmp to [A]
+    [B] ...
+     */
     @Override
     public VisitResult visitForAstNode(ForAstNode n){
-        return null;
+        List<String> instructions = new ArrayList<>();
+
+
+
+        if (n.decl != null){
+            VisitResult decVisit = n.decl.acceptVisitor(this);
+            instructions.addAll(Arrays.asList(decVisit.instructions));//add declaration to start
+        }
+
+
+        VisitResult condition = n.expr.acceptVisitor(this);
+        VisitResult block = n.block.acceptVisitor(this);
+
+        List<String> conditionInstructions = new ArrayList<>(Arrays.asList(condition.instructions));
+        List<String> blockInstructions = new ArrayList<>(Arrays.asList(block.instructions));
+
+        if (n.assignment != null){
+            VisitResult assVisit = n.assignment.acceptVisitor(this);
+            blockInstructions.addAll(Arrays.asList(assVisit.instructions)); //add assignment to end of block
+        }
+
+        blockInstructions.add("push #PC-"+(blockInstructions.size()+3+conditionInstructions.size()));
+        blockInstructions.add("jmp");
+
+        conditionInstructions.add("not");
+        conditionInstructions.add("push #PC+"+(blockInstructions.size()+2));
+        conditionInstructions.add("cjmp2"+debugComment(n));
+
+        instructions.addAll(conditionInstructions);
+        instructions.addAll(blockInstructions);
+
+        return new VisitResult(instructions.toArray(new String[0]));
     }
 
     @Override
@@ -192,8 +232,8 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
     public VisitResult visitIdentifierAstNode(IdentifierAstNode n){
 
 
-        int frameIndex = 0;
-        int indexInFrame = 0;
+        int frameIndex;
+        int indexInFrame;
 
 
         for (int i = memory.size() - 1; i >= 0; i--){
@@ -215,7 +255,7 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
     /*
     * condition
     push location of start of then block [A]
-    cjmp to 'then' block - if condition was true
+    cjmp2 to 'then' block - if condition was true
     * else block (or empty if the else was not specified)
     push location of instruction after the 'then' block ends [B]
     jmp to skip the 'then' block
@@ -227,7 +267,7 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
     public VisitResult visitIfAstNode(IfAstNode n){
         VisitResult conditionVisitRes = n.condition.acceptVisitor(this);
         VisitResult thenVisitRes = n.thenBlock.acceptVisitor(this);
-        VisitResult elseVisitRes = null;
+        VisitResult elseVisitRes;
 
         List<String> thenInstructions = Arrays.asList(thenVisitRes.instructions);
         List<String> elseInstructions = new ArrayList<>();
@@ -361,7 +401,7 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
 
 
 
-        List<String> instructions = new ArrayList<>(Arrays.asList(".main"));
+        List<String> instructions = new ArrayList<>(Collections.singletonList(".main"));
 
 
         //open a stack frame and remove the frame from the symbol table
@@ -413,7 +453,6 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
 
     @Override
     public VisitResult visitVarDeclAstNode(VarDeclAstNode n){
-        List<String> instructions = new ArrayList<>();
 
         VisitResult exprVisitRes = n.expr.acceptVisitor(this);
 
@@ -423,7 +462,7 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
         memory.peek().add(identifier);
 
         //push the result of the expr
-        instructions.addAll(Arrays.asList(exprVisitRes.instructions));
+        List<String> instructions = new ArrayList<>(Arrays.asList(exprVisitRes.instructions));
 
         instructions.add("push " + memory.peek().indexOf(identifier) +" //index of " +identifier);
         instructions.add("push 0" + "//in stack frame 0");
@@ -434,9 +473,38 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
         return new VisitResult(instructions.toArray(new String[0]));
     }
 
+    /*
+    * [A] expr
+    not
+    push location of to the 1st instruction after block [B]
+    cjmp2 to [B] - if expr was false
+    * block
+    push location of expr [A]
+    jmp to [A]
+    [B] ...
+     */
     @Override
     public VisitResult visitWhileAstNode(WhileAstNode n){
-        return null;
+
+        List<String> instructions = new ArrayList<>();
+
+        VisitResult condition = n.expr.acceptVisitor(this);
+        VisitResult block = n.block.acceptVisitor(this);
+
+        List<String> conditionInstructions = new ArrayList<>(Arrays.asList(condition.instructions));
+        List<String> blockInstructions = new ArrayList<>(Arrays.asList(block.instructions));
+
+        blockInstructions.add("push #PC-"+(blockInstructions.size()+3+conditionInstructions.size()));
+        blockInstructions.add("jmp");
+
+        conditionInstructions.add("not");
+        conditionInstructions.add("push #PC+"+(blockInstructions.size()+2));
+        conditionInstructions.add("cjmp2"+debugComment(n));
+
+        instructions.addAll(conditionInstructions);
+        instructions.addAll(blockInstructions);
+
+        return new VisitResult(instructions.toArray(new String[0]));
     }
     
     public String debugComment(ASTNode n){
