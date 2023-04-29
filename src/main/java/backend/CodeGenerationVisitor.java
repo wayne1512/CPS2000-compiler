@@ -12,9 +12,26 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
     //to be used as a symbol table
     Stack<List<String>> memory = new Stack<>();
 
+    List<List<String>> compiledFunctions = new ArrayList<>();
+
     @Override
     public VisitResult visitActualParamsAstNode(ActualParamsAstNode n){
-        return null;
+        List<String> instructions = new ArrayList<>();
+
+        List<ASTNode> children = new ArrayList<>(Arrays.asList(n.children));
+        //reverse the children[] so that to fit the call instruction
+        Collections.reverse(children);
+
+        for (ASTNode param : children) {
+
+            VisitResult childVisitResult = param.acceptVisitor(this);
+
+            instructions.addAll(Arrays.asList(childVisitResult.instructions));
+        }
+
+        instructions.add("push "+instructions.size()+" //param count");
+
+        return new VisitResult(instructions.toArray(new String[0]));
     }
 
     @Override
@@ -113,14 +130,9 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
         //open new frame in symbol table
         memory.push(new ArrayList<>());
 
-
         VisitResult visitResult = n.child.acceptVisitor(this);
 
-
-
-
         List<String> instructions = new ArrayList<>();
-
 
         //open a stack frame and remove the frame from the symbol table
         instructions.add("push " + memory.pop().size() + " // stack frame for block");
@@ -210,22 +222,64 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
 
     @Override
     public VisitResult visitFormalParameterAstNode(FormalParameterAstNode n){
-        return null;
+        return new VisitResult(new String[]{n.identifier.getVal()});
     }
 
     @Override
     public VisitResult visitFormalParamsAstNode(FormalParamsAstNode n){
-        return null;
+
+        //holds the parameter
+        ArrayList<String> paramMemoryFrame = new ArrayList<>();
+
+        for (FormalParameterAstNode param : n.children){
+            VisitResult visitResult = param.acceptVisitor(this);
+
+            //add the identifier of the param
+            paramMemoryFrame.add(visitResult.instructions[0]);
+        }
+
+        //add the memory frame to the symbol-table
+        memory.add(paramMemoryFrame);
+
+        return new VisitResult(new String[0]);
     }
 
     @Override
     public VisitResult visitFunctionCallAstNode(FunctionCallAstNode n){
-        return null;
+
+        VisitResult actualParamsResult = n.params.acceptVisitor(this);
+
+        List<String> instructions = new ArrayList<>(Arrays.asList(actualParamsResult.instructions));
+
+        instructions.add("push ."+n.identifier.getVal() + debugComment(n));
+        instructions.add("call");
+
+        return new VisitResult(instructions.toArray(new String[0]));
+
     }
 
     @Override
     public VisitResult visitFunDeclAstNode(FunDeclAstNode n){
-        return null;
+        //setup symbol table, ignore result as it has no important data
+        n.params.acceptVisitor(this);
+
+        List<String> instructions = new ArrayList<>();
+
+        instructions.add("."+n.identifier.getVal() + debugComment(n));
+
+        VisitResult blockRes = n.codeBlock.acceptVisitor(this);
+
+        instructions.addAll(Arrays.asList(blockRes.instructions));
+
+
+        //close the param stack frame from symbol table
+        memory.pop();
+
+        //add to compiled functions
+        compiledFunctions.add(instructions);
+
+        //return no instructions as the instructions will be added to compiledFunctions instead
+        return new VisitResult(new String[0]);
     }
 
     @Override
@@ -342,7 +396,14 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
 
     @Override
     public VisitResult visitPadReadAstNode(PadReadAstNode n){
-        return null;
+        List<String> instructions = new ArrayList<>();
+
+        instructions.addAll(Arrays.asList(n.y.acceptVisitor(this).instructions));
+        instructions.addAll(Arrays.asList(n.x.acceptVisitor(this).instructions));
+
+        instructions.add("read" + debugComment(n));
+
+        return new VisitResult(instructions.toArray(new String[0]));
     }
 
     @Override
@@ -413,12 +474,28 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
         //halt
         instructions.add("halt");
 
+        //add all the compiled functions
+        for (List<String> compiledFunction : compiledFunctions){
+            instructions.add("\n");
+            instructions.addAll(compiledFunction);
+        }
+
         return new VisitResult(instructions.toArray(new String[0]));
     }
 
     @Override
     public VisitResult visitReturnAstNode(ReturnAstNode n){
-        return null;
+        VisitResult childVisit = n.x.acceptVisitor(this);
+
+        List<String> instructions = new ArrayList<>(Arrays.asList(childVisit.instructions));
+
+        //close the frame
+        instructions.add("cframe");
+        instructions.add("ret");
+
+        return new VisitResult(instructions.toArray(new String[0]));
+
+
     }
 
     @Override

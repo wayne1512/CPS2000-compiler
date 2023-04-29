@@ -1,0 +1,10 @@
+/*print 1 5 and 10*/
+
+let res:integer = doStuff(1);
+
+fun doStuff(i:integer)->integer{
+    __print i;
+    return 10;
+}
+
+__print doStuff(5);

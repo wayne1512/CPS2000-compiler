@@ -1,5 +1,7 @@
 package frontend;
 
+import exceptions.LineNumberProvider;
+
 import java.io.Closeable;
 
 public interface CharacterProvider extends Closeable{
@@ -13,4 +15,6 @@ public interface CharacterProvider extends Closeable{
     long getPointer();
 
     void rewind();
+
+    LineNumberProvider createLineNumberProvider();
 }

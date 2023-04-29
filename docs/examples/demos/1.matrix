@@ -59,19 +59,19 @@ fun matrix(w:integer, h:integer, c_background:colour)->integer{
             __delay pixelDelay;
 
         }
-        
+
         for(let j:integer = 0;j<length2;j=j+1){
             __pixel col,currentY,c2;
             currentY = currentY -1;
             __delay pixelDelay;
         }
-        
+
         for(let k:integer = 0;k<length3;k=k+1){
             __pixel col,currentY,c3;
             currentY = currentY -1;
             __delay pixelDelay;
         }
-        
+
         for(let l:integer = 0;l<length4;l=l+1){
             __pixel col,currentY,c4;
             currentY = currentY -1;

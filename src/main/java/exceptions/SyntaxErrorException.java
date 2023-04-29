@@ -3,11 +3,14 @@ package exceptions;
 public class SyntaxErrorException extends Exception{
 
     long from, to;
+    String fromFormatted, toFormatted;
 
-    public SyntaxErrorException(String message, long from, long to){
+    public SyntaxErrorException(LineNumberProvider lineNumberProvider,String message, long from, long to){
         super(message);
         this.from = from;
         this.to = to;
+        fromFormatted = lineNumberProvider.get(from);
+        toFormatted = lineNumberProvider.get(to);
     }
 
     public long getFrom(){
@@ -20,6 +23,6 @@ public class SyntaxErrorException extends Exception{
 
     @Override
     public String getMessage(){
-        return super.getMessage() + " in position (" + from + "-" + to + ")";
+        return super.getMessage() + " in position (" + fromFormatted + "-" + toFormatted + ")";
     }
 }

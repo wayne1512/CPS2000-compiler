@@ -19,10 +19,20 @@ public class StatementParseRule implements ParseRule<StatementAstNode>{
                 child = new VarDeclParseRule().parse(pc);
                 consumeSemicolon(pc);
                 break;
-            case Identifier:
-                child = new AssignmentParseRule().parse(pc);
+            case Identifier: {
+                //check if it is a variable or a function call
+                Token t1 = pc.lookaheadSkipComments(1);
+
+                if (t1.getType() == Token.TokenType.BracOpen)
+                    //function
+                    child = new FunctionCallParseRule().parse(pc);
+                else
+                    //variable
+                    child = new AssignmentParseRule().parse(pc);
                 consumeSemicolon(pc);
+
                 break;
+            }
             case Print:
                 child = new PrintParseRule().parse(pc);
                 consumeSemicolon(pc);

@@ -1,5 +1,7 @@
 package frontend;
 
+import exceptions.LineNumberProvider;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -45,5 +47,41 @@ public class FileCharacterProvider implements CharacterProvider{
     @Override
     public void close() throws IOException{
         raf.close();
+    }
+
+    @Override
+    public LineNumberProvider createLineNumberProvider(){
+        return new LineNumberProvider(){
+            @Override
+            public String get(long charPos){
+
+                try {
+                    long oldPos = getPointer();
+
+                    raf.seek(0);
+
+
+                    int lineNumber = 0;
+
+                    long startPosOfCurrentLine = 0;
+                    while (raf.getFilePointer() < charPos){
+                        lineNumber++;
+                        startPosOfCurrentLine = raf.getFilePointer();
+                        raf.readLine();
+                    }
+
+                    //restore raf
+                    raf.seek(oldPos);
+
+                    return String.format("[%d:%d]",lineNumber,charPos-startPosOfCurrentLine);
+
+
+                } catch (IOException e) {
+                    return "position "+charPos;
+                }
+
+
+            }
+        };
     }
 }

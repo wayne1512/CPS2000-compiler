@@ -214,14 +214,22 @@ public class Lexer{
         while (!acceptedStates.containsKey(currentState) && currentState != null){
             //error - the lexeme is empty, yet we are not in a valid state
             if (lexeme.length() == 0)
-                throw new SyntaxErrorException("unknown token \"" + originalLexeme + "\"", tokenStart, tokenStart + originalLexeme.length());
+                throwLexerError(tokenStart, tokenStart + originalLexeme.length(), originalLexeme);
 
             currentState = stateStack.pop();
             lexeme.deleteCharAt(lexeme.length() - 1);
             cp.rewind();
         }
 
-        return new Token(acceptedStates.get(currentState).getType(lexeme.toString()), tokenStart, cp.getPointer(), lexeme.toString());
+        Token token = new Token(acceptedStates.get(currentState).getType(lexeme.toString()), tokenStart, cp.getPointer(), lexeme.toString());
+        if (token.getType() == null)
+            throwLexerError(tokenStart, tokenStart + originalLexeme.length(), originalLexeme);
+
+        return token;
+    }
+
+    private void throwLexerError(long tokenStart,long tokenEnd, String originalLexeme) throws SyntaxErrorException{
+        throw new SyntaxErrorException(cp.createLineNumberProvider(),"unknown token \"" + originalLexeme + "\"", tokenStart, tokenEnd);
     }
 
     private static String getCharClass(Character c) {
