@@ -1,5 +1,6 @@
 package frontend;
 
+import exceptions.LineNumberProvider;
 import exceptions.SyntaxErrorException;
 import frontend.tokens.Token;
 import frontend.tokens.Token.TokenType;
@@ -181,6 +182,11 @@ class LexerTest{
         @Override
         public void rewind(){
             ptr--;
+        }
+
+        @Override
+        public LineNumberProvider createLineNumberProvider(){
+            return charPos -> Long.toString(charPos);
         }
 
         @Override
