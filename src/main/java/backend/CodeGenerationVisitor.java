@@ -2,6 +2,7 @@ package backend;
 
 import ast.ASTNode;
 import ast.nodes.*;
+import exceptions.LineNumberProvider;
 import org.apache.commons.lang3.NotImplementedException;
 
 import java.util.*;
@@ -13,6 +14,12 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
     Stack<List<String>> memory = new Stack<>();
 
     List<List<String>> compiledFunctions = new ArrayList<>();
+
+    LineNumberProvider lineNumberProvider;
+
+    public CodeGenerationVisitor(LineNumberProvider lineNumberProvider){
+        this.lineNumberProvider = lineNumberProvider;
+    }
 
     @Override
     public VisitResult visitActualParamsAstNode(ActualParamsAstNode n){
@@ -585,7 +592,7 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
     }
     
     public String debugComment(ASTNode n){
-        return String.format(Locale.US,"    //(%d-%d) %s",n.getSourceStart(),n.getSourceEnd(),n.getClass().getSimpleName());
+        return String.format(Locale.US,"    //(%s-%s) %s",lineNumberProvider.get(n.getSourceStart()),lineNumberProvider.get(n.getSourceEnd()),n.getClass().getSimpleName());
     }
 
     public static class VisitResult{

@@ -14,7 +14,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class Main{
-    public static void main(String[] args) throws FileNotFoundException{
+    public static void main(String[] args){
 
         final String dir = System.getProperty("user.dir");
         System.out.println("current dir = " + dir);
@@ -40,7 +40,7 @@ public class Main{
             root.acceptVisitor(new SemanticVisitor());
 
             //generate the code
-            String[] generated = root.acceptVisitor(new CodeGenerationVisitor()).instructions;
+            String[] generated = root.acceptVisitor(new CodeGenerationVisitor(cp.createLineNumberProvider())).instructions;
             for (String s : generated) {
                 System.out.println(s);
             }

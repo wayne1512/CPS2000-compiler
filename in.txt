@@ -1,85 +1,13 @@
-let w:integer = __width;
-let h:integer = __height;
+/*print 1 5 and 10*/
 
-let clearCol:colour = #000000;
+let res:integer = doStuff(1);
 
-__print clear(w,h,clearCol);
-__print matrix(w,h,clearCol);
+let x:integer = 20;
 
-
-fun clear(w:integer, h:integer, c:colour)->integer{
-    for(let i:integer = 0; i < w; i=i+1){
-        for(let j:integer = 0; j < h; j=j+1){
-            __pixel i,j,c;
-        }
-    }
-    return 0;
+fun doStuff(i:integer)->integer{
+    let x:integer = 5;
+    __print x;
+    return 10;
 }
 
-fun matrix(w:integer, h:integer, c_background:colour)->integer{
-
-    let c1:colour = #204829;
-    let c2:colour = #22b455;
-    let c3:colour = #80ce86;
-    let c4:colour = #92e5a1;
-
-    while(true){
-        //pick a random column
-        let col:integer = __randi w;
-
-        //clear the column
-        __pixelr col,0,1,h,c_background;
-
-        let totalLen:integer = (__randi (3*h/4))+h/4; //total length of strip (minimum of 1/4 the height)
-        let halfLen:integer = __randi totalLen; //sum of first 2 strips
-
-        let length1:integer = __randi halfLen;
-        let length2:integer = halfLen - length1;
-
-        let bottomHalfLen:integer = totalLen - halfLen;
-
-        let length3:integer = __randi bottomHalfLen;
-        let length4:integer = bottomHalfLen - length3;
-
-        __print 1000000000; //marker for debugging
-        __print col;
-        __print length1;
-        __print length2;
-        __print length3;
-        __print length4;
-        __print totalLen;
-
-        let pixelDelay: float = (__randi 1000) * (2/100); //max of 20ms per pixel
-
-        let currentY:float = h-1;
-
-        for(let i:integer = 0;i<length1;i=i+1){
-            __pixel col,currentY,c1;
-            currentY = currentY -1;
-            __delay pixelDelay;
-
-        }
-        
-        for(let j:integer = 0;j<length2;j=j+1){
-            __pixel col,currentY,c2;
-            currentY = currentY -1;
-            __delay pixelDelay;
-        }
-        
-        for(let k:integer = 0;k<length3;k=k+1){
-            __pixel col,currentY,c3;
-            currentY = currentY -1;
-            __delay pixelDelay;
-        }
-        
-        for(let l:integer = 0;l<length4;l=l+1){
-            __pixel col,currentY,c4;
-            currentY = currentY -1;
-            __delay pixelDelay;
-        }
-
-        __delay 500;
-    }
-
-    return 0;
-}
+__print x;
