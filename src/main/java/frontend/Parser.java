@@ -33,7 +33,12 @@ public class Parser{
     public ASTNode parse() throws SyntaxErrorException{
         ParseRule<? extends ASTNode> startRule = new ProgramParseRule();
 
-        return startRule.parse(new ParserContext(this));
+        try {
+            return startRule.parse(new ParserContext(this));
+        } catch (NullPointerException e) {
+            //caused by lexer returning null due to end of file
+            throw new SyntaxErrorException(lexer.cp.createLineNumberProvider(),"Expected more token but the end of file was unexpectedly reached (missing a closing bracket or semicolon?)",0,lexer.cp.getPointer());
+        }
     }
 
 

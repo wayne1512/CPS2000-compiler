@@ -8,6 +8,6 @@ fun doStuff(i:integer)->integer{
     let x:integer = 5;
     __print x;
     return 10;
-}
 
-__print x;
+}
+__print x
