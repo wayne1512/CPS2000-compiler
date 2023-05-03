@@ -36,7 +36,7 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
             instructions.addAll(Arrays.asList(childVisitResult.instructions));
         }
 
-        instructions.add("push "+instructions.size()+" //param count");
+        instructions.add("push "+children.size()+" //param count");
 
         return new VisitResult(instructions.toArray(new String[0]));
     }

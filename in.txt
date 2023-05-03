@@ -1,13 +1,36 @@
-/*print 1 5 and 10*/
-
-let res:integer = doStuff(1);
-
-let x:integer = 20;
-
-fun doStuff(i:integer)->integer{
-    let x:integer = 5;
-    __print x;
-    return 10;
-
+while(true){
+    __delay square(0,0,__width,__height,0) * 1000;
 }
-__print x
+
+fun square(x:integer, y:integer, w:integer, h:integer,colorId:integer)->integer{
+    if((w < 1) or (h < 1)){
+        return 0;
+    }
+
+    let newColorId:integer = colorId;
+
+    if(colorId > 2){
+        newColorId = 0;
+    }
+
+
+    let c:colour = #ffffff;
+
+    if(newColorId == 0){
+        c = #ff0000;
+    }
+
+    if(newColorId == 1){
+        c = #00ff00;
+    }
+
+    if(newColorId == 2){
+        c = #0000ff;
+    }
+
+    __pixelr x,y,w,h,c;
+    __delay 100;
+
+    let res:integer = square(x+1,y+1,w-2,h-2,newColorId+1);
+    return res+1;
+}
