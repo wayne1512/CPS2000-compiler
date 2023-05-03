@@ -59,6 +59,7 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
             if (frame.contains(identifier)){
                 indexInFrame = frame.indexOf(identifier);
                 frameIndex = memory.size() - (i + 1);
+                break;
             }
         }
         //push the result of the expr
@@ -236,19 +237,16 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
     public VisitResult visitFormalParamsAstNode(FormalParamsAstNode n){
 
         //holds the parameter
-        ArrayList<String> paramMemoryFrame = new ArrayList<>();
+        ArrayList<String> params = new ArrayList<>();
 
         for (FormalParameterAstNode param : n.children){
             VisitResult visitResult = param.acceptVisitor(this);
 
             //add the identifier of the param
-            paramMemoryFrame.add(visitResult.instructions[0]);
+            params.add(visitResult.instructions[0]);
         }
 
-        //add the memory frame to the symbol-table
-        memory.add(paramMemoryFrame);
-
-        return new VisitResult(new String[0]);
+        return new VisitResult(params.toArray(new String[0]));
     }
 
     @Override
@@ -259,6 +257,7 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
         List<String> instructions = new ArrayList<>(Arrays.asList(actualParamsResult.instructions));
 
         instructions.add("push ."+n.identifier.getVal() + debugComment(n));
+
         instructions.add("call");
 
         return new VisitResult(instructions.toArray(new String[0]));
@@ -267,8 +266,9 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
 
     @Override
     public VisitResult visitFunDeclAstNode(FunDeclAstNode n){
-        //setup symbol table, ignore result as it has no important data
-        n.params.acceptVisitor(this);
+        VisitResult paramsRes =  n.params.acceptVisitor(this);
+        //open a stack frame for the parameters
+        memory.push(Arrays.asList(paramsRes.instructions));
 
         List<String> instructions = new ArrayList<>();
 
