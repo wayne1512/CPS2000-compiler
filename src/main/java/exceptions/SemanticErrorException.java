@@ -1,11 +1,11 @@
 package exceptions;
 
-public class SyntaxErrorException extends RuntimeException{
+public class SemanticErrorException extends RuntimeException{
 
     long from, to;
     String fromFormatted, toFormatted;
 
-    public SyntaxErrorException(LineNumberProvider lineNumberProvider,String message, long from, long to){
+    public SemanticErrorException(LineNumberProvider lineNumberProvider, String message, long from, long to){
         super(message);
         this.from = from;
         this.to = to;

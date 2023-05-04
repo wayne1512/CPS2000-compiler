@@ -1,14 +1,26 @@
 package backend.Sematic;
 
+import ast.ASTNode;
 import ast.Type;
 import ast.nodes.*;
 import backend.Visitor;
+import exceptions.LineNumberProvider;
+import exceptions.SemanticErrorException;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import java.util.StringJoiner;
+import java.util.*;
 
 public class SemanticVisitor implements Visitor<SemanticVisitor.VisitResult>{
 
+    Stack<List<VarSymbol>> symbolTable = new Stack<>();
+    //number of frames reachable from the current node being traversed.
+    public int frameReach = 0;
+
+    public LineNumberProvider lineNumberProvider;
+
+    public SemanticVisitor(LineNumberProvider lineNumberProvider){
+        this.lineNumberProvider = lineNumberProvider;
+    }
 
     @Override
     public VisitResult visitActualParamsAstNode(ActualParamsAstNode n){
@@ -42,12 +54,14 @@ public class SemanticVisitor implements Visitor<SemanticVisitor.VisitResult>{
 
     @Override
     public VisitResult visitDelayAstNode(DelayAstNode n){
-        return null;
+        VisitResult childVisitRes = n.x.acceptVisitor(this);
+        assertType(new Type[]{Type.Int},childVisitRes.type,n.x);
+        return new VisitResult(null);
     }
 
     @Override
     public VisitResult visitFactorAstNode(FactorAstNode n){
-        return null;
+        return n.child.acceptVisitor(this);
     }
 
     @Override
@@ -106,12 +120,17 @@ public class SemanticVisitor implements Visitor<SemanticVisitor.VisitResult>{
 
     @Override
     public VisitResult visitNegativeAstNode(NegativeAstNode n){
-        return null;
+        VisitResult childVisitRes = n.child.acceptVisitor(this);
+        assertType(new Type[]{Type.Float,Type.Int},childVisitRes.type,n.child);
+        //type is same as child's type
+        return new VisitResult(childVisitRes.type);
     }
 
     @Override
     public VisitResult visitNotAstNode(NotAstNode n){
-        return null;
+        VisitResult childVisitRes = n.child.acceptVisitor(this);
+        assertType(new Type[]{Type.Bool},childVisitRes.type,n.child);
+        return new VisitResult(Type.Bool);
     }
 
     @Override
@@ -146,12 +165,24 @@ public class SemanticVisitor implements Visitor<SemanticVisitor.VisitResult>{
 
     @Override
     public VisitResult visitPrintAstNode(PrintAstNode n){
-        return null;
+        n.x.acceptVisitor(this);
+        return new VisitResult(null);
     }
 
     @Override
     public VisitResult visitProgramAstNode(ProgramAstNode n){
-        return null;
+        //create new frame in symbol table
+        symbolTable.push(new ArrayList<>());
+        frameReach ++;
+
+        //check the semantics of the child
+        n.child.acceptVisitor(this);
+
+        //pop frame in symbol table
+        symbolTable.pop();
+        frameReach --;
+
+        return new VisitResult(null);
     }
 
     @Override
@@ -161,12 +192,17 @@ public class SemanticVisitor implements Visitor<SemanticVisitor.VisitResult>{
 
     @Override
     public VisitResult visitStatementAstNode(StatementAstNode n){
-        return null;
+        //check the child
+        return n.child.acceptVisitor(this);
     }
 
     @Override
     public VisitResult visitStatementListAstNode(StatementListAstNode n){
-        return null;
+        for (StatementAstNode child : n.children){
+            //check the semantics of each child
+            child.acceptVisitor(this);
+        }
+        return new VisitResult(null);
     }
 
     @Override
@@ -176,7 +212,7 @@ public class SemanticVisitor implements Visitor<SemanticVisitor.VisitResult>{
 
     @Override
     public VisitResult visitTypeLiteralAstNode(TypeLiteralAstNode n){
-        return null;
+        return new VisitResult(null);
     }
 
     @Override
@@ -187,6 +223,13 @@ public class SemanticVisitor implements Visitor<SemanticVisitor.VisitResult>{
     @Override
     public VisitResult visitWhileAstNode(WhileAstNode n){
         return null;
+    }
+
+
+
+    public void assertType(Type[] allowedTypes, Type actualType, ASTNode n){
+        if (!Arrays.asList(allowedTypes).contains(actualType))
+            throw new SemanticErrorException(lineNumberProvider,"Expected type '" + Arrays.toString(allowedTypes) + "' but got type '" + actualType+"'",n.getSourceStart(),n.getSourceEnd());
     }
 
     public static class VisitResult{
@@ -202,6 +245,16 @@ public class SemanticVisitor implements Visitor<SemanticVisitor.VisitResult>{
             return new StringJoiner(", ", VisitResult.class.getSimpleName() + "[", "]")
                     .add("type=" + type)
                     .toString();
+        }
+    }
+
+    public static class VarSymbol{
+        public Type t;
+        public String identifier;
+
+        public VarSymbol(Type t, String identifier){
+            this.t = t;
+            this.identifier = identifier;
         }
     }
 }

@@ -1,7 +1,17 @@
-let i:integer = 1;
-__print i;
-for (let j:integer = 5;j<3;j=j+1){
-    __print i;
-}
-__print i;
+//all the lines in this file, individually result in a semantic error due to wrong types
+//uncomment any line which is a single line comment, and it should throw a semantic error
 
+
+/*delay*/
+//__delay 1.1;
+//__delay #aaaaaa;
+//__delay true;
+
+/*not*/
+//__print !1;
+//__print !1.1;
+//__print !#aaaaaa;
+
+/*negative*/
+//__print -#aaaaaa;
+//__print -true;

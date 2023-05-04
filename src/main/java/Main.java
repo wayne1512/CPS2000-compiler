@@ -19,13 +19,6 @@ public class Main{
         final String dir = System.getProperty("user.dir");
         System.out.println("current dir = " + dir);
 
-        SemanticVisitor semanticVisitor = new SemanticVisitor();
-        ASTNode r = new LiteralAstNode(0,0,new ColourLiteralAstNode(0,0,"#123123"));
-
-        SemanticVisitor.VisitResult res = r.acceptVisitor(semanticVisitor);
-        System.out.println(res);
-
-
         try (CharacterProvider cp = new FileCharacterProvider("in.txt")) {
 
             Lexer lexer = new Lexer(cp);
@@ -37,7 +30,7 @@ public class Main{
             System.out.println(root.acceptVisitor(new ToXMLVisitor()));
 
             //perform a semantic check pass
-            root.acceptVisitor(new SemanticVisitor());
+            root.acceptVisitor(new SemanticVisitor(cp.createLineNumberProvider()));
 
             //generate the code
             String[] generated = root.acceptVisitor(new CodeGenerationVisitor(cp.createLineNumberProvider())).instructions;
