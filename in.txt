@@ -1,9 +1,7 @@
 let i:integer = 1;
 __print i;
-f(i);
+for (let j:integer = 5;j<3;j=j+1){
+    __print i;
+}
 __print i;
 
-fun f (i:integer)->integer{
-    i = 0;
-    return i;
-}
