@@ -1,0 +1,8 @@
+//uncomment a block and each block should return a semantic error
+
+
+//let i:wrongType = 5; //error because wrongType is not a valid type
+
+//__print x; //used a variable which was not yet defined
+
+//x = 5; //assigning to a variable which was not yet defined

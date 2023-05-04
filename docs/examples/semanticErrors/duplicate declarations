@@ -1,0 +1,26 @@
+//all chunks in this file, individually result in a semantic error due to variables being declared twice in the same scope
+//uncomment any block of multi line comment, and it should throw a semantic error
+
+
+/*
+//in program scope
+let i:int = 5;
+let i:int = 2;
+*/
+
+/*
+//in if statement
+if(true){
+    let i:int = 5;
+    let i:int = 2;
+}*/
+
+/*
+//in else
+if(true){
+    let i:int = 5;
+} else{
+    let i:int = 5; //no error here
+    let i:int = 2; //error here
+}
+*/

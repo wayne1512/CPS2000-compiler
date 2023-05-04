@@ -31,7 +31,7 @@ public class IfParseRule implements ParseRule<IfAstNode>{
 
         BlockAstNode elseBlock = null;
         Token elseToken = pc.lookaheadSkipComments(0);
-        if (elseToken.getType() == Token.TokenType.Else){
+        if (elseToken != null && elseToken.getType() == Token.TokenType.Else){
             //consume else
             pc.consumeTokenSkipComments();
 
