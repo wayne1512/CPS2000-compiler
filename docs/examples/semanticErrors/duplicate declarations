@@ -24,3 +24,10 @@ if(true){
     let i:int = 2; //error here
 }
 */
+
+/*
+//in function formal params
+fun f(a:int, a:bool)->int{ //error on the second param
+    return a;
+}
+*/

@@ -1,7 +1,7 @@
 import ast.ASTNode;
-import ast.nodes.ColourLiteralAstNode;
-import ast.nodes.LiteralAstNode;
 import backend.CodeGenerationVisitor;
+import backend.Sematic.FunctionDeclarationProperties;
+import backend.Sematic.FunctionDeclarationVisitor;
 import backend.Sematic.SemanticVisitor;
 import backend.ToXMLVisitor;
 import exceptions.SyntaxErrorException;
@@ -10,8 +10,8 @@ import frontend.FileCharacterProvider;
 import frontend.Lexer;
 import frontend.Parser;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Map;
 
 public class Main{
     public static void main(String[] args){
@@ -30,7 +30,13 @@ public class Main{
             System.out.println(root.acceptVisitor(new ToXMLVisitor()));
 
             //perform a semantic check pass
-            root.acceptVisitor(new SemanticVisitor(cp.createLineNumberProvider()));
+
+            //get a list of declared functions
+            FunctionDeclarationVisitor functionDeclarationVisitor = new FunctionDeclarationVisitor(cp.createLineNumberProvider());
+            root.acceptVisitor(functionDeclarationVisitor);
+            Map<String, FunctionDeclarationProperties> functions = functionDeclarationVisitor.getFunctions();
+
+            root.acceptVisitor(new SemanticVisitor(functions,cp.createLineNumberProvider()));
 
             //generate the code
             String[] generated = root.acceptVisitor(new CodeGenerationVisitor(cp.createLineNumberProvider())).instructions;

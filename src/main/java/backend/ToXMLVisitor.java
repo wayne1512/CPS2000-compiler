@@ -169,7 +169,8 @@ public class ToXMLVisitor implements Visitor<String>{
         sb.append(performIndentation()).append("<FunctionCall>");
         indent++;
         sb.append(n.identifier.acceptVisitor(this));
-        sb.append(n.params.acceptVisitor(this));
+
+        sb.append(n.params!=null? n.params.acceptVisitor(this):simulateVisitNullNode());
         indent--;
         sb.append(performIndentation()).append("</FunctionCall>");
         return sb.toString();

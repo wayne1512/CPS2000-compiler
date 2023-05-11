@@ -52,7 +52,9 @@ public class FactorParseRule implements ParseRule<FactorAstNode>{
 
         if (child == null)
             pc.throwUnexpectedTokenException(t);
-        return new FactorAstNode(t.getTokenStart(), t.getTokenEnd(), child);
+
+        //noinspection DataFlowIssue
+        return new FactorAstNode(t.getTokenStart(),child.getSourceEnd(), child);
 
     }
 }

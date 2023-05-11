@@ -3,12 +3,12 @@ package backend.Sematic;
 import ast.ASTNode;
 import ast.Type;
 import ast.nodes.*;
-import backend.CodeGenerationVisitor;
 import backend.Visitor;
 import exceptions.LineNumberProvider;
 import exceptions.SemanticErrorException;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class SemanticVisitor implements Visitor<SemanticVisitor.VisitResult>{
 
@@ -18,13 +18,21 @@ public class SemanticVisitor implements Visitor<SemanticVisitor.VisitResult>{
 
     public LineNumberProvider lineNumberProvider;
 
-    public SemanticVisitor(LineNumberProvider lineNumberProvider){
+    public Map<String, FunctionDeclarationProperties> functions;
+
+    public SemanticVisitor(Map<String, FunctionDeclarationProperties> functions, LineNumberProvider lineNumberProvider){
         this.lineNumberProvider = lineNumberProvider;
+        this.functions = functions;
     }
 
     @Override
     public VisitResult visitActualParamsAstNode(ActualParamsAstNode n){
-        return null;
+
+        Type[] types = Arrays.stream(n.children)
+                .map(c -> c.acceptVisitor(this).type)//check semantics of child and get its return types
+                .toArray(Type[]::new);
+
+        return VisitResult.createTypeListResult(types);
     }
 
     @Override
@@ -174,21 +182,93 @@ public class SemanticVisitor implements Visitor<SemanticVisitor.VisitResult>{
 
     @Override
     public VisitResult visitFormalParameterAstNode(FormalParameterAstNode n){
+        Type type = n.type.acceptVisitor(this).type;
+        String identifier = n.identifier.getVal();
+
+
+        //if the identifier has already been used
+        if (symbolTable.peek().stream().anyMatch(param-> Objects.equals(param.identifier, identifier)))
+            //throw error
+            throw new SemanticErrorException(lineNumberProvider,"Another parameter already exists with the name '"+identifier+"'",n.identifier.getSourceStart(),n.identifier.getSourceEnd());
+
+        //add the param to the symbol table
+        symbolTable.peek().add(new VarSymbol(type, identifier));
+
+        //return nothing as there is no data to return
         return null;
     }
 
     @Override
     public VisitResult visitFormalParamsAstNode(FormalParamsAstNode n){
+        for (FormalParameterAstNode child : n.children){
+            //semantically check all children
+            child.acceptVisitor(this);
+        }
+
         return null;
     }
 
     @Override
     public VisitResult visitFunctionCallAstNode(FunctionCallAstNode n){
-        return null;
+
+
+
+        String identifier = n.identifier.getVal();
+        FunctionDeclarationProperties func = functions.get(identifier);
+
+        if (func == null)
+            throw new SemanticErrorException(lineNumberProvider,"function '"+identifier+"' is not defined",n.identifier.getSourceStart(),n.identifier.getSourceEnd());
+
+        //check the params
+        Type[] actualTypeList = new Type[0];
+        if (n.params != null){
+            VisitResult paramsVisitRes = n.params.acceptVisitor(this);
+            actualTypeList = paramsVisitRes.typeList;
+        }
+
+        Type[] formalTypeList = func.paramType;//types expected by the params of the function
+        if (formalTypeList.length != actualTypeList.length)
+            throw new SemanticErrorException(lineNumberProvider,"Function '"+identifier+"' takes '"+formalTypeList.length +"' parameters, but was called with '"+actualTypeList.length+"' parameters",n.getSourceStart(),n.getSourceEnd());
+
+        for (int i = 0; i < formalTypeList.length; i++){
+            //check that type of variable and type of expression matches
+            List<Type> allowedTypes = new ArrayList<>(Collections.singleton(formalTypeList[i]));
+
+            //special rule to allow integers to be stored in floats
+            if (formalTypeList[i] == Type.Float)
+                allowedTypes.add(Type.Int);
+
+            assertType(allowedTypes.toArray(new Type[0]),actualTypeList[i],n.params.children[i]);
+        }
+
+
+        Type returnType = func.returnType;
+        return new VisitResult(returnType);
     }
 
     @Override
     public VisitResult visitFunDeclAstNode(FunDeclAstNode n){
+
+        int oldScopeReach = scopeReach;
+
+        //open a scope to store the params
+        symbolTable.push(new ArrayList<>(0));
+        scopeReach = 1;
+
+
+        if (n.params!=null){
+            //these types will be added to the symbol table, in the frame that was just created
+            n.params.acceptVisitor(this);
+        }
+        n.type.acceptVisitor(this);
+
+        //todo check for return statements - and that return statements return the correct type
+        n.codeBlock.acceptVisitor(this);
+
+        //remove scope
+        symbolTable.pop();
+        scopeReach = oldScopeReach; //restore the old scope reach
+
         return null;
     }
 
@@ -418,8 +498,16 @@ public class SemanticVisitor implements Visitor<SemanticVisitor.VisitResult>{
 
         Type type;
 
+        Type[] typeList;
+
         public VisitResult(Type type){
             this.type = type;
+        }
+
+        public static VisitResult createTypeListResult(Type[] typeList){
+            VisitResult visitResult = new VisitResult(null);
+            visitResult.typeList = typeList;
+            return visitResult;
         }
 
         @Override

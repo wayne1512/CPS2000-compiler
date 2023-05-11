@@ -5,8 +5,8 @@ import backend.Visitor;
 
 public class FormalParameterAstNode extends ASTNode{
     public IdentifierAstNode identifier;
-    public ASTNode type;
-    public FormalParameterAstNode(long sourceStart, long sourceEnd, IdentifierAstNode identifier, ASTNode type) {
+    public TypeLiteralAstNode type;
+    public FormalParameterAstNode(long sourceStart, long sourceEnd, IdentifierAstNode identifier, TypeLiteralAstNode type) {
         super(sourceStart, sourceEnd);
         this.identifier = identifier;
         this.type = type;

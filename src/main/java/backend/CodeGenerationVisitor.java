@@ -266,9 +266,12 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
 
     @Override
     public VisitResult visitFunDeclAstNode(FunDeclAstNode n){
-        VisitResult paramsRes =  n.params.acceptVisitor(this);
+
+        VisitResult paramsRes = null;
+        if (n.params!=null)
+            paramsRes = n.params.acceptVisitor(this);
         //open a stack frame for the parameters
-        memory.push(Arrays.asList(paramsRes.instructions));
+        memory.push(paramsRes!=null?Arrays.asList(paramsRes.instructions):new ArrayList<>());
 
         List<String> instructions = new ArrayList<>();
 

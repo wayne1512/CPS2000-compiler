@@ -1,0 +1,40 @@
+/*
+f(1); //should return error because f takes a colour not an int
+
+fun f(i:colour)->int{
+    return 0;
+}
+*/
+
+
+/*
+let c:colour = g(); //should return error because g returns an int not a colour
+
+fun g()->int{
+    return 1;
+}
+*/
+
+
+/*
+//duplicate function
+fun p()->int{
+    return 0;
+}
+
+fun p()->int{ //error here
+    return 0;
+}
+*/
+
+/*
+let x:int = h(1,2,3); //error wrong param count
+
+fun h(i:int,j:int)->int{
+    return i+j;
+}
+*/
+
+/*
+doesNotExist(); //error function doesnt exist
+*/
