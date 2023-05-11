@@ -1,7 +1,7 @@
-let i:integer = 5;
+let i:int = 5;
 let f:float = 2.0;
 let c:colour = #ffffff;
-let b:boolean = false;
+let b:bool = false;
 __print i;
 __print f;
 __print c;

@@ -1,0 +1,7 @@
+//all chunks in this file, individually result in a semantic error due to variables being declared twice in the same scope
+//uncomment any block of multi line comment, and it should throw a semantic error
+
+
+fun f()->int{
+    return 1;
+}

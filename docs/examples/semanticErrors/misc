@@ -1,4 +1,4 @@
-//uncomment a block and each block should return a semantic error
+//uncomment a line and each line should return a semantic error
 
 
 //let i:wrongType = 5; //error because wrongType is not a valid type

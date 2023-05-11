@@ -1,8 +1,8 @@
 /*print 1 5 and 10*/
 
-let res:integer = doStuff(1);
+let res:int = doStuff(1);
 
-fun doStuff(i:integer)->integer{
+fun doStuff(i:int)->int{
     __print i;
     return 10;
 }

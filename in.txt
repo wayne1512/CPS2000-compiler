@@ -1,0 +1,62 @@
+//all chunks in this file, individually result in a semantic error due to variables being declared twice in the same scope
+//uncomment any block of multi line comment, and it should throw a semantic error
+
+
+/*
+//no return
+fun b()->int{
+    __print 1;
+}
+*/
+
+
+/*
+//no else
+fun b()->int{
+    if(1>2){
+        return 1;
+    }
+}
+*/
+
+/*
+//no return in then
+fun b()->int{
+    if(1>2){
+        __print 2;
+    } else{
+        return 1;
+    }
+}
+*/
+
+/*
+//no return in else
+fun b()->int{
+    if(1>2){
+        return 1;
+    } else{
+        __pixel 1,1,#ffffff;
+    }
+}
+*/
+
+/*
+//for loop does not guarantee return
+fun b()->int{
+    for(let i:int = 0;i>5;i=i+1){
+        //never reached since condition is always false
+        return i;
+    }
+}
+*/
+
+/*
+//while loop does not guarantee return
+fun b()->int{
+    while(false){
+        //never reached since condition is always false
+        return i;
+    }
+}
+*/

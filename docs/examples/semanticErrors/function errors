@@ -1,3 +1,7 @@
+//all chunks in this file, individually result in a semantic error due to variables being declared twice in the same scope
+//uncomment any block of multi line comment, and it should throw a semantic error
+
+
 /*
 f(1); //should return error because f takes a colour not an int
 
@@ -38,3 +42,16 @@ fun h(i:int,j:int)->int{
 /*
 doesNotExist(); //error function doesnt exist
 */
+
+/*
+fun l(i:int)->int{
+    let i:int = 5; //error -already defined
+    return i;
+}
+*/
+
+/*
+//return outside of function block
+return 1;
+*/
+

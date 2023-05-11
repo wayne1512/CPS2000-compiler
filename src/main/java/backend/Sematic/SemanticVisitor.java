@@ -20,6 +20,10 @@ public class SemanticVisitor implements Visitor<SemanticVisitor.VisitResult>{
 
     public Map<String, FunctionDeclarationProperties> functions;
 
+    Type currentFunctionReturnType = null;
+
+    boolean blockMergeScopeFlag = false;
+
     public SemanticVisitor(Map<String, FunctionDeclarationProperties> functions, LineNumberProvider lineNumberProvider){
         this.lineNumberProvider = lineNumberProvider;
         this.functions = functions;
@@ -124,15 +128,25 @@ public class SemanticVisitor implements Visitor<SemanticVisitor.VisitResult>{
 
     @Override
     public VisitResult visitBlockAstNode(BlockAstNode n){
-        //create new frame in symbol table
-        symbolTable.push(new ArrayList<>());
-        scopeReach++;
+
+        boolean mergedScope = blockMergeScopeFlag;
+
+        if (!mergedScope){
+            //create new frame in symbol table
+            symbolTable.push(new ArrayList<>());
+            scopeReach++;
+        }else {
+            //if merged, scope, just keep adding variables to the current scope
+            blockMergeScopeFlag = false;//reset flag for any nested blocks
+        }
 
         n.child.acceptVisitor(this);
 
-        //pop frame in symbol table
-        symbolTable.pop();
-        scopeReach--;
+        //pop frame in symbol table - only if we created a scope
+        if (!mergedScope){
+            symbolTable.pop();
+            scopeReach--;
+        }
 
         return new VisitResult(null);
     }
@@ -253,23 +267,33 @@ public class SemanticVisitor implements Visitor<SemanticVisitor.VisitResult>{
 
         //open a scope to store the params
         symbolTable.push(new ArrayList<>(0));
-        scopeReach = 1;
+        scopeReach = 1; //the only scope that is reachable is this scope
 
 
         if (n.params!=null){
             //these types will be added to the symbol table, in the frame that was just created
             n.params.acceptVisitor(this);
         }
-        n.type.acceptVisitor(this);
+        VisitResult typeVisitResult = n.type.acceptVisitor(this);
 
         //todo check for return statements - and that return statements return the correct type
+        currentFunctionReturnType = typeVisitResult.type; //return statements will need to return this type
+        //set the flag so that the block doesn't create a new scope, instead it will use the same scope from the params
+        blockMergeScopeFlag = true;
         n.codeBlock.acceptVisitor(this);
+        currentFunctionReturnType = null; //any return statement after this is not in a block and therefore it's an error
+
+
+        //check that the block guarantees a return statement
+        boolean allPathsReturn = n.codeBlock.acceptVisitor(new ReturnVisitor());
+        if (!allPathsReturn)
+            throw new SemanticErrorException(lineNumberProvider,"not all paths return a value",n.getSourceStart(),n.getSourceEnd());
 
         //remove scope
         symbolTable.pop();
         scopeReach = oldScopeReach; //restore the old scope reach
 
-        return null;
+        return new VisitResult(null);
     }
 
     @Override
@@ -417,7 +441,24 @@ public class SemanticVisitor implements Visitor<SemanticVisitor.VisitResult>{
 
     @Override
     public VisitResult visitReturnAstNode(ReturnAstNode n){
-        return null;
+
+
+        if (currentFunctionReturnType == null){
+            throw new SemanticErrorException(lineNumberProvider,"Return statement outside of function block",n.getSourceStart(),n.getSourceEnd());
+        }
+
+        VisitResult visitResult = n.x.acceptVisitor(this);
+
+        //check that the type of the return node matches the method that we are currently in
+        List<Type> allowedTypes = new ArrayList<>(Collections.singleton(currentFunctionReturnType));
+
+        //special rule to allow integers to be stored in floats
+        if (currentFunctionReturnType == Type.Float)
+            allowedTypes.add(Type.Int);
+
+        assertType(allowedTypes.toArray(new Type[0]),visitResult.type,n.x);
+
+        return visitResult;
     }
 
     @Override

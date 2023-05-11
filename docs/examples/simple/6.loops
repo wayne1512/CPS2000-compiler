@@ -20,14 +20,14 @@ for(;i<5;){
 
 
 //decl
-for(let j:integer = 0;j<5;){
+for(let j:int = 0;j<5;){
     j=j+1;
     __print j;
 }
 
 
 //traditional for loop
-for(let k:integer = 1;k<=5;k=k+1){
+for(let k:int = 1;k<=5;k=k+1){
     __print k;
 }
 

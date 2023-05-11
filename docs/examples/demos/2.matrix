@@ -1,5 +1,5 @@
-let w:integer = __width;
-let h:integer = __height;
+let w:int = __width;
+let h:int = __height;
 
 let clearCol:colour = #000000;
 
@@ -7,16 +7,16 @@ __print clear(w,h,clearCol);
 __print matrix(w,h,clearCol);
 
 
-fun clear(w:integer, h:integer, c:colour)->integer{
-    for(let i:integer = 0; i < w; i=i+1){
-        for(let j:integer = 0; j < h; j=j+1){
+fun clear(w:int, h:int, c:colour)->int{
+    for(let i:int = 0; i < w; i=i+1){
+        for(let j:int = 0; j < h; j=j+1){
             __pixel i,j,c;
         }
     }
     return 0;
 }
 
-fun matrix(w:integer, h:integer, c_background:colour)->integer{
+fun matrix(w:int, h:int, c_background:colour)->int{
 
     let c1:colour = #204829;
     let c2:colour = #22b455;
@@ -25,21 +25,21 @@ fun matrix(w:integer, h:integer, c_background:colour)->integer{
 
     while(true){
         //pick a random column
-        let col:integer = __randi w;
+        let col:int = __randi w;
 
         //clear the column
         __pixelr col,0,1,h,c_background;
 
-        let totalLen:integer = (__randi (3*h/4))+h/4; //total length of strip (minimum of 1/4 the height)
-        let halfLen:integer = __randi totalLen; //sum of first 2 strips
+        let totalLen:int = __randi h; //total length of strip (minimum of 1/4 the height)
+        let halfLen:int = __randi totalLen; //sum of first 2 strips
 
-        let length1:integer = __randi halfLen;
-        let length2:integer = halfLen - length1;
+        let length1:int = __randi halfLen;
+        let length2:int = halfLen - length1;
 
-        let bottomHalfLen:integer = totalLen - halfLen;
+        let bottomHalfLen:int = totalLen - halfLen;
 
-        let length3:integer = __randi bottomHalfLen;
-        let length4:integer = bottomHalfLen - length3;
+        let length3:int = __randi bottomHalfLen;
+        let length4:int = bottomHalfLen - length3;
 
         __print 1000000000; //marker for debugging
         __print col;
@@ -49,30 +49,30 @@ fun matrix(w:integer, h:integer, c_background:colour)->integer{
         __print length4;
         __print totalLen;
 
-        let pixelDelay: float = (__randi 1000) * (2/100); //max of 20ms per pixel
+        let pixelDelay: int = (__randi 20); //max of 20ms per pixel
 
-        let currentY:float = h-1;
+        let currentY:int = h-1;
 
-        for(let i:integer = 0;i<length1;i=i+1){
+        for(let i:int = 0;i<length1;i=i+1){
             __pixel col,currentY,c1;
             currentY = currentY -1;
             __delay pixelDelay;
 
         }
 
-        for(let j:integer = 0;j<length2;j=j+1){
+        for(let j:int = 0;j<length2;j=j+1){
             __pixel col,currentY,c2;
             currentY = currentY -1;
             __delay pixelDelay;
         }
 
-        for(let k:integer = 0;k<length3;k=k+1){
+        for(let k:int = 0;k<length3;k=k+1){
             __pixel col,currentY,c3;
             currentY = currentY -1;
             __delay pixelDelay;
         }
 
-        for(let l:integer = 0;l<length4;l=l+1){
+        for(let l:int = 0;l<length4;l=l+1){
             __pixel col,currentY,c4;
             currentY = currentY -1;
             __delay pixelDelay;

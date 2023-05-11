@@ -43,3 +43,6 @@
 
 /*wrong assignment*/
 let a:colour = #aaaaaa; a=1;
+
+/*wrong return*/
+//fun b()->int{return 1.1;}
