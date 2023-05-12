@@ -288,7 +288,6 @@ public class SemanticVisitor implements Visitor<SemanticVisitor.VisitResult>{
         }
         VisitResult typeVisitResult = n.type.acceptVisitor(this);
 
-        //todo check for return statements - and that return statements return the correct type
         currentFunctionReturnType = typeVisitResult.type; //return statements will need to return this type
         //set the flag so that the block doesn't create a new scope, instead it will use the same scope from the params
         blockMergeScopeFlag = true;

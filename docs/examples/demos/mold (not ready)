@@ -23,7 +23,7 @@ while(true){
 
     let currentColour:colour = __read x,y;
 
-    let getInfectedFromNeighbours = getNeighboursWithColour(currentColour)
+    let getInfectedFromNeighbours:bool = getNeighboursWithColour(x,y,currentColour) > 0;//todo fix
 }
 
 
