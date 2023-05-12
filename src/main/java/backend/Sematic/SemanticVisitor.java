@@ -99,12 +99,24 @@ public class SemanticVisitor implements Visitor<SemanticVisitor.VisitResult>{
             case LT:
             case GTE:
             case LTE:
-            case EQ:
-            case NE:
                 assertType(new Type[]{Type.Int,Type.Float},lType,n.left);
                 assertType(new Type[]{Type.Int,Type.Float},rType,n.right);
                 returnType = Type.Bool;
                 break;
+            case EQ:
+            case NE:
+                {
+                    if (lType == Type.Int ||lType == Type.Float)
+                        //if the left is a number, the right has to be a number
+                        assertType(new Type[]{Type.Int, Type.Float}, rType, n.right);
+                    else {
+                        //otherwise make sure that the types are equal
+                        //we can compare colors to colors and booleans to booleans
+                        assertType(new Type[]{lType}, rType, n.right);
+                    }
+                    returnType = Type.Bool;
+                    break;
+                }
             case add:
             case sub:
             case mul:

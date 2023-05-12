@@ -10,24 +10,29 @@ import frontend.FileCharacterProvider;
 import frontend.Lexer;
 import frontend.Parser;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.Map;
 
 public class Main{
     public static void main(String[] args){
 
-        final String dir = System.getProperty("user.dir");
-        System.out.println("current dir = " + dir);
+        try (
+                CharacterProvider cp = new FileCharacterProvider("in.txt");
+                BufferedWriter intermediateOutputFile = new BufferedWriter(new FileWriter("intermediateXML.xml"));
+                BufferedWriter compiledCodeOutputFile = new BufferedWriter(new FileWriter("output.txt"));
+            ) {
 
-        try (CharacterProvider cp = new FileCharacterProvider("in.txt")) {
+
+
 
             Lexer lexer = new Lexer(cp);
             Parser parser = new Parser(lexer);
             ASTNode root = parser.parse();
 
 
-
-            System.out.println(root.acceptVisitor(new ToXMLVisitor()));
+            String intermediateXML = root.acceptVisitor(new ToXMLVisitor());
+            intermediateOutputFile.write(intermediateXML);
+            System.out.println(intermediateXML);
 
             //perform a semantic check pass
 
@@ -42,6 +47,7 @@ public class Main{
             String[] generated = root.acceptVisitor(new CodeGenerationVisitor(cp.createLineNumberProvider())).instructions;
             for (String s : generated) {
                 System.out.println(s);
+                compiledCodeOutputFile.write(s + System.lineSeparator());
             }
 
 

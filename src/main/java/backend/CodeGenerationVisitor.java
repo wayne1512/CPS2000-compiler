@@ -366,8 +366,8 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
     public VisitResult visitLiteralAstNode(LiteralAstNode n){
         VisitResult visitResult = n.child.acceptVisitor(this);
 
-        if (n.child instanceof PadWidthAstNode||n.child instanceof PadHeightAstNode||n.child instanceof PadRandiAstNode)
-            //exception for width, height and randi as they do not need the push command
+        if (n.child instanceof PadWidthAstNode||n.child instanceof PadHeightAstNode||n.child instanceof PadRandiAstNode||n.child instanceof PadReadAstNode)
+            //exception for width, height, read and randi as they do not need the push command
             return visitResult;
 
 
