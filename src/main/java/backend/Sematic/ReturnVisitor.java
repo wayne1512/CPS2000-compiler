@@ -1,7 +1,7 @@
 package backend.Sematic;
 
-import ast.nodes.*;
 import backend.Visitor;
+import ast.nodes.*;
 
 import java.util.Arrays;
 

@@ -4,6 +4,7 @@ import backend.Sematic.FunctionDeclarationProperties;
 import backend.Sematic.FunctionDeclarationVisitor;
 import backend.Sematic.SemanticVisitor;
 import backend.ToXMLVisitor;
+import exceptions.SemanticErrorException;
 import exceptions.SyntaxErrorException;
 import frontend.CharacterProvider;
 import frontend.FileCharacterProvider;
@@ -54,8 +55,8 @@ public class Main{
         } catch (IOException e) {
             System.err.println("Error while opening file");
             e.printStackTrace();
-        } catch (SyntaxErrorException e) {
-            throw new RuntimeException(e);
+        } catch (SyntaxErrorException | SemanticErrorException e) {
+            System.err.println(e.getMessage());
         }
 
 

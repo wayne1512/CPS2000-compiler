@@ -1,8 +1,8 @@
 package backend.Sematic;
 
 import ast.Type;
-import ast.nodes.*;
 import backend.Visitor;
+import ast.nodes.*;
 import exceptions.LineNumberProvider;
 import exceptions.SemanticErrorException;
 

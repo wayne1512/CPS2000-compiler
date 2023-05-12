@@ -1,7 +1,6 @@
 package frontend.parseRules;
 
 import ast.ASTNode;
-import ast.nodes.ColourLiteralAstNode;
 import ast.nodes.LiteralAstNode;
 import exceptions.SyntaxErrorException;
 import frontend.ParserContext;

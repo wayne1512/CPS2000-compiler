@@ -2,13 +2,12 @@ package backend.Sematic;
 
 import ast.ASTNode;
 import ast.Type;
-import ast.nodes.*;
 import backend.Visitor;
+import ast.nodes.*;
 import exceptions.LineNumberProvider;
 import exceptions.SemanticErrorException;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class SemanticVisitor implements Visitor<SemanticVisitor.VisitResult>{
 

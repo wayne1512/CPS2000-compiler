@@ -1,45 +1,5 @@
-
-/*
-f(2); //should return error because f takes a colour not an int
-
-fun f(i:int)->int{
-    return 0.1;
-}*/
-
-let c:float = #aaaaaa;
-
-/*
-let c:colour = g(); //should return error because g returns an int not a colour
-
-fun g()->int{
-    return 1;
-}
-*/
-
-
-
-
-
-/*
-let x:int = h(1,2,3); //error wrong param count
-
-fun h(i:int,j:int)->int{
-    return i+j;
-}
-*/
-
-
-//doesNotExist(); //error function doesnt exist
-
-/*
-fun l(i:int)->int{
-    let i:int = 5; //error -already defined
-    return i;
-}
-*/
-
-
-//return outside of function block
-return 1;
-
-
+__print false;
+__print true;
+__print #000080;
+__print 3.14
+__print 1;

@@ -1,6 +1,6 @@
 package frontend.parseRules;
 
-import ast.*;
+import ast.ASTNode;
 import ast.nodes.AssignmentAstNode;
 import ast.nodes.BlockAstNode;
 import ast.nodes.ForAstNode;
