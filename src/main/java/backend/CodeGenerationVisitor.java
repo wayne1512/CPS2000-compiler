@@ -535,7 +535,7 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
 
     @Override
     public VisitResult visitTypeLiteralAstNode(TypeLiteralAstNode n){
-        return n.acceptVisitor(this);
+        return new VisitResult(new String[0]);//doesn't do anything
     }
 
     @Override
