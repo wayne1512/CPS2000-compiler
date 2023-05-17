@@ -1,0 +1,176 @@
+.main
+push 2 // stack frame for program
+oframe
+push #ff0000    //([1:17]-[1:23]) LiteralAstNode
+push 0 //index of c1
+push 0//in stack frame 0
+st    //([1:1]-[1:23]) VarDeclAstNode
+push #0000ff    //([2:17]-[2:23]) LiteralAstNode
+push 1 //index of c2
+push 0//in stack frame 0
+st    //([2:1]-[2:23]) VarDeclAstNode
+push [1:0]    //([4:10]-[4:11]) IdentifierAstNode
+push [0:0]    //([4:7]-[4:8]) IdentifierAstNode
+push 2 //param count
+push .start    //([4:1]-[4:12]) FunctionCallAstNode
+call
+cframe
+halt
+
+
+.init    //([6:1]-[17:1]) FunDeclAstNode
+push 0 // stack frame for block
+oframe    //([6:35]-[17:1]) BlockAstNode
+push #ffffff    //([9:35]-[9:41]) LiteralAstNode
+height
+width
+push 0    //([9:16]-[9:16]) LiteralAstNode
+push 0    //([9:14]-[9:14]) LiteralAstNode
+pixelr    //([9:5]-[9:41]) PixelRangeAstNode
+push [0:1]    //([12:29]-[12:30]) IdentifierAstNode
+height
+push 1    //([12:18]-[12:18]) LiteralAstNode
+push 0    //([12:16]-[12:16]) LiteralAstNode
+push 0    //([12:14]-[12:14]) LiteralAstNode
+pixelr    //([12:5]-[12:30]) PixelRangeAstNode
+push [1:1]    //([15:37]-[15:38]) IdentifierAstNode
+height
+push 1    //([15:26]-[15:26]) LiteralAstNode
+push 0    //([15:24]-[15:24]) LiteralAstNode
+push 1    //([15:22]-[15:22]) LiteralAstNode
+width
+sub    //([15:14]-[15:22]) BinaryOpAstNode
+pixelr    //([15:5]-[15:38]) PixelRangeAstNode
+width
+height
+mul    //([16:12]-[16:29]) BinaryOpAstNode
+cframe //closing all unclosed frames before ret
+ret
+cframe
+
+
+.start    //([19:1]-[51:1]) FunDeclAstNode
+push 2 // stack frame for block
+oframe    //([19:36]-[51:1]) BlockAstNode
+push 0    //([21:27]-[21:31]) LiteralAstNode
+push 0 //index of debugPixel
+push 0//in stack frame 0
+st    //([21:5]-[21:31]) VarDeclAstNode
+push [1:1]    //([23:28]-[23:29]) IdentifierAstNode
+push [0:1]    //([23:25]-[23:26]) IdentifierAstNode
+push 2 //param count
+push .init    //([23:20]-[23:30]) FunctionCallAstNode
+call
+push 1 //index of area
+push 0//in stack frame 0
+st    //([23:5]-[23:30]) VarDeclAstNode
+push [1:0]    //([25:13]-[25:16]) IdentifierAstNode
+print    //([25:5]-[25:16]) PrintAstNode
+push 1    //([27:11]-[27:14]) LiteralAstNode
+not
+push #PC+67
+cjmp2    //([27:5]-[47:5]) WhileAstNode
+push 3 // stack frame for block
+oframe    //([27:16]-[47:5]) BlockAstNode
+width
+irnd    //([29:21]-[29:35]) PadRandiAstNode
+push 0 //index of x
+push 0//in stack frame 0
+st    //([29:9]-[29:35]) VarDeclAstNode
+height
+irnd    //([30:21]-[30:36]) PadRandiAstNode
+push 1 //index of y
+push 0//in stack frame 0
+st    //([30:9]-[30:36]) VarDeclAstNode
+push [1:0]    //([33:33]-[33:33]) IdentifierAstNode
+push [0:0]    //([33:31]-[33:31]) IdentifierAstNode
+read    //([33:24]-[33:33]) PadReadAstNode
+push 2 //index of c
+push 0//in stack frame 0
+st    //([33:9]-[33:29]) VarDeclAstNode
+push [1:2]    //([36:31]-[36:32]) IdentifierAstNode
+push [2:0]    //([36:26]-[36:26]) IdentifierAstNode
+eq    //([36:26]-[36:32]) BinaryOpAstNode
+push [0:2]    //([36:18]-[36:19]) IdentifierAstNode
+push [2:0]    //([36:13]-[36:13]) IdentifierAstNode
+eq    //([36:13]-[36:19]) BinaryOpAstNode
+or    //([36:12]-[36:33]) BinaryOpAstNode
+push #PC+4
+cjmp2    //([36:9]-[41:9]) IfAstNode
+push #PC+23
+jmp //end else block
+push 0 // stack frame for block
+oframe    //([36:35]-[41:9]) BlockAstNode
+push [2:1]    //([39:48]-[39:48]) IdentifierAstNode
+push 3    //([39:46]-[39:46]) LiteralAstNode
+push 3    //([39:44]-[39:44]) LiteralAstNode
+push 0    //([39:41]-[39:41]) LiteralAstNode
+push 1    //([39:39]-[39:39]) LiteralAstNode
+push [1:1]    //([39:37]-[39:37]) IdentifierAstNode
+sub    //([39:37]-[39:39]) BinaryOpAstNode
+push 2 //param count
+push .max    //([39:33]-[39:42]) FunctionCallAstNode
+call
+push 0    //([39:30]-[39:30]) LiteralAstNode
+push 1    //([39:28]-[39:28]) LiteralAstNode
+push [0:1]    //([39:26]-[39:26]) IdentifierAstNode
+sub    //([39:26]-[39:28]) BinaryOpAstNode
+push 2 //param count
+push .max    //([39:22]-[39:31]) FunctionCallAstNode
+call
+pixelr    //([39:13]-[39:48]) PixelRangeAstNode
+cframe
+push [0:1]    //([43:12]-[43:21]) IdentifierAstNode
+push #PC+4
+cjmp2    //([43:9]-[45:9]) IfAstNode
+push #PC+9
+jmp //end else block
+push 0 // stack frame for block
+oframe    //([43:23]-[45:9]) BlockAstNode
+push #00ff00    //([44:25]-[44:31]) LiteralAstNode
+push [1:1]    //([44:23]-[44:23]) IdentifierAstNode
+push [0:1]    //([44:21]-[44:21]) IdentifierAstNode
+pixel    //([44:13]-[44:31]) PixelAstNode
+cframe
+cframe
+push #PC-67
+jmp
+push 0    //([49:12]-[49:12]) LiteralAstNode
+cframe //closing all unclosed frames before ret
+ret
+cframe
+
+
+.max    //([53:1]-[64:1]) FunDeclAstNode
+push 2 // stack frame for block
+oframe    //([53:26]-[64:1]) BlockAstNode
+push [0:1]    //([55:25]-[55:25]) IdentifierAstNode
+push 0 //index of i_float
+push 0//in stack frame 0
+st    //([55:5]-[55:25]) VarDeclAstNode
+push [1:1]    //([56:25]-[56:25]) IdentifierAstNode
+push 1 //index of j_float
+push 0//in stack frame 0
+st    //([56:5]-[56:25]) VarDeclAstNode
+push [1:0]    //([58:18]-[58:24]) IdentifierAstNode
+push [0:0]    //([58:8]-[58:14]) IdentifierAstNode
+lt    //([58:8]-[58:24]) BinaryOpAstNode
+push #PC+11
+cjmp2    //([58:5]-[62:5]) IfAstNode
+push 0 // stack frame for block
+oframe    //([60:11]-[62:5]) BlockAstNode
+push [0:2]    //([61:16]-[61:16]) IdentifierAstNode
+cframe //closing all unclosed frames before ret
+cframe //closing all unclosed frames before ret
+ret
+cframe
+push #PC+9
+jmp //end else block
+push 0 // stack frame for block
+oframe    //([58:26]-[60:5]) BlockAstNode
+push [1:2]    //([59:16]-[59:16]) IdentifierAstNode
+cframe //closing all unclosed frames before ret
+cframe //closing all unclosed frames before ret
+ret
+cframe
+cframe

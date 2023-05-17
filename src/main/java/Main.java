@@ -20,7 +20,7 @@ public class Main{
         try (
                 CharacterProvider cp = new FileCharacterProvider("in.txt");
                 BufferedWriter intermediateOutputFile = new BufferedWriter(new FileWriter("intermediateXML.xml"));
-                BufferedWriter compiledCodeOutputFile = new BufferedWriter(new FileWriter("output.txt"));
+                BufferedWriter compiledCodeOutputFile = new BufferedWriter(new FileWriter("output.txt"))
             ) {
 
 
@@ -51,11 +51,17 @@ public class Main{
                 compiledCodeOutputFile.write(s + System.lineSeparator());
             }
 
+            System.out.println("File compiled successfully - the output was saved to output.txt");
+
 
         } catch (IOException e) {
             System.err.println("Error while opening file");
             e.printStackTrace();
-        } catch (SyntaxErrorException | SemanticErrorException e) {
+        } catch (SyntaxErrorException e) {
+            System.err.println("Syntax Error:");
+            System.err.println(e.getMessage());
+        } catch (SemanticErrorException e){
+            System.err.println("Semantic Error:");
             System.err.println(e.getMessage());
         }
 

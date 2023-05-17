@@ -12,6 +12,8 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
 
     //to be used as a symbol table
     Stack<List<String>> memory = new Stack<>();
+    Stack<Integer> frameCountWhenFunctionDeclared = new Stack<>();
+
 
     List<List<String>> compiledFunctions = new ArrayList<>();
 
@@ -256,6 +258,7 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
 
         List<String> instructions = new ArrayList<>(Arrays.asList(actualParamsResult.instructions));
 
+
         instructions.add("push ."+n.identifier.getVal() + debugComment(n));
 
         instructions.add("call");
@@ -266,6 +269,10 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
 
     @Override
     public VisitResult visitFunDeclAstNode(FunDeclAstNode n){
+
+
+        //store the ammount of frames in memory when the function was called
+        frameCountWhenFunctionDeclared.push(memory.size());
 
         VisitResult paramsRes = null;
         if (n.params!=null)
@@ -287,6 +294,9 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
 
         //add to compiled functions
         compiledFunctions.add(instructions);
+
+        //pop the frameCountWhenFunctionDeclared
+        frameCountWhenFunctionDeclared.pop();
 
         //return no instructions as the instructions will be added to compiledFunctions instead
         return new VisitResult(new String[0]);
@@ -499,8 +509,22 @@ public class CodeGenerationVisitor implements Visitor<CodeGenerationVisitor.Visi
 
         List<String> instructions = new ArrayList<>(Arrays.asList(childVisit.instructions));
 
-        //close the frame
-        instructions.add("cframe");
+
+
+        //close the frames (including any unclosed if, else, loops etc.)
+        //as the 'cframe' command of these nodes will be skipped by this return instruction
+        int expectedFrameCount = frameCountWhenFunctionDeclared.peek();
+
+        int unclosedFrames = memory.size() - (expectedFrameCount + 1); //close frames up to and excluding the parameter frame
+
+        for (int i = 0; i < unclosedFrames; i++){
+            instructions.add("cframe //closing all unclosed frames before ret");
+            //the memory should not be updated, as the nodes will handle that themselves
+        }
+
+
+
+
         instructions.add("ret");
 
         return new VisitResult(instructions.toArray(new String[0]));

@@ -1,0 +1,17 @@
+let i:int = 5;
+let j:int = 10;
+
+__print (max(i,j)+max(i,j));
+
+
+fun max(i:int,j:int)->int{
+    //using floats to test that int->float conversion works - no other practical reason
+    let i_float:float = i;
+    let j_float:float = j;
+
+    if(i_float < j_float){
+        return j;
+    } else{
+        return i;
+    }
+}

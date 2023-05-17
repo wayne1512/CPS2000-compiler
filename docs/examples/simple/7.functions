@@ -1,10 +1,77 @@
-/*print 1 5 and 10*/
+/*print 1 5 and 10 - 5 times
+this tests the integrity of scope limiting ie. that the var in the outside scope is never touched
+this also tests that the return function closes all unclosed scopes
+*/
 
-let res:int = doStuff(1);
+let constant:int = 1;
+let param:int = 5;
 
+__print constant;
+__print doStuff(param);
+
+__print constant;
+__print doStuff1(param);
+
+__print constant;
+__print doStuff2(param);
+
+__print constant;
+__print doStuff3(param);
+
+__print constant;
+__print doStuff4(param);
+
+
+
+//normal return
 fun doStuff(i:int)->int{
     __print i;
-    return 10;
+    i=i*2; //should not affect the i in the starting scope
+    return i;
 }
 
-__print doStuff(5);
+//return inside if
+fun doStuff1(i:int)->int{
+    __print i;
+
+    if(true){
+        i=i*2;//should not affect the i in the starting scope
+        return i;
+    }
+    return -1;
+}
+
+//return inside else
+fun doStuff2(i:int)->int{
+    __print i;
+
+    if(false){
+        __print 99999;
+        return -1;
+    } else{
+        i=i*2;//should not affect the i in the starting scope
+        return i;
+    }
+}
+
+//return inside for
+fun doStuff3(i:int)->int{
+    __print i;
+
+    for(let j:int = 1; j<5;j=j+1){
+        i=i*2;//should not affect the i in the starting scope
+        return i;
+    }
+    return -1;
+}
+
+//return inside while
+fun doStuff4(i:int)->int{
+    __print i;
+
+    while(true){
+        i=i*2;//should not affect the i in the starting scope
+        return i;
+    }
+    return -1;
+}
