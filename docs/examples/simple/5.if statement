@@ -11,7 +11,7 @@
 */
 
 
-let i:integer = __randi 10;
+let i:int = __randi 10;
 
 __print i;
 

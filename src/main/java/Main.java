@@ -17,6 +17,8 @@ import java.util.Map;
 public class Main{
     public static void main(String[] args){
 
+        System.out.println("compiling in.txt");
+
         try (
                 CharacterProvider cp = new FileCharacterProvider("in.txt");
                 BufferedWriter intermediateOutputFile = new BufferedWriter(new FileWriter("intermediateXML.xml"));
@@ -42,6 +44,7 @@ public class Main{
             root.acceptVisitor(functionDeclarationVisitor);
             Map<String, FunctionDeclarationProperties> functions = functionDeclarationVisitor.getFunctions();
 
+            //main semantic pass
             root.acceptVisitor(new SemanticVisitor(functions,cp.createLineNumberProvider()));
 
             //generate the code

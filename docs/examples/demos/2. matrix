@@ -1,3 +1,12 @@
+/*
+Visual matrix-style display inspired from the Matrix movie
+A random column is selected, cleared and randomly filled with a line containing 1-4 colours.
+
+use:
+this example was created as an example of using PixArDis to create visual displays
+using the power of loops, randomization and delays
+*/
+
 let w:int = __width;
 let h:int = __height;
 

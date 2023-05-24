@@ -1,3 +1,6 @@
+import org.gradle.jvm.tasks.Jar
+
+
 plugins {
     id("java")
     id("application")
@@ -6,8 +9,12 @@ plugins {
 apply(plugin = "java")
 
 
-group = "org.example"
-version = "1.0-SNAPSHOT"
+group = "mt.wayne"
+
+
+application {
+    mainClass.set("Main")
+}
 
 repositories {
     mavenCentral()
@@ -24,6 +31,19 @@ tasks.test {
     useJUnitPlatform()
 }
 
-application {
-    mainClass.set("Main")
+tasks.jar {
+
+    manifest.attributes["Main-Class"] = "Main"
+    val dependencies = configurations
+            .runtimeClasspath
+            .get()
+            .map(::zipTree) // OR .map { zipTree(it) }
+    from(dependencies)
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+tasks {
+    "build" {
+        dependsOn(jar)
+    }
 }

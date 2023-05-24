@@ -1,3 +1,15 @@
+/*
+Visual fight between red and blue
+
+A random location is chosen, and if that location is taken by a team, than the 3x3 area, centered around that location
+is taken by that team
+
+use:
+to show how __read can be used.
+*/
+
+
+
 let c1:colour = #ff0000;
 let c2:colour = #0000ff;
 
@@ -18,7 +30,7 @@ fun init(c1:colour,c2:colour)->int{
 
 fun start(c1:colour,c2:colour)->int{
 
-    let debugPixel:bool = false;
+    let debugPixel:bool = false; //set this to true to color the random coordinates returned by the random function
 
     let area:int = init(c1,c2);
 

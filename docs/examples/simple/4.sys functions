@@ -9,3 +9,5 @@ __delay 3000; //delay 3 seconds
 
 //set a random pixel in the bottom right corner to blue
 __pixel __randi 5, __randi 5, #0000FF;
+
+__print __read 5,5;

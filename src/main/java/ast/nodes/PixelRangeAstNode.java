@@ -21,13 +21,6 @@ public class PixelRangeAstNode extends ASTNode{
         this.colour = colour;
     }
 
-    public PixelRangeAstNode(long sourceStart, long sourceEnd, ASTNode x, ASTNode y, ASTNode colour) {
-        super(sourceStart, sourceEnd);
-        this.x = x;
-        this.y = y;
-        this.colour = colour;
-    }
-
     @Override
     public <R> R acceptVisitor(Visitor<R> visitor){
         return visitor.visitPixelRangeAstNode(this);
