@@ -1,11 +1,11 @@
 /*
 Visual fight between red and blue
 
-A random location is chosen, and if that location is taken by a team, than the 3x3 area, centered around that location
+A random location is chosen, and if that location is taken by a team, than a 3x3 area, centered around that location
 is taken by that team
 
 use:
-to show how __read can be used.
+to show how __read, __random, __pixelr can be used to create a visual display.
 */
 
 

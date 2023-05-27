@@ -17,7 +17,7 @@ __print matrix(w,h,clearCol);
 
 
 fun clear(w:int, h:int, c:colour)->int{
-    for(let i:int = 0; i < w; i=i+1){
+    for(let i:int = 0; i < w; i=i+1){ //using for loops instead of pixelr just to test nested for loops
         for(let j:int = 0; j < h; j=j+1){
             __pixel i,j,c;
         }
